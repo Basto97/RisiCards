@@ -12,8 +12,8 @@ public class SpellCardAsset extends CardAsset{
         this.targetType = targetType;
     }
 
-    public SpellCardAsset(JSONObject json) {
-        super(json.getInt("id"),json.getInt("manaCost"));
+    public SpellCardAsset(int id, JSONObject json) {
+        super(id, json);
         this.targetType = TargetType.Get(json.getInt("targetType"));
     }
 

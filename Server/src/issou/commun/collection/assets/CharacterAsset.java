@@ -19,8 +19,8 @@ public class CharacterAsset {
         this.startMana = startMana;
         this.heroPowerType = heroPowerType;
     }
-    public CharacterAsset(JSONObject json) {
-        this.type = CharacterType.Get(json.getInt("id"));
+    public CharacterAsset(int id, JSONObject json) {
+        this.type = CharacterType.Get(id);
         this.health  = json.getInt("health");
         this.startMana = json.getInt("startMana");
         this.heroPowerType = HeroPowerType.Get(json.getInt("heroPower"));

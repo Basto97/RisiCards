@@ -27,6 +27,7 @@ public class Content implements IContent {
     private static final Map<HeroPowerType, HeroPowerAsset> heroPowers = new HashMap<>();
     private static final Map<CharacterType, CharacterAsset> characters = new HashMap<>();
     private static final Map<Integer, CardAsset> cards = new HashMap<>();
+    private static final Map<Integer, String> cardNames = new HashMap<>();
     private static int initialDraw;
     private static int maxCardsHand;
     private static int maxMana;
@@ -88,8 +89,10 @@ public class Content implements IContent {
         JSONObject cards = data.getJSONObject("cards");
         JSONArray minions = cards.getJSONArray("minions");
         JSONArray spells = cards.getJSONArray("spells");
-        loadMinions(minions);
-        loadSpells(spells);
+        int nbMinions = loadMinions(minions);
+        loadSpells(spells, nbMinions);
+
+        loadCardNames(minions, spells);
     }
 
     private static void loadGameOptions(JSONObject gameOptions){
@@ -101,7 +104,7 @@ public class Content implements IContent {
     private static void loadHeroPowers(JSONArray heroPowers) {
         for (int i = 0; i < heroPowers.length(); i++) {
             JSONObject json = heroPowers.getJSONObject(i);
-            HeroPowerAsset heroPowerAsset =  new HeroPowerAsset(json);
+            HeroPowerAsset heroPowerAsset =  new HeroPowerAsset(i, json);
             Content.heroPowers.put(heroPowerAsset.getType(), heroPowerAsset);
         }
     }
@@ -109,23 +112,34 @@ public class Content implements IContent {
     private static void loadCharacters(JSONArray charactersArray) {
         for (int i = 0; i < charactersArray.length(); i++) {
             JSONObject json = charactersArray.getJSONObject(i) ;
-            CharacterAsset characterAsset = new CharacterAsset(json);
+            CharacterAsset characterAsset = new CharacterAsset(i, json);
             Content.characters.put(characterAsset.getType(), characterAsset);
         }
     }
 
-    private static void loadMinions(JSONArray minions) {
-        for (int i = 0; i < minions.length(); i++) {
+    private static int loadMinions(JSONArray minions) {
+        int i;
+        for (i = 0; i < minions.length(); i++) {
             JSONObject json = minions.getJSONObject(i);
-            Content.cards.put(json.getInt("id"), new MinionCardAsset(json));
+            Content.cards.put(i, new MinionCardAsset(i,json));
+        }
+        return i;
+    }
+
+    private static void loadSpells(JSONArray spells, int idMinions) {
+        for (int i = 0; i < spells.length(); i++) {
+            JSONObject json = spells.getJSONObject(i);
+            int id = idMinions + i;
+            Content.cards.put(id, new SpellCardAsset(id, json));
         }
     }
 
-    private static void loadSpells(JSONArray spells) {
-        for (int i = 0; i < spells.length(); i++) {
-            JSONObject json = spells.getJSONObject(i);
-            Content.cards.put(json.getInt("id"), new SpellCardAsset(json));
-        }
+    private static void loadCardNames(JSONArray minions, JSONArray spells){
+        int i;
+        for (i = 0; i < minions.length(); i++)
+            Content.cardNames.put(i, minions.getJSONObject(i).getString("name"));
+        for (int j = 0; j < spells.length(); j++)
+            Content.cardNames.put(i+j, spells.getJSONObject(j).getString("name"));
     }
 
     @Override
@@ -141,6 +155,11 @@ public class Content implements IContent {
     @Override
     public HeroPowerAsset getHeroPowerAsset(int id) {
         return heroPowers.get(id).clone();
+    }
+
+    @Override
+    public String getCardName(int id) {
+        return cardNames.get(id);
     }
 
     @Override
@@ -176,7 +195,7 @@ public class Content implements IContent {
         sb.append("\n");
         sb.append("Cards :\n");
         for (Map.Entry<Integer, CardAsset> entry : cards.entrySet())
-            sb.append("- ").append(entry.getKey()).append(" : ").append(entry.getValue()).append("\n");
+            sb.append("- ").append(getCardName(entry.getKey())).append(" : ").append(entry.getValue()).append("\n");
         sb.append("\n");
 
         return sb.toString();

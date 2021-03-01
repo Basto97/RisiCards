@@ -23,15 +23,14 @@ public enum TargetType {
     public static void load(JSONArray types){
         for(int i = 0; i < types.length() ; i++){
             JSONObject type = types.getJSONObject(i);
-            int id = type.getInt("id");
             switch (type.getString("name")) {
-                case "AllChars" -> allChardsID = id;
-                case "MyChar" -> myCharID = id;
-                case "EnemyChar" ->enemyCharID = id;
-                case "AllMinions" ->allMinionsID = id;
-                case "MyMinions" ->myMinionsID = id;
-                case "EnemyMinions" -> enemyMinionsID= id;
-                case "NoTarget" ->noTargetID = id;
+                case "AllChars" -> allChardsID = i;
+                case "MyChar" -> myCharID = i;
+                case "EnemyChar" ->enemyCharID = i;
+                case "AllMinions" ->allMinionsID = i;
+                case "MyMinions" ->myMinionsID = i;
+                case "EnemyMinions" -> enemyMinionsID= i;
+                case "NoTarget" ->noTargetID = i;
             }
         }
     }
@@ -49,6 +48,9 @@ public enum TargetType {
             return MyMinions;
         if(id == enemyMinionsID)
             return EnemyMinions;
+        if(id == noTargetID)
+            return NoTarget;
+        System.err.println("Target Type "+id+" not knowed.");
         return NoTarget;
     }
 }

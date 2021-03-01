@@ -16,8 +16,8 @@ public class MinionCardAsset extends CardAsset{
         this.type = type;
     }
 
-    public MinionCardAsset(JSONObject json) {
-        super(json.getInt("id"),json.getInt("manaCost"));
+    public MinionCardAsset(int id, JSONObject json) {
+        super(id, json);
         this.health =  json.getInt("health");
         this.attack =  json.getInt("attack");
         this.type = MinionType.Get(json.getInt("type"));

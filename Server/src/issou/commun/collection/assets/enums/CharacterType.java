@@ -13,10 +13,9 @@ public enum CharacterType {
     public static void load(JSONArray types){
         for(int i = 0; i < types.length() ; i++){
             JSONObject type = types.getJSONObject(i);
-            int id = type.getInt("id");
             switch (type.getString("name")) {
-                case "Mage Noir" -> mageNoirID = id;
-                case "Chevalier Blanc" -> chevalierBlancID = id;
+                case "Mage Noir" -> mageNoirID = i;
+                case "Chevalier Blanc" -> chevalierBlancID = i;
             }
         }
     }
@@ -26,6 +25,7 @@ public enum CharacterType {
             return MageNoir;
         if(id == chevalierBlancID)
             return ChevalierBlanc;
+        System.err.println("Character Type "+id+" not knowed.");
         return MageNoir;
     }
 }

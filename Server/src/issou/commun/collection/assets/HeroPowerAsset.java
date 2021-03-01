@@ -14,8 +14,8 @@ public class HeroPowerAsset {
         this.type = type;
         this.cost = cost;
     }
-    public HeroPowerAsset(JSONObject json){
-        this.type = HeroPowerType.Get(json.getInt("id"));
+    public HeroPowerAsset(int id ,JSONObject json){
+        this.type = HeroPowerType.Get(id);
         this.cost = json.getInt("cost");
     }
 

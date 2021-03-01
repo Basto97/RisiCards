@@ -8,9 +8,9 @@ public interface IContent {
     CardAsset getCardAsset(int id);
     CharacterAsset getCharacterAsset(int id);
     HeroPowerAsset getHeroPowerAsset(int id);
+    String getCardName(int id);
     int initialDraw();
     int maxCardsHand();
     int maxMana();
-
     String toString();
 }

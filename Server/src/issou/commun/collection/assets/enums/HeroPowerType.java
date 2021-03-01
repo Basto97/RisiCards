@@ -13,10 +13,9 @@ public enum HeroPowerType {
     public static void load(JSONArray types){
         for(int i = types.length()-1; i >= 0; i--){
             JSONObject type = types.getJSONObject(i);
-            int id = type.getInt("id");
             switch (type.getString("name")) {
-                case "Boule de Feu" -> bouleDeFeuID = id;
-                case "Boule de Glace" -> bouleDeGlaceID = id;
+                case "Boule de Feu" -> bouleDeFeuID = i;
+                case "Boule de Glace" -> bouleDeGlaceID = i;
             }
         }
     }
@@ -26,6 +25,7 @@ public enum HeroPowerType {
             return BouleDeFeu;
         if(id == bouleDeGlaceID)
             return BouleDeGlace;
-        return BouleDeFeu;
+        System.err.println("Hero Power Type "+id+" not knowed.");
+        return BouleDeGlace;
     }
 }
