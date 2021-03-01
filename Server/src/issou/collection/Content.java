@@ -7,10 +7,13 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static issou.collection.LoadFile.readJsonFromUrl;
+import static issou.collection.APIConnection.getData;
+import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class Content implements IContent {
 
@@ -18,16 +21,24 @@ public class Content implements IContent {
     private static final Lock lock = new ReentrantLock();
     private static boolean refresh = true;
 
+    static {
+        Runnable drawRunnable = () -> {
+            refresh = APIConnection.getRefresh();
+        };
+        ScheduledExecutorService exec = Executors.newScheduledThreadPool(1);
+        exec.scheduleAtFixedRate(drawRunnable , 0, 1, MINUTES);
+    }
+
+    public static void main(String[] args){
+        refresh = APIConnection.getRefresh();
+    }
+
     private static final Map<Integer, HeroPowerAsset> heroPowers = new HashMap<>();
     private static final Map<Integer, CardAsset> cards = new HashMap<>();
     private static final Map<Integer, CharacterAsset> characters = new HashMap<>();
     private static int initialDraw;
     private static int maxCardsHand;
     private static int maxMana;
-
-    public void AskRefresh(){
-        refresh = true;
-    }
 
     public static IContent Instance(){
         lock.lock();
@@ -46,18 +57,15 @@ public class Content implements IContent {
         heroPowers.clear();
         cards.clear();
         characters.clear();
-        try {
-            JSONObject json  = readJsonFromUrl();
-            loadGameOptions(json.getJSONObject("gameOptions"));
-            json = json.getJSONObject("data");
-            loadCharacters(json.getJSONArray("characters"));
-            loadHeroPowers(json.getJSONArray("heroPowers"));
-            json = json.getJSONObject("cards");
-            loadMinions(json.getJSONArray("minions"));
-            loadSpells(json.getJSONArray("minions"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        JSONObject json  = getData();
+        loadGameOptions(json.getJSONObject("gameOptions"));
+        json = json.getJSONObject("data");
+        loadCharacters(json.getJSONArray("characters"));
+        loadHeroPowers(json.getJSONArray("heroPowers"));
+        json = json.getJSONObject("cards");
+        loadMinions(json.getJSONArray("minions"));
+        loadSpells(json.getJSONArray("minions"));
+
     }
 
     private static void loadGameOptions(JSONObject gameOptions){

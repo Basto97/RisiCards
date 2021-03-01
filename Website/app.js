@@ -2,8 +2,10 @@ const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+require('dotenv').config()
 
 const indexRouter = require('./routes/index');
+const risicardsRouter = require('./routes/risicards');
 
 const app = express();
 
@@ -13,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', indexRouter);
+app.use('/risicards', risicardsRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));

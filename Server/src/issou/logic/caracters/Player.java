@@ -22,7 +22,7 @@ public class Player extends CharacterAttacker {
 
     public Player(CharacterAsset charAsset, Set<CardAsset> deck) {
         super(1,0,1,true);
-        this.heroId = charAsset.id;
+       // this.heroId = charAsset.id;
         // this.manaPool = new ManaPool(charAsset.startMana);
         // this.deck = new Deck(deck);
         this.hand = new Hand();
