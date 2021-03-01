@@ -1,0 +1,107 @@
+{
+  "gameOptions": {
+    "initialDraw": "2",
+    "maxCardsHand": "10",
+    "maxMana": "10"
+  },
+  "data": {
+    "heroPowers": [
+      {
+        "#comment": " Boule de Feu ",
+        "id": "1",
+        "cost": "2"
+      },
+      {
+        "#comment": " Boule de Glace ",
+        "id": "2",
+        "cost": "1"
+      }
+    ],
+    "characters": [
+      {
+        "#comment": " Mage Noir ",
+        "id": "1",
+        "startMana": "1",
+        "health": "25",
+        "heroPower": "1"
+      },
+      {
+        "#comment": " Chevalier Blanc ",
+        "id": "2",
+        "startMana": "1",
+        "health": "30",
+        "heroPower": "2"
+      }
+    ],
+    "cards": {
+      "minions":  [
+        {
+          "#comment": "Eric Zemmour",
+          "id": "1",
+          "manaCost": "2",
+          "health": "7",
+          "attack": "3",
+          "type": "1",
+          "character": "0",
+          "powers": {
+            "power": "3"
+          }
+        },
+        {
+          "#comment": "Alain Soral",
+          "id": "2",
+          "manaCost": "3",
+          "health": "5",
+          "attack": "2",
+          "type": "2",
+          "character": "0",
+          "powers": {
+            "power": [
+              "1",
+              "2"
+            ]
+          }
+        }
+      ],
+      "spells": [
+        {"#comment": " Pavé MMA ",
+          "id": "1",
+          "cost": "2",
+          "target": "1"
+        }
+      ]
+    }
+  },
+  "sync": {
+    "types": {
+      "type": [
+        {
+          "name": "PeupleElu",
+          "id": "1"
+        },
+        {
+          "name": "IslamoGauchiste",
+          "id": "2"
+        }
+      ]
+    },
+    "powers": {
+      "power": {
+        "name": "BouclierDivin",
+        "id": "1"
+      }
+    },
+    "targets": {
+      "target": [
+        {
+          "name": "AllChar",
+          "id": "1"
+        },
+        {
+          "name": "AllMinions",
+          "id": "2"
+        }
+      ]
+    }
+  }
+}
