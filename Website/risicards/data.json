@@ -5,28 +5,30 @@
     "maxMana": "10"
   },
   "data": {
-    "heroPowers": [
+    "heroPowers":
+    [
       {
-        "#comment": " Boule de Feu ",
+        "name": "Boule de Feu",
         "id": "1",
         "cost": "2"
       },
       {
-        "#comment": " Boule de Glace ",
+        "name": "Boule de Glace",
         "id": "2",
         "cost": "1"
       }
     ],
-    "characters": [
+    "characters":
+    [
       {
-        "#comment": " Mage Noir ",
+        "name": "Mage Noir",
         "id": "1",
         "startMana": "1",
         "health": "25",
         "heroPower": "1"
       },
       {
-        "#comment": " Chevalier Blanc ",
+        "name": "Chevalier Blanc",
         "id": "2",
         "startMana": "1",
         "health": "30",
@@ -34,7 +36,8 @@
       }
     ],
     "cards": {
-      "minions":  [
+      "minions":
+      [
         {
           "#comment": "Eric Zemmour",
           "id": "1",
@@ -63,45 +66,67 @@
           }
         }
       ],
-      "spells": [
-        {"#comment": " Pavé MMA ",
+      "spells":
+      [
+        {
+          "#comment": " Pavé MMA ",
           "id": "1",
+          "manaCost": "3",
           "cost": "2",
-          "target": "1"
+          "targetType": "7"
         }
       ]
     }
   },
   "sync": {
-    "types": {
-      "type": [
-        {
-          "name": "PeupleElu",
-          "id": "1"
-        },
-        {
-          "name": "IslamoGauchiste",
-          "id": "2"
-        }
-      ]
-    },
-    "powers": {
-      "power": {
+    "cardTypes":
+    [
+      {
+        "name": "PeupleElu",
+        "id": "1"
+      },
+      {
+        "name": "IslamoGauchiste",
+        "id": "2"
+      }
+    ],
+    "powers":
+    [
+      {
         "name": "BouclierDivin",
         "id": "1"
       }
-    },
-    "targets": {
-      "target": [
-        {
-          "name": "AllChar",
-          "id": "1"
-        },
-        {
-          "name": "AllMinions",
-          "id": "2"
-        }
-      ]
-    }
+    ],
+    "targets":
+    [
+      {
+        "name": "AllChars",
+        "id": "1"
+      },
+      {
+        "name": "MyChar",
+        "id": "2"
+      },
+      {
+        "name": "EnemyChar",
+        "id": "3"
+      },
+      {
+        "name": "AllMinions",
+        "id": "4"
+      },
+      {
+        "name": "MyMinions",
+        "id": "5"
+      },
+      {
+        "name": "EnemyMinions",
+        "id": "6"
+      },
+      {
+        "name": "NoTarget",
+        "id": "7"
+      }
+    ]
   }
 }
