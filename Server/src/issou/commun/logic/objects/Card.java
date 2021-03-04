@@ -1,7 +1,7 @@
 package issou.commun.logic.objects;
 
 import issou.commun.collection.assets.CardAsset;
-import issou.commun.logic.caracters.Player;
+import issou.commun.logic.utils.Player;
 import issou.commun.logic.utils.Identifiable;
 
 import java.util.HashMap;

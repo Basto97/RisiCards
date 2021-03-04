@@ -1,4 +1,4 @@
-package issou.commun.logic.caracters;
+package issou.commun.logic.utils;
 
 public class Players {
 

@@ -1,17 +1,13 @@
 package issou.commun.logic.objects;
 
+import issou.commun.collection.Content;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
 
-    static final int MAX_CARDS = 10;
-
     public List<Card> cardsInHand = new ArrayList<>();
-
-    public boolean isFull(){
-        return cardsInHand.size() >= MAX_CARDS;
-    }
 
     public void removeCard(Card c) {
         cardsInHand.remove(c);
@@ -23,5 +19,9 @@ public class Hand {
             return false;
         cardsInHand.add(c);
         return true;
+    }
+
+    public boolean isFull(){
+        return cardsInHand.size() >= Content.Instance().maxCardsHand();
     }
 }

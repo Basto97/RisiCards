@@ -3,7 +3,7 @@ package issou.commun.collection.assets.enums;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public enum CharacterType {
+public enum HeroType {
     MageNoir,
     ChevalierBlanc;
 
@@ -20,12 +20,12 @@ public enum CharacterType {
         }
     }
 
-    public static CharacterType Get(int id){
+    public static HeroType Get(int id){
         if(id == mageNoirID)
             return MageNoir;
         if(id == chevalierBlancID)
             return ChevalierBlanc;
-        System.err.println("Character Type "+id+" not knowed.");
+        System.err.println("Hero Type "+id+" not knowed.");
         return MageNoir;
     }
 }

@@ -1,10 +1,13 @@
 package issou.commun.collection;
 
 import issou.commun.collection.assets.*;
-import issou.commun.collection.assets.enums.CharacterType;
+import issou.commun.collection.assets.enums.HeroType;
 import issou.commun.collection.assets.enums.HeroPowerType;
 import issou.commun.collection.assets.enums.MinionType;
 import issou.commun.collection.assets.enums.TargetType;
+import issou.commun.logic.caracters.Hero;
+import issou.commun.logic.objects.Card;
+import issou.commun.logic.objects.HeroPower;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,7 +28,7 @@ public class Content implements IContent {
     private static boolean refresh = true;
 
     private static final Map<HeroPowerType, HeroPowerAsset> heroPowers = new HashMap<>();
-    private static final Map<CharacterType, CharacterAsset> characters = new HashMap<>();
+    private static final Map<HeroType, HeroAsset> heros = new HashMap<>();
     private static final Map<Integer, CardAsset> cards = new HashMap<>();
     private static final Map<Integer, String> cardNames = new HashMap<>();
     private static int initialDraw;
@@ -39,10 +42,6 @@ public class Content implements IContent {
         ScheduledExecutorService exec = Executors.newScheduledThreadPool(1);
         exec.scheduleAtFixedRate(drawRunnable , 10, 10, MINUTES);
         Instance();
-    }
-
-    public static void main(String[] args){
-        System.out.println(Instance());
     }
 
     public static IContent Instance(){
@@ -61,7 +60,7 @@ public class Content implements IContent {
     private static void load(){
         heroPowers.clear();
         cards.clear();
-        characters.clear();
+        heros.clear();
 
         JSONObject json  = getData();
 
@@ -83,8 +82,8 @@ public class Content implements IContent {
         Content.loadHeroPowers(heroPowers);
 
         JSONArray characters = data.getJSONArray("characters");
-        CharacterType.load(characters);
-        Content.loadCharacters(characters);
+        HeroType.load(characters);
+        Content.loadHeros(characters);
 
         JSONObject cards = data.getJSONObject("cards");
         JSONArray minions = cards.getJSONArray("minions");
@@ -109,11 +108,11 @@ public class Content implements IContent {
         }
     }
 
-    private static void loadCharacters(JSONArray charactersArray) {
+    private static void loadHeros(JSONArray charactersArray) {
         for (int i = 0; i < charactersArray.length(); i++) {
             JSONObject json = charactersArray.getJSONObject(i) ;
-            CharacterAsset characterAsset = new CharacterAsset(i, json);
-            Content.characters.put(characterAsset.getType(), characterAsset);
+            HeroAsset heroAsset = new HeroAsset(i, json);
+            Content.heros.put(heroAsset.getType(), heroAsset);
         }
     }
 
@@ -143,18 +142,18 @@ public class Content implements IContent {
     }
 
     @Override
-    public CardAsset getCardAsset(int id) {
-        return cards.get(id).clone();
+    public Card getCard(int id) {
+        return new Card(cards.get(id));
     }
 
     @Override
-    public CharacterAsset getCharacterAsset(int id) {
-        return characters.get(id).clone();
+    public Hero getHero(int id) {
+        return new Hero(heros.get(id));
     }
 
     @Override
-    public HeroPowerAsset getHeroPowerAsset(int id) {
-        return heroPowers.get(id).clone();
+    public HeroPower getHeroPower(int id) {
+        return new HeroPower(heroPowers.get(id));
     }
 
     @Override
@@ -190,14 +189,20 @@ public class Content implements IContent {
             sb.append("- ").append(entry.getKey().name()).append(" : ").append(entry.getValue()).append("\n");
         sb.append("\n");
         sb.append("Characters :\n");
-        for (Map.Entry<CharacterType, CharacterAsset> entry : characters.entrySet())
+        for (Map.Entry<HeroType, HeroAsset> entry : heros.entrySet())
             sb.append("- ").append(entry.getKey().name()).append(" : ").append(entry.getValue()).append("\n");
         sb.append("\n");
+        sb.append(toStringCards());
+        return sb.toString();
+    }
+
+    @Override
+    public String toStringCards() {
+        StringBuilder sb = new StringBuilder();
         sb.append("Cards :\n");
         for (Map.Entry<Integer, CardAsset> entry : cards.entrySet())
             sb.append("- ").append(getCardName(entry.getKey())).append(" : ").append(entry.getValue()).append("\n");
         sb.append("\n");
-
         return sb.toString();
     }
 }

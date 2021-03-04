@@ -1,28 +1,24 @@
 package issou.commun.logic.objects;
 
-import issou.commun.collection.assets.CardAsset;
-
 import java.util.*;
 
 public class Deck {
 
-    private final Queue<CardAsset> cards;
+    private final Queue<Card> cards = new LinkedList<>();
 
-    public Deck(Set<CardAsset> cards)
-    {
+    public void shuffle(){
         Collections.shuffle((List<?>) cards);
-        this.cards  = new LinkedList<>(cards);
     }
 
-    public boolean IsEmpty() {
+    public boolean isEmpty() {
         return this.cards.isEmpty();
     }
 
-    public int Size (){
+    public int size(){
         return this.cards.size();
     }
 
-    public CardAsset Draw()
+    public Card draw()
     {
         return this.cards.poll();
     }
