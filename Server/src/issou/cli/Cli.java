@@ -24,10 +24,9 @@ public class Cli {
                 if(log.isNeedResponse()){
                     out.print("$ ");
                     String cmd = sc.nextLine();
-                    log.getLogDest().sendResponse(cmd);
+                    Play.sendResponse(cmd, log.getLogDest());
                 }
             }
-
             out.print("$ ");
             String cmd = sc.nextLine();
             gererCmd(cmd);

@@ -14,14 +14,21 @@ public class ClientConnection implements IClientConnection {
         this.first = first;
     }
 
-    @Override
     public void startGame(IHand hand){
         StringBuilder cardsStr = new StringBuilder();
         cardsStr.append("first : ").append(first).append("\n");
-        cardsStr.append("Starting cards :\n");
+        cardsStr.append("Starting cards : ");
         cardsStr.append(hand).append("\n");
-        cardsStr.append( "Keep them ? (y/n)");
+        cardsStr.append( "Type ids of cards to change.");
         addLog(true, cardsStr.toString());
+    }
+
+    public void startGameNewHand(IHand newHand) {
+        StringBuilder cardsStr = new StringBuilder();
+        cardsStr.append("Starting cards : ");
+        cardsStr.append(newHand).append("\n");
+        cardsStr.append( "Your new Cards.");
+        addLog(false, cardsStr.toString());
     }
 
     private void addLog(boolean needResponse, String msg){

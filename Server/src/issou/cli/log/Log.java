@@ -26,6 +26,6 @@ public class Log {
 
     @Override
     public String toString(){
-        return logDest.name()+" : "+msg;
+        return logDest.name()+" :\n"+msg;
     }
 }

@@ -44,7 +44,6 @@ public class Player extends Character implements IPlayer {
             cardsStart++;
         for(int i = 0 ; i<cardsStart; i++)
             hand.addCard(deck.draw());
-        con.startGame(hand);
     }
 
     @Override

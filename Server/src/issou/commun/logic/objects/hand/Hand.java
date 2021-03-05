@@ -16,10 +16,12 @@ public class Hand implements IHand {
         cardsInHand.add(card);
     }
 
-    public List<ICard> newGameChangeCards(List<Integer> ids) {
-        Predicate<ICard> mathId = c -> ids.contains(c.getId());
-        List<ICard> cardsChanged = cardsInHand.stream().filter(mathId).collect(Collectors.toList());
-        cardsInHand.removeIf(mathId);
+    public List<ICard> dropTheseCards(List<Integer> ids) {
+        List<ICard> cardsChanged = new ArrayList<>();
+        for(ICard card : cardsInHand)
+            if(ids.contains(card.getId()))
+                cardsChanged.add(card);
+        cardsInHand.removeIf(c -> ids.contains(c.getId()));
         return cardsChanged;
     }
 

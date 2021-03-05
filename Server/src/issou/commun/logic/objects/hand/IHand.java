@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface IHand {
     void addCard(ICard card);
-    List<ICard> newGameChangeCards(List<Integer> indexes);
+    List<ICard> dropTheseCards(List<Integer> ids);
     boolean isFull();
 }

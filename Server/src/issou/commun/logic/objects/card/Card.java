@@ -26,7 +26,7 @@ public class Card extends Identifiable implements ICard {
         return card.getName().equals(name);
     }
     public String toString() {
-        return "Card{" +
+        return "Card "+getId()+"{" +
                 "name=" + name +
                 ", manaCost=" + manaCost +
                 '}';
