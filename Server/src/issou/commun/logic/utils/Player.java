@@ -1,11 +1,11 @@
 package issou.commun.logic.utils;
 
-import issou.commun.collection.assets.CardAsset;
-import issou.commun.collection.assets.HeroAsset;
-import issou.commun.logic.caracters.CharacterAttacker;
-import issou.commun.logic.objects.*;
-
-import java.util.Set;
+import issou.commun.logic.caracters.Hero;
+import issou.commun.logic.objects.deck.Deck;
+import issou.commun.logic.objects.hand.Hand;
+import issou.commun.logic.objects.heropower.HeroPower;
+import issou.commun.logic.objects.manapool.ManaPool;
+import issou.commun.logic.objects.table.Table;
 
 public class Player extends CharacterAttacker {
 
@@ -15,7 +15,7 @@ public class Player extends CharacterAttacker {
     public ManaPool manaPool;
     public HeroPower heroPower;
 
-    public Player(HeroAsset charAsset, Set<CardAsset> deck) {
+    public Player(Hero hero, Deck deck) {
         super(1,0,1,true);
 
         // this.manaPool = new ManaPool(charAsset.startMana);

@@ -1,11 +1,12 @@
-package issou.commun.logic.objects;
+package issou.commun.logic.objects.hand;
 
 import issou.commun.collection.Content;
+import issou.commun.logic.objects.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand {
+public class Hand implements IHand {
 
     public List<Card> cardsInHand = new ArrayList<>();
 

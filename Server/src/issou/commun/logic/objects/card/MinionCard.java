@@ -1,0 +1,33 @@
+package issou.commun.logic.objects.card;
+
+import issou.commun.collection.assets.card.IMinionCardAsset;
+import issou.commun.collection.assets.enums.MinionType;
+
+public class MinionCard extends Card implements IMinionCard{
+
+    private int attack;
+    private int health;
+    private final MinionType minionType;
+
+    public MinionCard(IMinionCardAsset card) {
+        super(card);
+        this.attack = card.getAttack();
+        this.health = card.getHealth();
+        this.minionType = card.getMinionType();
+    }
+
+    @Override
+    public int getAttack() {
+        return attack;
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
+    }
+
+    @Override
+    public MinionType getMinionType() {
+        return minionType;
+    }
+}

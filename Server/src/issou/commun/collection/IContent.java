@@ -1,18 +1,17 @@
 package issou.commun.collection;
 
-import issou.commun.logic.caracters.Character;
-import issou.commun.logic.caracters.Hero;
-import issou.commun.logic.objects.Card;
-import issou.commun.logic.objects.HeroPower;
+import issou.commun.collection.assets.enums.HeroPowerType;
+import issou.commun.collection.assets.enums.HeroType;
+import issou.commun.logic.caracters.IHero;
+import issou.commun.logic.objects.card.ICard;
+import issou.commun.logic.objects.heropower.IHeroPower;
 
 public interface IContent {
-    Card getCard(int id);
-    Hero getHero(int id);
-    HeroPower getHeroPower(int id);
+    ICard getCard(int id);
+    IHero getHero(HeroType type);
+    IHeroPower getHeroPower(HeroPowerType type);
     int initialDraw();
     int maxCardsHand();
     int maxMana();
     String getCardName(int id);
-    String toString();
-    String toStringCards();
 }

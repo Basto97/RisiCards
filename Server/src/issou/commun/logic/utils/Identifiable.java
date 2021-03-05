@@ -1,6 +1,6 @@
 package issou.commun.logic.utils;
 
-public abstract class Identifiable {
+public abstract class Identifiable implements IIdentifiable {
 
     private static int actualId = 1;
     private final int id;

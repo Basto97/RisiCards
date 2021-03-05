@@ -1,41 +1,25 @@
-package issou.commun.collection.assets;
+package issou.commun.collection.assets.heropower;
 
 import issou.commun.collection.assets.enums.HeroPowerType;
 import org.json.JSONObject;
 
-import java.util.Objects;
-
-public class HeroPowerAsset {
+public class HeroPowerAsset implements IHeroPowerAsset{
 
     private final HeroPowerType type;
     private final int cost;
 
-    public HeroPowerAsset(HeroPowerType type, int cost) {
-        this.type = type;
-        this.cost = cost;
-    }
     public HeroPowerAsset(int id ,JSONObject json){
         this.type = HeroPowerType.Get(id);
         this.cost = json.getInt("cost");
     }
 
-    public HeroPowerType getType(){
-        return type;
-    }
+    @Override
     public int getCost(){
         return this.cost;
     }
-
     @Override
-    public String toString() {
-        return "HeroPowerAsset{" +
-                "type=" + type +
-                ", cost=" + cost +
-                '}';
-    }
-    @Override
-    public HeroPowerAsset clone(){
-        return new HeroPowerAsset(this.type, this.cost);
+    public HeroPowerType getHeroPowerType() {
+        return this.type;
     }
     @Override
     public boolean equals(Object o) {
@@ -45,7 +29,10 @@ public class HeroPowerAsset {
         return type == that.type;
     }
     @Override
-    public int hashCode() {
-        return Objects.hash(type);
+    public String toString() {
+        return "HeroPowerAsset{" +
+                "type=" + type +
+                ", cost=" + cost +
+                '}';
     }
 }

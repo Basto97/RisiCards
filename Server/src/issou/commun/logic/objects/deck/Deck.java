@@ -1,13 +1,19 @@
-package issou.commun.logic.objects;
+package issou.commun.logic.objects.deck;
+
+import issou.commun.logic.objects.card.Card;
 
 import java.util.*;
 
-public class Deck {
+public class Deck implements IDeck {
 
     private final Queue<Card> cards = new LinkedList<>();
 
+    public void addCard(Card card){
+        this.cards.add(card);
+    }
+
     public void shuffle(){
-        Collections.shuffle((List<?>) cards);
+        Collections.shuffle((List<?>) this.cards);
     }
 
     public boolean isEmpty() {
