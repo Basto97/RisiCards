@@ -23,29 +23,45 @@ public class Game implements IGame {
 
     // api
 
+    public void newTurn(){
+        getCurrentPlayer().con.newTurn();
+
+        ICard cardDrawed = getCurrentPlayer().deck.draw();
+
+    }
+
     public void chooseFirstCards(LogDest logDest, List<Integer> cardsToChangeIds){
         if(gameState == WaitingToStart1)
             gameState = WaitingToStart2;
         else if (gameState == WaitingToStart2)
             gameState = TurnP1;
+
         List<ICard> cardsDropped = getPlayer(logDest).hand.dropTheseCards(cardsToChangeIds);
         for(int i = 0 ; i < cardsDropped.size() ; i++)
             getPlayer(logDest).hand.addCard(getPlayer(logDest).deck.draw());
         for(ICard card : cardsDropped)
             getPlayer(logDest).deck.addCard(card);
         getPlayer(logDest).deck.shuffle();
+
         getPlayer(logDest).con.startGameNewHand(getPlayer(logDest).hand);
     }
 
     // gets
 
+
+    public Player getCurrentPlayer(){
+        if(gameState == TurnP1)
+            return players[0];
+        else if(gameState == TurnP2)
+            return players[1];
+        throw new IllegalArgumentException();
+    }
     public Player getPlayer1() {
         return players[0];
     }
     public Player getPlayer2() {
         return players[1];
     }
-
     public Player getPlayer(LogDest logDest){
         if(logDest == LogDest.One)
             return players[0];
@@ -53,7 +69,6 @@ public class Game implements IGame {
             return players[1];
         throw new IllegalArgumentException();
     }
-
     public GameState getGameState() {
         return gameState;
     }
