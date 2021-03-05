@@ -1,7 +1,7 @@
 package issou.commun.collection.assets.hero;
 
-import issou.commun.collection.assets.enums.Types.HeroPowerType;
-import issou.commun.collection.assets.enums.Types.HeroType;
+import issou.commun.collection.enums.Types.HeroPowerType;
+import issou.commun.collection.enums.Types.HeroType;
 
 public interface IHeroAsset {
     HeroType getType();

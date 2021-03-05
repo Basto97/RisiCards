@@ -1,7 +1,6 @@
 package issou.commun.collection.assets.heropower;
 
-import issou.commun.collection.assets.enums.Types;
-import issou.commun.collection.assets.enums.Types.HeroPowerType;
+import issou.commun.collection.enums.Types.HeroPowerType;
 import org.json.JSONObject;
 
 public class HeroPowerAsset implements IHeroPowerAsset{

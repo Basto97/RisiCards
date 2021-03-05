@@ -1,6 +1,6 @@
 package issou.commun.logic.objects.heropower;
 
-import issou.commun.collection.assets.enums.Types;
+import issou.commun.collection.enums.Types;
 
 public interface IHeroPower {
     int getCost();

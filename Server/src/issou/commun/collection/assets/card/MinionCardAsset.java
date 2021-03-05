@@ -1,10 +1,10 @@
 package issou.commun.collection.assets.card;
 
-import issou.commun.collection.assets.enums.Types.MinionType;
+import issou.commun.collection.enums.Types.MinionType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static issou.commun.collection.assets.enums.Types.MinionType.*;
+import static issou.commun.collection.enums.Types.MinionType.*;
 
 public class MinionCardAsset extends CardAsset implements IMinionCardAsset{
 
@@ -12,8 +12,8 @@ public class MinionCardAsset extends CardAsset implements IMinionCardAsset{
     private final int attack;
     private final MinionType type;
 
-    public MinionCardAsset(int cardID, JSONObject json) {
-        super(cardID, json);
+    public MinionCardAsset(JSONObject json) {
+        super(json);
         this.health =  json.getInt("health");
         this.attack =  json.getInt("attack");
         this.type = setType(json);

@@ -1,7 +1,6 @@
 package issou.commun.game;
 
-import issou.commun.collection.assets.enums.Types;
-import issou.commun.collection.assets.enums.Types.HeroType;
+import issou.commun.collection.enums.Types.HeroType;
 import issou.commun.collection.content.Content;
 import issou.commun.logic.caracters.hero.Hero;
 import issou.commun.logic.caracters.hero.IHero;
@@ -18,7 +17,7 @@ public class GameConfig {
     private final IHero[] heros = new Hero[2];
     private final IDeck[] decks = new Deck[2];
 
-    public GameConfig(String[] heros, List<Integer>[] decks) {
+    public GameConfig(String[] heros, List<String>[] decks) {
         assert this.heros.length == heros.length : "Heros size errors in creation of GameConfig";
         assert this.decks.length == decks.length : "Decks size errors in creation of GameConfig";
 

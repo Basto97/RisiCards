@@ -1,6 +1,6 @@
 package issou.commun.logic.objects.heropower;
 
-import issou.commun.collection.assets.enums.Types.HeroPowerType;
+import issou.commun.collection.enums.Types.HeroPowerType;
 import issou.commun.collection.assets.heropower.IHeroPowerAsset;
 
 public class HeroPower implements IHeroPower{

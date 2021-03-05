@@ -1,7 +1,7 @@
 package issou.commun.logic.objects.card;
 
 import issou.commun.collection.assets.card.ISpellCardAsset;
-import issou.commun.collection.assets.enums.Types.TargetType;
+import issou.commun.collection.enums.Types.TargetType;
 
 public class SpellCard extends Card implements ISpellCard{
 

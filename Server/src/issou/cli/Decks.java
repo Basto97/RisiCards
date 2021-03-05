@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class Decks {
 
     private static final List<IDeck> decks = new ArrayList<>();
-    public static final List<List<Integer>> decksInts = new ArrayList<>();
+    public static final List<List<String>> decksStr = new ArrayList<>();
 
     public static void loadDecks() {
         try {
@@ -23,13 +23,12 @@ public class Decks {
                 String data = myReader.nextLine();
                 String[] elems = data.split(" ");
                 IDeck deck = new Deck();
-                List<Integer> deckInt = new ArrayList<>();
+                List<String> deckStr = new ArrayList<>();
                 for(String elem : elems){
-                    int cardInt = Integer.parseInt(elem);
-                    deckInt.add(cardInt);
-                    deck.addCard(Content.Instance.getCard(cardInt));
+                    deckStr.add(elem);
+                    deck.addCard(Content.Instance.getCard(elem));
                 }
-                decksInts.add(deckInt);
+                decksStr.add(deckStr);
                 decks.add(deck);
             }
             myReader.close();

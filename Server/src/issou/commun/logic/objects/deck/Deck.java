@@ -38,7 +38,7 @@ public class Deck implements IDeck {
         StringBuilder sb = new StringBuilder();
         sb.append(cards.size()).append(" { ");
         for(ICard c : this.cards)
-            sb.append(Content.Instance.getCardName(c.getCardId())).append(", ");
+            sb.append(c.getName()).append(", ");
         sb.append("}");
         return sb.toString();
     }

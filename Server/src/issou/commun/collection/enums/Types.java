@@ -1,4 +1,4 @@
-package issou.commun.collection.assets.enums;
+package issou.commun.collection.enums;
 
 public class Types {
     public enum HeroType {

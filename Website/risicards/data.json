@@ -44,7 +44,7 @@
           ]
         },
         {
-          "name": "John of the Guarden",
+          "name": "JohnOfTheGuarden",
           "manaCost": "3",
           "health": "5",
           "attack": "2",
@@ -57,7 +57,7 @@
       "spells":
       [
         {
-          "name": "Pave MMA",
+          "name": "PaveMMA",
           "manaCost": "3",
           "cost": "2",
           "targetType": "NoTarget"

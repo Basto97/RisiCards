@@ -1,14 +1,14 @@
 package issou.commun.collection.assets.card;
 
-import issou.commun.collection.assets.enums.Types.TargetType;
+import issou.commun.collection.enums.Types.TargetType;
 import org.json.JSONObject;
 
 public class SpellCardAsset extends CardAsset implements ISpellCardAsset{
 
     private final TargetType targetType;
 
-    public SpellCardAsset(int cardID, JSONObject json) {
-        super(cardID, json);
+    public SpellCardAsset(JSONObject json) {
+        super(json);
         this.targetType = TargetType.valueOf(json.getString("targetType"));
     }
 
@@ -16,6 +16,6 @@ public class SpellCardAsset extends CardAsset implements ISpellCardAsset{
         return this.targetType;
     }
     public String toString() {
-        return "SpellCardAsset{" + super.toString() + ", manaCost=" + manaCost + ", targetType=" + targetType + '}';
+        return "SpellCardAsset{" + super.toString() + ", manaCost=" + getManaCost() + ", targetType=" + targetType + '}';
     }
 }
