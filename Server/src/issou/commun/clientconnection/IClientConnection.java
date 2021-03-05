@@ -1,9 +1,7 @@
 package issou.commun.clientconnection;
 
-import issou.commun.logic.objects.card.ICard;
-
-import java.util.List;
+import issou.commun.logic.objects.hand.IHand;
 
 public interface IClientConnection {
-    void startGame(List<ICard> cards);
+    void startGame(IHand hand);
 }

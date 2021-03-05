@@ -1,31 +1,34 @@
 package issou.cli;
 
+import issou.cli.log.Log;
+import issou.cli.log.LogDest;
 import issou.commun.collection.content.Content;
-import issou.commun.collection.assets.enums.HeroType;
-import issou.commun.game.Game;
-import issou.commun.game.GameConfig;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
 
-import static issou.commun.collection.assets.enums.HeroType.ChevalierBlanc;
-import static issou.commun.collection.assets.enums.HeroType.MageNoir;
+import static java.lang.System.out;
 
 public class Cli {
 
     private static final Queue<Log> logs = new LinkedList<>();
     private static final Scanner sc = new Scanner(System.in);
-    private static boolean cmdReady;
-
-    private static Game game;
 
     public static void main(String[] args){
         Decks.loadDecks();
         while(true){
-            while(!cmdReady && logs.peek() != null)
-                if(logs.peek() != null)
-                    System.out.println(logs.poll());
-            cmdReady = false;
-            System.out.print("$ ");
+            while(logs.peek() != null){
+                Log log = logs.poll();
+                out.println(log);
+                if(log.isNeedResponse()){
+                    out.print("$ ");
+                    String cmd = sc.nextLine();
+                    log.getLogDest().sendResponse(cmd);
+                }
+            }
+
+            out.print("$ ");
             String cmd = sc.nextLine();
             gererCmd(cmd);
         }
@@ -34,26 +37,13 @@ public class Cli {
     private static void gererCmd(String cmd){
         String[] args = cmd.split(" ");
         switch (args[0]) {
-            case "play" -> {
-                int[] heroTypes = new int[2];
-                heroTypes[0] = HeroType.Get(ChevalierBlanc);
-                heroTypes[1] = HeroType.Get(MageNoir);
-                List<Integer>[] decks = new List[2];
-                decks[0] = Decks.decksInts.get(0);
-                decks[1] = Decks.decksInts.get(1);
-                GameConfig config = new GameConfig(heroTypes, decks);
-                game = new Game(config);
-            }
+            case "play" -> Play.play();
             case "decks" -> Decks.MontrerDecks();
-            case "content" -> System.out.println(Content.Instance);
+            case "content" -> out.println(Content.Instance);
         }
     }
 
-    public static void addLog(boolean first, String msg){
-        logs.add(new Log(first, msg));
-    }
-
-    public static void cmdReady(){
-        cmdReady = true;
+    public static void addLog(LogDest logDest, boolean needResponse, String msg){
+        logs.add(new Log(logDest, needResponse, msg));
     }
 }

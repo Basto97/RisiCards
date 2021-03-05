@@ -1,9 +1,9 @@
 package issou.commun.clientconnection;
 
 import issou.cli.Cli;
-import issou.commun.logic.objects.card.ICard;
+import issou.commun.logic.objects.hand.IHand;
 
-import java.util.List;
+import static issou.cli.log.LogDest.*;
 
 public class ClientConnection implements IClientConnection {
 
@@ -15,17 +15,19 @@ public class ClientConnection implements IClientConnection {
     }
 
     @Override
-    public void startGame(List<ICard> cards){
+    public void startGame(IHand hand){
         StringBuilder cardsStr = new StringBuilder();
         cardsStr.append("first : ").append(first).append("\n");
         cardsStr.append("Starting cards :\n");
-        for(int i = 0 ; i < cards.size() ; i++)
-            cardsStr.append(i).append(" : ").append(cards.get(i)).append("\n");
+        cardsStr.append(hand).append("\n");
         cardsStr.append( "Keep them ? (y/n)");
-        addLog(cardsStr.toString());
+        addLog(true, cardsStr.toString());
     }
 
-    private void addLog(String msg){
-        Cli.addLog(first, msg);
+    private void addLog(boolean needResponse, String msg){
+        Cli.addLog(first ? One : Two, needResponse, msg);
+    }
+    private static void addLogBoth(boolean needResonse, String msg){
+        Cli.addLog(Both, needResonse, msg);
     }
 }

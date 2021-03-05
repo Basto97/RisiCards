@@ -8,27 +8,27 @@
     "heroPowers":
     [
       {
-        "name": "Boule de Feu",
+        "name": "BouleDeFeu",
         "cost": "2"
       },
       {
-        "name": "Boule de Glace",
+        "name": "BouleDeGlace",
         "cost": "1"
       }
     ],
-    "characters":
+    "heros":
     [
       {
-        "name": "Mage Noir",
-        "startMana": "1",
+        "name": "MageNoir",
+        "heroPower": "BouleDeGlace",
         "health": "25",
-        "heroPower": "0"
+        "startMana": "1"
       },
       {
-        "name": "Chevalier Blanc",
-        "startMana": "1",
+        "name": "ChevalierBlanc",
+        "heroPower": "BouleDeFeu",
         "health": "30",
-        "heroPower": "1"
+        "startMana": "1"
       }
     ],
     "cards": {
@@ -39,8 +39,6 @@
           "manaCost": "2",
           "health": "7",
           "attack": "3",
-          "type": "0",
-          "character": "-1",
           "powers": [
             "3"
           ]
@@ -50,8 +48,6 @@
           "manaCost": "3",
           "health": "5",
           "attack": "2",
-          "type": "1",
-          "character": "-1",
           "powers": [
             "3",
             "5"
@@ -64,53 +60,9 @@
           "name": "Pave MMA",
           "manaCost": "3",
           "cost": "2",
-          "targetType": "6"
+          "targetType": "NoTarget"
         }
       ]
     }
-  },
-  "sync": {
-    "cardTypes":
-    [
-      {
-        "name": "SansType"
-      },
-      {
-        "name": "PeupleElu"
-      },
-      {
-        "name": "IslamoGauchiste"
-      }
-    ],
-    "powers":
-    [
-      {
-        "name": "BouclierDivin"
-      }
-    ],
-    "targets":
-    [
-      {
-        "name": "AllChars"
-      },
-      {
-        "name": "MyChar"
-      },
-      {
-        "name": "EnemyChar"
-      },
-      {
-        "name": "AllMinions"
-      },
-      {
-        "name": "MyMinions"
-      },
-      {
-        "name": "EnemyMinions"
-      },
-      {
-        "name": "NoTarget"
-      }
-    ]
   }
 }

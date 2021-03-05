@@ -1,7 +1,7 @@
 package issou.commun.collection.assets.card;
 
-import issou.commun.collection.assets.enums.TargetType;
+import issou.commun.collection.assets.enums.Types;
 
 public interface ISpellCardAsset extends ICardAsset{
-    TargetType getTargetType();
+    Types.TargetType getTargetType();
 }

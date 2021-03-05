@@ -1,6 +1,7 @@
 package issou.commun.collection.assets.heropower;
 
-import issou.commun.collection.assets.enums.HeroPowerType;
+import issou.commun.collection.assets.enums.Types;
+import issou.commun.collection.assets.enums.Types.HeroPowerType;
 import org.json.JSONObject;
 
 public class HeroPowerAsset implements IHeroPowerAsset{
@@ -8,8 +9,8 @@ public class HeroPowerAsset implements IHeroPowerAsset{
     private final HeroPowerType type;
     private final int cost;
 
-    public HeroPowerAsset(int id ,JSONObject json){
-        this.type = HeroPowerType.Get(id);
+    public HeroPowerAsset(JSONObject json){
+        this.type = HeroPowerType.valueOf(json.getString("name"));
         this.cost = json.getInt("cost");
     }
 

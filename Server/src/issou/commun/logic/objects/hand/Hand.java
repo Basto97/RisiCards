@@ -5,27 +5,28 @@ import issou.commun.logic.objects.card.ICard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Hand implements IHand {
 
     public List<ICard> cardsInHand = new ArrayList<>();
 
-    public void removeCard(ICard c) {
-        cardsInHand.remove(c);
+    public void addCard(ICard card) {
+        cardsInHand.add(card);
     }
 
-    public boolean receveCard(ICard c)
-    {
-        if(isFull()) return false;
-        cardsInHand.add(c);
-        return true;
+    public List<ICard> newGameChangeCards(List<Integer> ids) {
+        Predicate<ICard> mathId = c -> ids.contains(c.getId());
+        List<ICard> cardsChanged = cardsInHand.stream().filter(mathId).collect(Collectors.toList());
+        cardsInHand.removeIf(mathId);
+        return cardsChanged;
     }
 
     public boolean isFull(){
         return cardsInHand.size() >= Content.Instance.maxCardsHand();
     }
 
-    @Override
     public String toString() {
         StringBuilder s = new StringBuilder("Hand{" +
                 "cardsInHand={");
@@ -34,5 +35,4 @@ public class Hand implements IHand {
         s.append("}}");
         return s.toString();
     }
-
 }

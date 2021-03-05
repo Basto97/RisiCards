@@ -1,6 +1,6 @@
 package issou.commun.logic.caracters.hero;
 
-import issou.commun.collection.assets.enums.HeroType;
+import issou.commun.collection.assets.enums.Types.HeroType;
 import issou.commun.collection.assets.hero.IHeroAsset;
 import issou.commun.logic.caracters.Character;
 

@@ -1,6 +1,8 @@
 package issou.commun.logic.caracters.player;
 
+import issou.commun.clientconnection.ClientConnection;
 import issou.commun.clientconnection.IClientConnection;
+import issou.commun.collection.content.Content;
 import issou.commun.logic.caracters.Character;
 import issou.commun.logic.caracters.hero.IHero;
 import issou.commun.logic.objects.deck.IDeck;
@@ -22,7 +24,9 @@ public class Player extends Character implements IPlayer {
     public IHero hero;
     public IClientConnection con;
 
-    public Player(IHero hero, IHeroPower heroPower, IDeck deck) {
+    private final boolean first;
+
+    public Player(IHero hero, IHeroPower heroPower, IDeck deck, boolean first) {
         super(1,0,1,true);
         this.hero = hero;
         this.deck = deck;
@@ -30,13 +34,17 @@ public class Player extends Character implements IPlayer {
         this.manaPool = new ManaPool(hero.getStartMana());
         this.hand = new Hand();
         this.table = new Table();
+        this.con = new ClientConnection(first); // add sfs2x id to client connection instead of "first"
+        this.first = first;
     }
 
-    public void onTurnStart() {
-        manaPool.increaseManaMax(1);
-        manaPool.resetCurrentMana();
-        // heroPower.reset();
-        // table.onTurnStart();
+    public void onGameStart(){
+        int cardsStart = Content.Instance.initialDraw();
+        if(first)
+            cardsStart++;
+        for(int i = 0 ; i<cardsStart; i++)
+            hand.addCard(deck.draw());
+        con.startGame(hand);
     }
 
     @Override

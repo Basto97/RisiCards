@@ -1,7 +1,7 @@
 package issou.commun.logic.objects.card;
 
 import issou.commun.collection.assets.card.IMinionCardAsset;
-import issou.commun.collection.assets.enums.MinionType;
+import issou.commun.collection.assets.enums.Types.MinionType;
 
 public class MinionCard extends Card implements IMinionCard{
 

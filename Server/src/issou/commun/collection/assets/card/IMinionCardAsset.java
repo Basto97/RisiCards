@@ -1,9 +1,9 @@
 package issou.commun.collection.assets.card;
 
-import issou.commun.collection.assets.enums.MinionType;
+import issou.commun.collection.assets.enums.Types;
 
 public interface IMinionCardAsset extends ICardAsset{
     int getHealth();
     int getAttack();
-    MinionType getMinionType();
+    Types.MinionType getMinionType();
 }

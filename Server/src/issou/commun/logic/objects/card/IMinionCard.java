@@ -1,9 +1,10 @@
 package issou.commun.logic.objects.card;
 
-import issou.commun.collection.assets.enums.MinionType;
+
+import issou.commun.collection.assets.enums.Types;
 
 public interface IMinionCard extends ICard {
     int getAttack();
     int getHealth();
-    MinionType getMinionType();
+    Types.MinionType getMinionType();
 }

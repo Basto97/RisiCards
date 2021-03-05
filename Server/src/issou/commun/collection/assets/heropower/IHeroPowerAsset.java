@@ -1,8 +1,8 @@
 package issou.commun.collection.assets.heropower;
 
-import issou.commun.collection.assets.enums.HeroPowerType;
+import issou.commun.collection.assets.enums.Types;
 
 public interface IHeroPowerAsset {
     int getCost();
-    HeroPowerType getHeroPowerType();
+    Types.HeroPowerType getHeroPowerType();
 }
