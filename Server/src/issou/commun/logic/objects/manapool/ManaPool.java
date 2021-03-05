@@ -50,4 +50,12 @@ public class ManaPool implements  IManaPool {
     {
         _currentMana = _totalMana;
     }
+
+    @Override
+    public String toString() {
+        return "ManaPool{" +
+                "_totalMana=" + _totalMana +
+                ", _currentMana=" + _currentMana +
+                '}';
+    }
 }

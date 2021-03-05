@@ -1,5 +1,6 @@
-package issou.commun.collection;
+package issou.commun.collection.content;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import issou.commun.collection.assets.card.ICardAsset;
 import issou.commun.collection.assets.card.MinionCardAsset;
 import issou.commun.collection.assets.card.SpellCardAsset;
@@ -17,24 +18,22 @@ import issou.commun.logic.objects.card.Card;
 import issou.commun.logic.objects.card.ICard;
 import issou.commun.logic.objects.heropower.HeroPower;
 import issou.commun.logic.objects.heropower.IHeroPower;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import static issou.commun.collection.APIConnection.getData;
-import static java.util.concurrent.TimeUnit.MINUTES;
+import java.util.Objects;
 
 public class Content implements IContent {
 
-    private static final IContent Instance = new Content();
-    private static final Lock lock = new ReentrantLock();
-    private static boolean refresh = true;
+    public static final IContent Instance = new Content();
 
     private static final Map<HeroPowerType, IHeroPowerAsset> heroPowers = new HashMap<>();
     private static final Map<HeroType, IHeroAsset> heros = new HashMap<>();
@@ -45,63 +44,50 @@ public class Content implements IContent {
     private static int maxMana;
 
     static {
-        Runnable drawRunnable = () -> {
-            refresh = APIConnection.getRefresh();
-        };
-        ScheduledExecutorService exec = Executors.newScheduledThreadPool(1);
-        exec.scheduleAtFixedRate(drawRunnable , 10, 10, MINUTES);
-        Instance(); // to load
-    }
+        try {
+            Dotenv dotenv = Dotenv.load();
+            String protocol = dotenv.get("API_SERVER_PROTOCOL");
+            String host = dotenv.get("API_SERVER_HOST");
+            String port = dotenv.get("API_SERVER_PORT");
+            String cmd = dotenv.get("API_SERVER_CMD_DATA");
+            String url =  protocol + "://" + host + ":"+ port + "/"+cmd;
+            URL urlCmd = new URL(url);
+            Request request = new Request.Builder().url(urlCmd).build();
+            Response response = new OkHttpClient().newCall(request).execute();
+            JSONObject json  = new JSONObject(Objects.requireNonNull(response.body()).string());
 
-    public static IContent Instance(){
-        lock.lock();
-        try{
-            if(refresh){
-                load();
-                refresh = false;
-            }
-            return Instance;
-        } finally {
-            lock.unlock();
+            JSONObject gameOptions = json.getJSONObject("gameOptions");
+            loadGameOptions(gameOptions);
+
+            JSONObject sync = json.getJSONObject("sync");
+
+            JSONArray cardTypes = sync.getJSONArray("cardTypes");
+            MinionType.load(cardTypes);
+
+            JSONArray targets = sync.getJSONArray("targets");
+            TargetType.load(targets);
+
+            JSONObject data = json.getJSONObject("data");
+
+            JSONArray heroPowers = data.getJSONArray("heroPowers");
+            HeroPowerType.load(heroPowers);
+            Content.loadHeroPowers(heroPowers);
+
+            JSONArray characters = data.getJSONArray("characters");
+            HeroType.load(characters);
+            Content.loadHeros(characters);
+
+            JSONObject cards = data.getJSONObject("cards");
+            JSONArray minions = cards.getJSONArray("minions");
+            JSONArray spells = cards.getJSONArray("spells");
+            int nbMinions = loadMinions(minions);
+            loadSpells(spells, nbMinions);
+            loadCardNames(minions, spells);
+        }  catch (JSONException | IOException e){
+            e.printStackTrace();
         }
     }
 
-    private static void load(){
-        heroPowers.clear();
-        cards.clear();
-        heros.clear();
-
-        JSONObject json  = getData();
-
-        JSONObject gameOptions = json.getJSONObject("gameOptions");
-        loadGameOptions(gameOptions);
-
-        JSONObject sync = json.getJSONObject("sync");
-
-        JSONArray cardTypes = sync.getJSONArray("cardTypes");
-        MinionType.load(cardTypes);
-
-        JSONArray targets = sync.getJSONArray("targets");
-        TargetType.load(targets);
-
-        JSONObject data = json.getJSONObject("data");
-
-        JSONArray heroPowers = data.getJSONArray("heroPowers");
-        HeroPowerType.load(heroPowers);
-        Content.loadHeroPowers(heroPowers);
-
-        JSONArray characters = data.getJSONArray("characters");
-        HeroType.load(characters);
-        Content.loadHeros(characters);
-
-        JSONObject cards = data.getJSONObject("cards");
-        JSONArray minions = cards.getJSONArray("minions");
-        JSONArray spells = cards.getJSONArray("spells");
-        int nbMinions = loadMinions(minions);
-        loadSpells(spells, nbMinions);
-
-        loadCardNames(minions, spells);
-    }
     private static void loadGameOptions(JSONObject gameOptions){
         Content.initialDraw = gameOptions.getInt("initialDraw");
         Content.maxCardsHand = gameOptions.getInt("maxCardsHand");
@@ -144,41 +130,30 @@ public class Content implements IContent {
             Content.cardNames.put(i+j, spells.getJSONObject(j).getString("name"));
     }
 
-    @Override
     public ICard getCard(int id) {
         return new Card(cards.get(id));
     }
-    @Override
     public IHero getHero(HeroType type) {
         return new Hero(heros.get(type));
     }
-
-    @Override
     public IHeroPower getHeroPower(HeroType type) {
         return new HeroPower(heroPowers.get(heros.get(type).getHeroPowerType()));
     }
-
-    @Override
     public IHeroPower getHeroPower(HeroPowerType type) {
         return new HeroPower(heroPowers.get(type));
     }
-    @Override
     public int initialDraw() {
         return initialDraw;
     }
-    @Override
     public int maxCardsHand() {
         return maxCardsHand;
     }
-    @Override
     public int maxMana() {
         return maxMana;
     }
-    @Override
     public String getCardName(int id) {
         return cardNames.get(id);
     }
-    @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("Game Options : \n");

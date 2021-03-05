@@ -1,6 +1,6 @@
 package issou.commun.collection.assets.card;
 
-import issou.commun.collection.Content;
+import issou.commun.collection.content.Content;
 import org.json.JSONObject;
 
 public abstract class CardAsset implements ICardAsset{
@@ -30,6 +30,6 @@ public abstract class CardAsset implements ICardAsset{
     }
     @Override
     public String toString() {
-        return "name=" + Content.Instance().getCardName(cardID) + ", manaCost=" + manaCost;
+        return "name=" + Content.Instance.getCardName(cardID) + ", manaCost=" + manaCost;
     }
 }

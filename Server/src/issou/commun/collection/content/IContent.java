@@ -1,4 +1,4 @@
-package issou.commun.collection;
+package issou.commun.collection.content;
 
 import issou.commun.collection.assets.enums.HeroPowerType;
 import issou.commun.collection.assets.enums.HeroType;

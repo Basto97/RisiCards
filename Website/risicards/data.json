@@ -35,29 +35,27 @@
       "minions":
       [
         {
-          "name": "Eric Zemmour",
+          "name": "Risitas",
           "manaCost": "2",
           "health": "7",
           "attack": "3",
           "type": "0",
-          "character": "0",
-          "powers": {
-            "power": "3"
-          }
+          "character": "-1",
+          "powers": [
+            "3"
+          ]
         },
         {
-          "name": "Alain Soral",
+          "name": "John of the Guarden",
           "manaCost": "3",
           "health": "5",
           "attack": "2",
           "type": "1",
-          "character": "0",
-          "powers": {
-            "power": [
-              "1",
-              "2"
-            ]
-          }
+          "character": "-1",
+          "powers": [
+            "3",
+            "5"
+          ]
         }
       ],
       "spells":

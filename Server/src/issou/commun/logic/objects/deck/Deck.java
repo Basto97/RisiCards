@@ -1,6 +1,6 @@
 package issou.commun.logic.objects.deck;
 
-import issou.commun.collection.Content;
+import issou.commun.collection.content.Content;
 import issou.commun.logic.objects.card.ICard;
 
 import java.util.Collections;
@@ -33,12 +33,12 @@ public class Deck implements IDeck {
     {
         return this.cards.poll();
     }
-
+    @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Deck, ").append(cards.size()).append(" cards : { ");
+        sb.append(cards.size()).append(" { ");
         for(ICard c : this.cards)
-            sb.append(Content.Instance().getCardName(c.getCardId())).append(", ");
+            sb.append(Content.Instance.getCardName(c.getCardId())).append(", ");
         sb.append("}");
         return sb.toString();
     }

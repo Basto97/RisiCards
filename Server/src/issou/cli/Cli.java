@@ -1,12 +1,9 @@
 package issou.cli;
 
-import issou.cli.log.Log;
-import issou.commun.collection.Content;
+import issou.commun.collection.content.Content;
 import issou.commun.collection.assets.enums.HeroType;
 import issou.commun.game.Game;
 import issou.commun.game.GameConfig;
-import issou.commun.logic.objects.deck.Deck;
-import issou.commun.logic.objects.deck.IDeck;
 
 import java.util.*;
 
@@ -18,6 +15,8 @@ public class Cli {
     private static final Queue<Log> logs = new LinkedList<>();
     private static final Scanner sc = new Scanner(System.in);
     private static boolean cmdReady;
+
+    private static Game game;
 
     public static void main(String[] args){
         Decks.loadDecks();
@@ -43,15 +42,15 @@ public class Cli {
                 decks[0] = Decks.decksInts.get(0);
                 decks[1] = Decks.decksInts.get(1);
                 GameConfig config = new GameConfig(heroTypes, decks);
-                System.out.println(config);
+                game = new Game(config);
             }
             case "decks" -> Decks.MontrerDecks();
-            case "content" -> System.out.println(Content.Instance());
+            case "content" -> System.out.println(Content.Instance);
         }
     }
 
-    public static void addLog(Log log){
-        logs.add(log);
+    public static void addLog(boolean first, String msg){
+        logs.add(new Log(first, msg));
     }
 
     public static void cmdReady(){

@@ -1,6 +1,6 @@
 package issou.commun.logic.objects.card;
 
-import issou.commun.collection.Content;
+import issou.commun.collection.content.Content;
 import issou.commun.collection.assets.card.ICardAsset;
 import issou.commun.logic.utils.Identifiable;
 
@@ -28,7 +28,7 @@ public class Card extends Identifiable implements ICard {
     @Override
     public String toString() {
         return "Card{" +
-                "name=" + Content.Instance().getCardName(this.cardID)+
+                "name=" + Content.Instance.getCardName(this.cardID)+
                 ", manaCost=" + manaCost +
                 '}';
     }

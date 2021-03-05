@@ -1,6 +1,6 @@
 package issou.commun.game;
 
-import issou.commun.collection.Content;
+import issou.commun.collection.content.Content;
 import issou.commun.collection.assets.enums.HeroType;
 import issou.commun.logic.caracters.hero.Hero;
 import issou.commun.logic.caracters.hero.IHero;
@@ -24,16 +24,32 @@ public class GameConfig {
         // heros & hero powers
         for(int i = 0 ; i < this.heros.length ; i++){
             HeroType heroType = HeroType.Get(heros[i]);
-            this.heros[i] = Content.Instance().getHero(heroType);
-            this.heroPowers[i] = Content.Instance().getHeroPower(heroType);
+            this.heros[i] = Content.Instance.getHero(heroType);
+            this.heroPowers[i] = Content.Instance.getHeroPower(heroType);
         }
 
         // cards
         for(int i = 0 ; i < this.decks.length ; i++){
             this.decks[i] = new Deck();
             for(int j = 0; j < decks[i].size() ; j++)
-                this.decks[i].addCard(Content.Instance().getCard(decks[i].get(j)));
+                this.decks[i].addCard(Content.Instance.getCard(decks[i].get(j)));
+            this.decks[i].shuffle();
         }
+    }
+
+    public IDeck getDeck(int index){
+        assert index == 0 || index == 1;
+        return decks[index];
+    }
+
+    public IHero getHero(int index){
+        assert index == 0 || index == 1;
+        return heros[index];
+    }
+
+    public IHeroPower getHeroPower(int index){
+        assert index == 0 || index == 1;
+        return heroPowers[index];
     }
 
     public String toString(){

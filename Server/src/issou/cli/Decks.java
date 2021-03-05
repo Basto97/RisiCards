@@ -1,6 +1,6 @@
 package issou.cli;
 
-import issou.commun.collection.Content;
+import issou.commun.collection.content.Content;
 import issou.commun.logic.objects.deck.Deck;
 import issou.commun.logic.objects.deck.IDeck;
 
@@ -27,7 +27,7 @@ public class Decks {
                 for(String elem : elems){
                     int cardInt = Integer.parseInt(elem);
                     deckInt.add(cardInt);
-                    deck.addCard(Content.Instance().getCard(cardInt));
+                    deck.addCard(Content.Instance.getCard(cardInt));
                 }
                 decksInts.add(deckInt);
                 decks.add(deck);
