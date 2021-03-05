@@ -1,14 +1,14 @@
 package issou.commun.logic.objects.card;
 
-import issou.commun.collection.assets.card.ICardAsset;
+import issou.commun.collection.assets.CardAsset;
 import issou.commun.logic.utils.Identifiable;
 
-public class Card extends Identifiable implements ICard {
+public class Card extends Identifiable{
 
     private final String name;
     private int manaCost;
 
-    public Card(ICardAsset card)
+    public Card(CardAsset card)
     {
         super();
         this.name = card.getName();
@@ -22,7 +22,7 @@ public class Card extends Identifiable implements ICard {
         return manaCost;
     }
 
-    public boolean equals(ICard card){
+    public boolean equals(Card card){
         return card.getName().equals(name);
     }
     public String toString() {

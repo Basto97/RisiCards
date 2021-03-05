@@ -12,10 +12,6 @@ public class Log {
         this.needResponse = needResponse;
     }
 
-    public void sendResponse(String res){
-
-    }
-
     public LogDest getLogDest(){
         return logDest;
     }
@@ -26,6 +22,6 @@ public class Log {
 
     @Override
     public String toString(){
-        return logDest.name()+" :\n"+msg;
+        return "-"+logDest.name()+" :\n"+msg;
     }
 }

@@ -1,8 +1,8 @@
-package issou.commun.collection.assets.card;
+package issou.commun.collection.assets;
 
 import org.json.JSONObject;
 
-public abstract class CardAsset implements ICardAsset{
+public abstract class CardAsset {
 
     private final String name;
     private final int manaCost;

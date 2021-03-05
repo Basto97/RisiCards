@@ -3,10 +3,12 @@ package issou.cli;
 import issou.cli.log.LogDest;
 import issou.commun.game.Game;
 import issou.commun.game.GameConfig;
-import issou.commun.game.GameState;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static issou.commun.logic.utils.Enums.GameState.WaitingToStart1;
+import static issou.commun.logic.utils.Enums.GameState.WaitingToStart2;
 
 
 public class Play {
@@ -25,13 +27,15 @@ public class Play {
     }
 
     public static void sendResponse(String res, LogDest logDest){
-        if(game.getGameState() == GameState.WaitingToStart1 || game.getGameState() == GameState.WaitingToStart2){
+        assert logDest != LogDest.Both;
+        int playerInt = logDest == LogDest.One ? 0 : 1;
+        if(game.getGameState() == WaitingToStart1 || game.getGameState() == WaitingToStart2) {   // to choose first cards
             String[] elems = res.split(" ");
             List<Integer> ids = new ArrayList<>();
             for (String elem : elems)
                 if(!elem.equals(""))
                     ids.add(Integer.parseInt(elem));
-            game.chooseFirstCards(logDest,ids);
+            game.chooseFirstCards(playerInt,ids);
         }
     }
 }

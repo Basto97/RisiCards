@@ -1,74 +1,44 @@
 package issou.commun.game;
 
 import issou.cli.log.LogDest;
-import issou.commun.logic.caracters.player.Player;
-import issou.commun.logic.objects.card.ICard;
+import issou.commun.logic.objects.card.Card;
+import issou.commun.logic.utils.Enums.GameState;
 
 import java.util.List;
 
-import static issou.commun.game.GameState.*;
+import static issou.commun.logic.utils.Enums.GameState.*;
 
-public class Game implements IGame {
+public class Game {
 
-    private final Player[] players = new Player[2];
+    private final Players players = new Players(this);
     private GameState gameState = WaitingToStart1;
 
     public Game(GameConfig config){
         for(int i = 0 ; i < 2 ; i++){
-            players[i] = new Player(config.getHero(i), config.getHeroPower(i), config.getDeck(i), i==0);
-            players[i].onGameStart();
-            players[i].con.startGame(players[i].hand);
+            players.set(i, new Player(config.getHero(i), config.getHeroPower(i), config.getDeck(i), i==0));
+            players.get(i).onGameStart();
+            players.get(i).con.startGame( players.get(i).hand);
         }
     }
 
     // api
 
     public void newTurn(){
-        getCurrentPlayer().con.newTurn();
-
-        ICard cardDrawed = getCurrentPlayer().deck.draw();
+        players.getCurrent().con.newTurn();
+        Card cardDrawed = players.getCurrent().deck.draw();
 
     }
 
-    public void chooseFirstCards(LogDest logDest, List<Integer> cardsToChangeIds){
-        if(gameState == WaitingToStart1)
-            gameState = WaitingToStart2;
-        else if (gameState == WaitingToStart2)
-            gameState = TurnP1;
-
-        List<ICard> cardsDropped = getPlayer(logDest).hand.dropTheseCards(cardsToChangeIds);
-        for(int i = 0 ; i < cardsDropped.size() ; i++)
-            getPlayer(logDest).hand.addCard(getPlayer(logDest).deck.draw());
-        for(ICard card : cardsDropped)
-            getPlayer(logDest).deck.addCard(card);
-        getPlayer(logDest).deck.shuffle();
-
-        getPlayer(logDest).con.startGameNewHand(getPlayer(logDest).hand);
+    public void chooseFirstCards(int playerInt, List<Integer> cardsToChangeIds){
+        switch (gameState){
+            case WaitingToStart1 -> gameState = WaitingToStart2;
+            case WaitingToStart2 -> gameState = TurnP1;
+        }
+        Player player = players.get(playerInt);
+        player.onGameStartCardsChanged(cardsToChangeIds);
+        player.con.startGameNewHand(player.hand);
     }
 
-    // gets
-
-
-    public Player getCurrentPlayer(){
-        if(gameState == TurnP1)
-            return players[0];
-        else if(gameState == TurnP2)
-            return players[1];
-        throw new IllegalArgumentException();
-    }
-    public Player getPlayer1() {
-        return players[0];
-    }
-    public Player getPlayer2() {
-        return players[1];
-    }
-    public Player getPlayer(LogDest logDest){
-        if(logDest == LogDest.One)
-            return players[0];
-        else if(logDest == LogDest.Two)
-            return players[1];
-        throw new IllegalArgumentException();
-    }
     public GameState getGameState() {
         return gameState;
     }

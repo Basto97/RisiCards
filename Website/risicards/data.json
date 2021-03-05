@@ -57,7 +57,7 @@
       "spells":
       [
         {
-          "name": "PaveMMA",
+          "name": "FireBall",
           "manaCost": "3",
           "cost": "2",
           "targetType": "NoTarget"

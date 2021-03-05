@@ -1,11 +1,11 @@
 package issou.commun.clientconnection;
 
 import issou.cli.Cli;
-import issou.commun.logic.objects.hand.IHand;
+import issou.commun.logic.objects.Hand;
 
 import static issou.cli.log.LogDest.*;
 
-public class ClientConnection implements IClientConnection {
+public class ClientConnection {
 
     // sfs2x object userid
     private final boolean first;
@@ -14,16 +14,15 @@ public class ClientConnection implements IClientConnection {
         this.first = first;
     }
 
-    public void startGame(IHand hand){
+    public void startGame(Hand hand){
         StringBuilder cardsStr = new StringBuilder();
-        cardsStr.append("first : ").append(first).append("\n");
         cardsStr.append("Starting cards : ");
         cardsStr.append(hand).append("\n");
         cardsStr.append( "Type ids of cards to change.");
         addLog(true, cardsStr.toString());
     }
 
-    public void startGameNewHand(IHand newHand) {
+    public void startGameNewHand(Hand newHand) {
         StringBuilder cardsStr = new StringBuilder();
         cardsStr.append("Starting cards : ");
         cardsStr.append(newHand).append("\n");
@@ -36,5 +35,9 @@ public class ClientConnection implements IClientConnection {
     }
     private static void addLogBoth(boolean needResonse, String msg){
         Cli.addLog(Both, needResonse, msg);
+    }
+
+    public void newTurn() {
+
     }
 }

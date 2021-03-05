@@ -1,28 +1,25 @@
-package issou.commun.logic.objects.heropower;
+package issou.commun.logic.objects;
 
-import issou.commun.collection.enums.Types.HeroPowerType;
-import issou.commun.collection.assets.heropower.IHeroPowerAsset;
+import issou.commun.collection.assets.HeroPowerAsset;
+import issou.commun.logic.utils.Enums.HeroPowerType;
 
-public class HeroPower implements IHeroPower{
+public class HeroPower {
 
     private int cost;
     private HeroPowerType heroPowerType;
 
-    public HeroPower(IHeroPowerAsset heroPowerAsset) {
+    public HeroPower(HeroPowerAsset heroPowerAsset) {
         this.cost = heroPowerAsset.getCost();
         this.heroPowerType = heroPowerAsset.getHeroPowerType();
     }
 
-    @Override
     public int getCost() {
         return this.cost;
     }
-    @Override
     public HeroPowerType getHeroPowerType() {
         return this.heroPowerType;
     }
 
-    @Override
     public String toString() {
         return "HeroPower{" +
                 "cost=" + cost +

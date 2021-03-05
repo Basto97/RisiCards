@@ -1,6 +1,6 @@
-package issou.commun.logic.objects.table;
+package issou.commun.logic.objects;
 
-public class Table implements ITable {
+public class Table {
     public void onTurnStart(){
 
     }

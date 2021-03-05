@@ -1,9 +1,9 @@
-package issou.commun.collection.assets.heropower;
+package issou.commun.collection.assets;
 
-import issou.commun.collection.enums.Types.HeroPowerType;
+import issou.commun.logic.utils.Enums.HeroPowerType;
 import org.json.JSONObject;
 
-public class HeroPowerAsset implements IHeroPowerAsset{
+public class HeroPowerAsset {
 
     private final HeroPowerType type;
     private final int cost;
@@ -13,22 +13,18 @@ public class HeroPowerAsset implements IHeroPowerAsset{
         this.cost = json.getInt("cost");
     }
 
-    @Override
     public int getCost(){
         return this.cost;
     }
-    @Override
     public HeroPowerType getHeroPowerType() {
         return this.type;
     }
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HeroPowerAsset that = (HeroPowerAsset) o;
         return type == that.type;
     }
-    @Override
     public String toString() {
         return "HeroPowerAsset{" +
                 "type=" + type +

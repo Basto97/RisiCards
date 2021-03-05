@@ -1,6 +1,6 @@
-package issou.commun.collection.enums;
+package issou.commun.logic.utils;
 
-public class Types {
+public class Enums {
     public enum HeroType {
         MageNoir,
         ChevalierBlanc;
@@ -25,6 +25,14 @@ public class Types {
     public enum HeroPowerType {
         BouleDeFeu,
         BouleDeGlace;
+    }
+
+    public enum GameState {
+        WaitingToStart1,
+        WaitingToStart2,
+        TurnP1,
+        TurnP2,
+        Finished
     }
 
 }

@@ -1,12 +1,12 @@
-package issou.commun.collection.assets.card;
+package issou.commun.collection.assets;
 
-import issou.commun.collection.enums.Types.MinionType;
+import issou.commun.logic.utils.Enums.MinionType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static issou.commun.collection.enums.Types.MinionType.*;
+import static issou.commun.logic.utils.Enums.MinionType.*;
 
-public class MinionCardAsset extends CardAsset implements IMinionCardAsset{
+public class MinionCardAsset extends CardAsset {
 
     private final int health;
     private final int attack;

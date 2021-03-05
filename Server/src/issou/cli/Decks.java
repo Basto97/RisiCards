@@ -1,8 +1,7 @@
 package issou.cli;
 
-import issou.commun.collection.content.Content;
-import issou.commun.logic.objects.deck.Deck;
-import issou.commun.logic.objects.deck.IDeck;
+import issou.commun.collection.Content;
+import issou.commun.logic.objects.Deck;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,7 +11,7 @@ import java.util.Scanner;
 
 public class Decks {
 
-    private static final List<IDeck> decks = new ArrayList<>();
+    private static final List<Deck> decks = new ArrayList<>();
     public static final List<List<String>> decksStr = new ArrayList<>();
 
     public static void loadDecks() {
@@ -22,11 +21,11 @@ public class Decks {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 String[] elems = data.split(" ");
-                IDeck deck = new Deck();
+                Deck deck = new Deck();
                 List<String> deckStr = new ArrayList<>();
                 for(String elem : elems){
                     deckStr.add(elem);
-                    deck.addCard(Content.Instance.getCard(elem));
+                    deck.addCard(Content.getCard(elem));
                 }
                 decksStr.add(deckStr);
                 decks.add(deck);
@@ -41,7 +40,7 @@ public class Decks {
     public static void MontrerDecks(){
         StringBuilder sb = new StringBuilder();
         int i = 0;
-        for(IDeck deck : decks)
+        for(Deck deck : decks)
             sb.append(" ").append(i++).append(" : ").append(deck).append("\n");
         System.out.println(sb.toString());
     }

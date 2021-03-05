@@ -1,18 +1,17 @@
 package issou.commun.logic.objects.card;
 
-import issou.commun.collection.assets.card.ISpellCardAsset;
-import issou.commun.collection.enums.Types.TargetType;
+import issou.commun.collection.assets.SpellCardAsset;
+import issou.commun.logic.utils.Enums.TargetType;
 
-public class SpellCard extends Card implements ISpellCard{
+public class SpellCard extends Card{
 
     private final TargetType targetType;
 
-    public SpellCard(ISpellCardAsset card) {
+    public SpellCard(SpellCardAsset card) {
         super(card);
         this.targetType = card.getTargetType();
     }
 
-    @Override
     public TargetType getTargetType() {
         return targetType;
     }

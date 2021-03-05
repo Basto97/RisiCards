@@ -1,14 +1,14 @@
-package issou.commun.logic.objects.deck;
+package issou.commun.logic.objects;
 
-import issou.commun.logic.objects.card.ICard;
+import issou.commun.logic.objects.card.Card;
 
 import java.util.*;
 
-public class Deck implements IDeck {
+public class Deck {
 
-    private final Queue<ICard> cards = new LinkedList<>();
+    private final Queue<Card> cards = new LinkedList<>();
 
-    public void addCard(ICard card){
+    public void addCard(Card card){
         this.cards.add(card);
     }
     public void shuffle(){
@@ -20,14 +20,14 @@ public class Deck implements IDeck {
     public int size(){
         return this.cards.size();
     }
-    public ICard draw()
+    public Card draw()
     {
         return this.cards.poll();
     }
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(cards.size()).append(" { ");
-        for(ICard c : this.cards)
+        for(Card c : this.cards)
             sb.append(c.getName()).append(", ");
         sb.append("}");
         return sb.toString();

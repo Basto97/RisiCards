@@ -1,10 +1,10 @@
-package issou.commun.collection.assets.hero;
+package issou.commun.collection.assets;
 
-import issou.commun.collection.enums.Types.HeroPowerType;
-import issou.commun.collection.enums.Types.HeroType;
+import issou.commun.logic.utils.Enums.HeroPowerType;
+import issou.commun.logic.utils.Enums.HeroType;
 import org.json.JSONObject;
 
-public class HeroAsset implements IHeroAsset {
+public class HeroAsset {
 
     private final HeroType type;
     private final HeroPowerType heroPowerType;

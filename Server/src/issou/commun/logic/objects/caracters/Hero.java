@@ -1,15 +1,14 @@
-package issou.commun.logic.caracters.hero;
+package issou.commun.logic.objects.caracters;
 
-import issou.commun.collection.enums.Types.HeroType;
-import issou.commun.collection.assets.hero.IHeroAsset;
-import issou.commun.logic.caracters.Character;
+import issou.commun.collection.assets.HeroAsset;
+import issou.commun.logic.utils.Enums.HeroType;
 
-public class Hero extends Character implements IHero {
+public class Hero extends Character {
 
     private final HeroType heroType;
     private final int startMana;
 
-    public Hero(IHeroAsset heroAsset) {
+    public Hero(HeroAsset heroAsset) {
         super(heroAsset.getHealth(), 0,1 , true);
         this.heroType = heroAsset.getType();
         this.startMana = heroAsset.getStartMana();
@@ -19,17 +18,14 @@ public class Hero extends Character implements IHero {
 
     }
 
-    @Override
     public HeroType getHeroType() {
         return this.heroType;
     }
 
-    @Override
     public int getStartMana() {
         return this.startMana;
     }
 
-    @Override
     public String toString() {
         return "Hero{" + "heroType=" + heroType + '}';
     }

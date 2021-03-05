@@ -2,7 +2,7 @@ package issou.cli;
 
 import issou.cli.log.Log;
 import issou.cli.log.LogDest;
-import issou.commun.collection.content.Content;
+import issou.commun.collection.Content;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -38,7 +38,7 @@ public class Cli {
         switch (args[0]) {
             case "play" -> Play.play();
             case "decks" -> Decks.MontrerDecks();
-            case "content" -> out.println(Content.Instance);
+            case "content" -> out.println(Content.toStringContent());
         }
     }
 

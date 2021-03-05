@@ -1,21 +1,12 @@
-package issou.commun.collection.content;
+package issou.commun.collection;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import issou.commun.collection.assets.card.ICardAsset;
-import issou.commun.collection.assets.card.MinionCardAsset;
-import issou.commun.collection.assets.card.SpellCardAsset;
-import issou.commun.collection.enums.Types.HeroPowerType;
-import issou.commun.collection.enums.Types.HeroType;
-import issou.commun.collection.assets.hero.HeroAsset;
-import issou.commun.collection.assets.hero.IHeroAsset;
-import issou.commun.collection.assets.heropower.HeroPowerAsset;
-import issou.commun.collection.assets.heropower.IHeroPowerAsset;
-import issou.commun.logic.caracters.hero.Hero;
-import issou.commun.logic.caracters.hero.IHero;
+import issou.commun.collection.assets.*;
+import issou.commun.logic.utils.Enums.HeroPowerType;
+import issou.commun.logic.utils.Enums.HeroType;
+import issou.commun.logic.objects.caracters.Hero;
 import issou.commun.logic.objects.card.Card;
-import issou.commun.logic.objects.card.ICard;
-import issou.commun.logic.objects.heropower.HeroPower;
-import issou.commun.logic.objects.heropower.IHeroPower;
+import issou.commun.logic.objects.HeroPower;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -29,13 +20,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Content implements IContent {
+public class Content {
 
-    public static final IContent Instance = new Content();
-
-    private static final Map<HeroPowerType, IHeroPowerAsset> heroPowers = new HashMap<>();
-    private static final Map<HeroType, IHeroAsset> heros = new HashMap<>();
-    private static final Map<String, ICardAsset> cards = new HashMap<>();
+    private static final Map<HeroPowerType, HeroPowerAsset> heroPowers = new HashMap<>();
+    private static final Map<HeroType, HeroAsset> heros = new HashMap<>();
+    private static final Map<String, CardAsset> cards = new HashMap<>();
     private static int initialDraw;
     private static int maxCardsHand;
     private static int maxMana;
@@ -107,45 +96,46 @@ public class Content implements IContent {
             Content.cards.put(spellCardAsset.getName(), spellCardAsset);
         }
     }
-    public ICard getCard(String name) {
+
+    public static Card getCard(String name) {
         return new Card(cards.get(name));
     }
-    public IHero getHero(HeroType type) {
+    public static Hero getHero(HeroType type) {
         return new Hero(heros.get(type));
     }
-    public IHeroPower getHeroPower(HeroType type) {
+    public static HeroPower getHeroPower(HeroType type) {
         return new HeroPower(heroPowers.get(heros.get(type).getHeroPowerType()));
     }
-    public IHeroPower getHeroPower(HeroPowerType type) {
+    public static HeroPower getHeroPower(HeroPowerType type) {
         return new HeroPower(heroPowers.get(type));
     }
-    public int initialDraw() {
+    public static int getInitialDraw() {
         return initialDraw;
     }
-    public int maxCardsHand() {
+    public static int getMaxCardsHand() {
         return maxCardsHand;
     }
-    public int maxMana() {
+    public static int getMaxMana() {
         return maxMana;
     }
 
-    public String toString(){
+    public static String toStringContent(){
         StringBuilder sb = new StringBuilder();
         sb.append("Game Options : \n");
-        sb.append("- Initial Draw : ").append(initialDraw()).append("\n");
-        sb.append("- Max Cards : ").append(maxCardsHand()).append("\n");
-        sb.append("- Max Mana : ").append(maxMana()).append("\n");
+        sb.append("- Initial Draw : ").append(getInitialDraw()).append("\n");
+        sb.append("- Max Cards : ").append(getMaxCardsHand()).append("\n");
+        sb.append("- Max Mana : ").append(getMaxMana()).append("\n");
         sb.append("\n");
         sb.append("Hero Powers :\n");
-        for (Map.Entry<HeroPowerType, IHeroPowerAsset> entry : heroPowers.entrySet())
+        for (Map.Entry<HeroPowerType, HeroPowerAsset> entry : heroPowers.entrySet())
             sb.append("- ").append(entry.getValue()).append("\n");
         sb.append("\n");
         sb.append("Heros :\n");
-        for (Map.Entry<HeroType, IHeroAsset> entry : heros.entrySet())
+        for (Map.Entry<HeroType, HeroAsset> entry : heros.entrySet())
             sb.append("- ").append(entry.getValue()).append("\n");
         sb.append("\n");
         sb.append("Cards :\n");
-        for (Map.Entry<String, ICardAsset> entry : cards.entrySet())
+        for (Map.Entry<String, CardAsset> entry : cards.entrySet())
             sb.append("- ").append(entry.getValue()).append("\n");
         return sb.toString();
     }

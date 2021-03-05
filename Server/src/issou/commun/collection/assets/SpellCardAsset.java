@@ -1,9 +1,9 @@
-package issou.commun.collection.assets.card;
+package issou.commun.collection.assets;
 
-import issou.commun.collection.enums.Types.TargetType;
+import issou.commun.logic.utils.Enums.TargetType;
 import org.json.JSONObject;
 
-public class SpellCardAsset extends CardAsset implements ISpellCardAsset{
+public class SpellCardAsset extends CardAsset {
 
     private final TargetType targetType;
 
