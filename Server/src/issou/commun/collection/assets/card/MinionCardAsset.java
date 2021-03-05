@@ -30,11 +30,6 @@ public class MinionCardAsset extends CardAsset implements IMinionCardAsset{
     }
     @Override
     public String toString() {
-        return "MinionCardAsset{" +
-                "Card=" + super.toString() +
-                ", health=" + health +
-                ", attack=" + attack +
-                ", type=" + type +
-                '}';
+        return "MinionCardAsset{" + super.toString() + ", health=" + health + ", attack=" + attack + ", type=" + type + '}';
     }
 }

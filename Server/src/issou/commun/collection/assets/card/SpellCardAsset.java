@@ -18,10 +18,6 @@ public class SpellCardAsset extends CardAsset implements ISpellCardAsset{
     }
     @Override
     public String toString() {
-        return "SpellCardAsset{" +
-                "Card=" + super.toString() +
-                ", manaCost=" + manaCost +
-                ", targetType=" + targetType +
-                '}';
+        return "SpellCardAsset{" + super.toString() + ", manaCost=" + manaCost + ", targetType=" + targetType + '}';
     }
 }

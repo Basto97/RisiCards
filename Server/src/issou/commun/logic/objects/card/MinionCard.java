@@ -30,4 +30,13 @@ public class MinionCard extends Card implements IMinionCard{
     public MinionType getMinionType() {
         return minionType;
     }
+
+    @Override
+    public String toString() {
+        return "MinionCard{" +super.toString()+","+
+                "attack=" + attack +
+                ", health=" + health +
+                ", minionType=" + minionType +
+                '}';
+    }
 }

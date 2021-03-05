@@ -1,4 +1,4 @@
-package issou.cli;
+package issou.cli.log;
 
 public class Log {
 

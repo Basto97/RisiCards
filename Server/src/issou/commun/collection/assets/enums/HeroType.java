@@ -20,6 +20,13 @@ public enum HeroType {
         }
     }
 
+    public static int Get(HeroType heroType){
+        return switch (heroType) {
+            case MageNoir -> mageNoirID;
+            case ChevalierBlanc -> chevalierBlancID;
+        };
+    }
+
     public static HeroType Get(int id){
         if(id == mageNoirID)
             return MageNoir;

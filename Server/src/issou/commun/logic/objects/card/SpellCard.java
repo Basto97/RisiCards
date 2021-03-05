@@ -9,12 +9,19 @@ public class SpellCard extends Card implements ISpellCard{
     private final TargetType targetType;
 
     public SpellCard(ISpellCardAsset card) {
-        super((ICardAsset) card);
+        super(card);
         this.targetType = card.getTargetType();
     }
 
     @Override
     public TargetType getTargetType() {
         return targetType;
+    }
+
+    @Override
+    public String toString() {
+        return "SpellCard{" + super.toString()+", "+
+                "targetType=" + targetType +
+                '}';
     }
 }

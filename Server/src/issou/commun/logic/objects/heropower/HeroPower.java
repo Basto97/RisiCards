@@ -21,4 +21,12 @@ public class HeroPower implements IHeroPower{
     public HeroPowerType getHeroPowerType() {
         return this.heroPowerType;
     }
+
+    @Override
+    public String toString() {
+        return "HeroPower{" +
+                "cost=" + cost +
+                ", heroPowerType=" + heroPowerType +
+                '}';
+    }
 }

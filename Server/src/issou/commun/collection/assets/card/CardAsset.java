@@ -30,9 +30,6 @@ public abstract class CardAsset implements ICardAsset{
     }
     @Override
     public String toString() {
-        return "CardAsset{" +
-                "name=" + Content.Instance().getCardName(cardID) +
-                ", manaCost=" + manaCost +
-                '}';
+        return "name=" + Content.Instance().getCardName(cardID) + ", manaCost=" + manaCost;
     }
 }

@@ -1,14 +1,14 @@
 package issou.commun.logic.utils;
 
-import issou.commun.logic.caracters.Hero;
+import issou.commun.logic.caracters.hero.Hero;
 import issou.commun.logic.objects.deck.Deck;
 import issou.commun.logic.objects.hand.Hand;
 import issou.commun.logic.objects.heropower.HeroPower;
 import issou.commun.logic.objects.manapool.ManaPool;
 import issou.commun.logic.objects.table.Table;
 
-public class Player extends CharacterAttacker {
-
+public class Player {
+/*
     public Deck deck;
     public Hand hand;
     public Table table;
@@ -95,9 +95,9 @@ public class Player extends CharacterAttacker {
             Hand.RemoveCard(playedCard);
             new PlayACreatureCommand(Area, playedCard, tablePos, newCreature.ID).AddToQueue();
         }
-        */
+
         public void die()
         {
             // TODO TURNMANAGER
-        }
+        }*/
 }

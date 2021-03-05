@@ -11,8 +11,8 @@ import issou.commun.collection.assets.hero.HeroAsset;
 import issou.commun.collection.assets.hero.IHeroAsset;
 import issou.commun.collection.assets.heropower.HeroPowerAsset;
 import issou.commun.collection.assets.heropower.IHeroPowerAsset;
-import issou.commun.logic.caracters.Hero;
-import issou.commun.logic.caracters.IHero;
+import issou.commun.logic.caracters.hero.Hero;
+import issou.commun.logic.caracters.hero.IHero;
 import issou.commun.logic.objects.card.Card;
 import issou.commun.logic.objects.card.ICard;
 import issou.commun.logic.objects.heropower.HeroPower;
@@ -152,6 +152,12 @@ public class Content implements IContent {
     public IHero getHero(HeroType type) {
         return new Hero(heros.get(type));
     }
+
+    @Override
+    public IHeroPower getHeroPower(HeroType type) {
+        return new HeroPower(heroPowers.get(heros.get(type).getHeroPowerType()));
+    }
+
     @Override
     public IHeroPower getHeroPower(HeroPowerType type) {
         return new HeroPower(heroPowers.get(type));
@@ -182,16 +188,15 @@ public class Content implements IContent {
         sb.append("\n");
         sb.append("Hero Powers :\n");
         for (Map.Entry<HeroPowerType, IHeroPowerAsset> entry : heroPowers.entrySet())
-            sb.append("- ").append(entry.getKey().name()).append(" : ").append(entry.getValue()).append("\n");
+            sb.append("- ").append(entry.getValue()).append("\n");
         sb.append("\n");
-        sb.append("Characters :\n");
+        sb.append("Heros :\n");
         for (Map.Entry<HeroType, IHeroAsset> entry : heros.entrySet())
-            sb.append("- ").append(entry.getKey().name()).append(" : ").append(entry.getValue()).append("\n");
+            sb.append("- ").append(entry.getValue()).append("\n");
         sb.append("\n");
         sb.append("Cards :\n");
         for (Map.Entry<Integer, ICardAsset> entry : cards.entrySet())
-            sb.append("- ").append(getCardName(entry.getKey())).append(" : ").append(entry.getValue()).append("\n");
-        sb.append("\n");
+            sb.append("- ").append(entry.getValue()).append("\n");
         return sb.toString();
     }
 }
