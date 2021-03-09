@@ -1,0 +1,5 @@
+copy the dependencies to the extensions/__lib__ folder in sfs2x
+copy the .env to the root folder or sfs2x
+add httpclient, httpcore,  sfs2x and sfs2x core to the dependencies of the project
+add the artificat risicard commun, output is extensions/__lib__
+add the artificat risicard game, output is extensions/Risicards

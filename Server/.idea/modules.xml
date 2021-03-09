@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RisicardsServerV2.iml" filepath="$PROJECT_DIR$/RisicardsServerV2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RisicardsCommun/RisicardsCommun.iml" filepath="$PROJECT_DIR$/RisicardsCommun/RisicardsCommun.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RisicardsGame/RisicardsGame.iml" filepath="$PROJECT_DIR$/RisicardsGame/RisicardsGame.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RisicardsExtension">
+    <output-path>$USER_HOME$/SmartFoxServer_2X/SFS2X/extensions/Risicards</output-path>
+    <root id="archive" name="RisicardsExtension.jar">
+      <element id="module-output" name="RisicardsGame" />
+    </root>
+  </artifact>
+</component>
