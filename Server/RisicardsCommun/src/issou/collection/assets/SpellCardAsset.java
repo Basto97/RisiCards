@@ -1,21 +1,27 @@
 package issou.collection.assets;
 
-import issou.logic.utils.Enums.TargetType;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.protocol.serialization.SerializableSFSType;
 import org.json.JSONObject;
 
 public class SpellCardAsset extends CardAsset {
 
-    private final TargetType targetType;
+    private final String targetType;
 
     public SpellCardAsset(JSONObject json) {
         super(json);
-        this.targetType = TargetType.valueOf(json.getString("targetType"));
+        this.targetType = json.getString("targetType");
     }
 
-    public TargetType getTargetType() {
+    public ISFSObject toISFS(){
+        ISFSObject ret = super.toISFS();
+        ret.putUtfString("cardType","spell");
+        ret.putUtfString("targetType", targetType);
+        return ret;
+    }
+
+    public String getTargetType() {
         return this.targetType;
     }
-    public String toString() {
-        return "SpellCardAsset{" + super.toString() + ", manaCost=" + getManaCost() + ", targetType=" + targetType + '}';
-    }
+
 }

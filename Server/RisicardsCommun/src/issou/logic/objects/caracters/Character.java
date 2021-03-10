@@ -1,6 +1,6 @@
 package issou.logic.objects.caracters;
 
-import issou.logic.utils.Identifiable;
+import issou.logic.objects.Identifiable;
 
 public abstract class Character extends Identifiable {
 

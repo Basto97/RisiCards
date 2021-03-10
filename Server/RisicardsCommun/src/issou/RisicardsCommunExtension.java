@@ -10,6 +10,8 @@ public class RisicardsCommunExtension extends SFSExtension {
     @Override
     public void init() {
         content = new Content();
+
+        addRequestHandler("content", (user, isfsObject) -> send("content", Content.getSerializedContent() ,user));
     }
 
     public Content getContent(){

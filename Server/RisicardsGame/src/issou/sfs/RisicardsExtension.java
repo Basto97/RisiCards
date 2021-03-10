@@ -1,7 +1,7 @@
 package issou.sfs;
 
 import com.smartfoxserver.v2.extensions.SFSExtension;
-import issou.game.Game;
+import issou.logic.game.Game;
 import issou.sfs.utils.Load;
 
 public class RisicardsExtension extends SFSExtension {

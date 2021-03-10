@@ -1,13 +1,12 @@
 package issou.logic.objects.card;
 
 import issou.collection.assets.MinionCardAsset;
-import issou.logic.utils.Enums.MinionType;
 
 public class MinionCard extends Card{
 
     private int attack;
     private int health;
-    private final MinionType minionType;
+    private final String minionType;
 
     public MinionCard(MinionCardAsset card) {
         super(card);
@@ -22,7 +21,7 @@ public class MinionCard extends Card{
     public int getHealth() {
         return health;
     }
-    public MinionType getMinionType() {
+    public String getMinionType() {
         return minionType;
     }
 

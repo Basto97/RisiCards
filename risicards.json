@@ -1,0 +1,68 @@
+{
+  "gameOptions": {
+    "initialDraw": "2",
+    "maxCardsHand": "10",
+    "maxMana": "10"
+  },
+  "data": {
+    "heroPowers":
+    [
+      {
+        "name": "BouleDeFeu",
+        "cost": "2"
+      },
+      {
+        "name": "BouleDeGlace",
+        "cost": "1"
+      }
+    ],
+    "heros":
+    [
+      {
+        "name": "MageNoir",
+        "heroPower": "BouleDeGlace",
+        "health": "25",
+        "startMana": "1"
+      },
+      {
+        "name": "ChevalierBlanc",
+        "heroPower": "BouleDeFeu",
+        "health": "30",
+        "startMana": "1"
+      }
+    ],
+    "cards": {
+      "minions":
+      [
+        {
+          "name": "Risitas",
+          "cost": "2",
+          "effects": ["Bouclier Divin", "Resistance"],
+          "special": [],
+          "health": "7",
+          "attack": "3",
+          "type" : "Issou"
+        },
+        {
+          "name": "JohnOfTheGuarden",
+          "cost": "3",
+          "effects": [],
+          "special": ["1","3"],
+          "health": "5",
+          "attack": "2",
+          "type" : ""
+        }
+      ],
+      "spells":
+      [
+        {
+          "name": "Fireball",
+          "cost": "3",
+          "effects": ["Bouclier Divin", "Resistance"],
+          "special": ["4"],
+          "targetType": "NoTarget"
+        }
+      ]
+    }
+  }
+}

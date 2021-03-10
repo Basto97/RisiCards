@@ -1,18 +1,17 @@
 package issou.logic.objects.card;
 
 import issou.collection.assets.SpellCardAsset;
-import issou.logic.utils.Enums.TargetType;
 
 public class SpellCard extends Card{
 
-    private final TargetType targetType;
+    private final String targetType;
 
     public SpellCard(SpellCardAsset card) {
         super(card);
         this.targetType = card.getTargetType();
     }
 
-    public TargetType getTargetType() {
+    public String getTargetType() {
         return targetType;
     }
 

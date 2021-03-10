@@ -1,25 +1,25 @@
 package issou.logic.objects.card;
 
 import issou.collection.assets.CardAsset;
-import issou.logic.utils.Identifiable;
+import issou.logic.objects.Identifiable;
 
 public class Card extends Identifiable {
 
     private final String name;
-    private int manaCost;
+    private int cost;
 
     public Card(CardAsset card)
     {
         super();
         this.name = card.getName();
-        this.manaCost = card.getManaCost();
+        this.cost = card.getCost();
     }
 
     public String getName() {
         return name;
     }
-    public int getManaCost() {
-        return manaCost;
+    public int getCost() {
+        return cost;
     }
 
     public boolean equals(Card card){
@@ -28,7 +28,7 @@ public class Card extends Identifiable {
     public String toString() {
         return "Card "+getId()+"{" +
                 "name=" + name +
-                ", manaCost=" + manaCost +
+                ", cost=" + cost +
                 '}';
     }
 }

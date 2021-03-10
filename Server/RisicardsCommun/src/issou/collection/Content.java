@@ -1,26 +1,27 @@
 package issou.collection;
 
-import io.github.cdimascio.dotenv.Dotenv;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import issou.collection.assets.*;
 import issou.logic.objects.HeroPower;
 import issou.logic.objects.caracters.Hero;
 import issou.logic.objects.card.Card;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Content {
+
+    private static final ISFSObject serializedContent = new SFSObject();;
 
     private static final Map<String, HeroPowerAsset> heroPowers = new HashMap<>();
     private static final Map<String, HeroAsset> heros = new HashMap<>();
@@ -30,39 +31,35 @@ public class Content {
     private static int maxMana;
 
     static {
-       try {
-            Dotenv dotenv = Dotenv.load();
-            String protocol = dotenv.get("API_SERVER_PROTOCOL");
-            String host = dotenv.get("API_SERVER_HOST");
-            String port = dotenv.get("API_SERVER_PORT");
-            String cmd = dotenv.get("API_SERVER_CMD_DATA");
-            String url =  protocol + "://" + host + ":"+ port + "/"+cmd;
+        try {
 
-            HttpClient httpclient = HttpClients.createDefault();
-            HttpGet get = new HttpGet(url);
-            HttpResponse response = httpclient.execute(get);
-            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            String total = "", line = "";
-            while ((line = rd.readLine()) != null)
-               total +=line;
+            StringBuilder total = new StringBuilder();
+            File myObj = new File("risicards.json");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine())
+                total.append(myReader.nextLine());
+            myReader.close();
 
-            JSONObject json  = new JSONObject(Objects.requireNonNull(total));
+            JSONObject json  = new JSONObject(Objects.requireNonNull(total.toString()));
 
             JSONObject gameOptions = json.getJSONObject("gameOptions");
             loadGameOptions(gameOptions);
 
             JSONObject data = json.getJSONObject("data");
 
-            JSONArray heroPowers = data.getJSONArray("heroPowers");
-            loadHeroPowers(heroPowers);
+            JSONArray heroPowersJson = data.getJSONArray("heroPowers");
+            loadHeroPowers(heroPowersJson);
 
-            JSONArray heros = data.getJSONArray("heros");
-            loadHeros(heros);
-            JSONObject cards = data.getJSONObject("cards");
-            JSONArray minions = cards.getJSONArray("minions");
-            JSONArray spells = cards.getJSONArray("spells");
+            JSONArray herosJson = data.getJSONArray("heros");
+            loadHeros(herosJson);
+            JSONObject cardsJson = data.getJSONObject("cards");
+            JSONArray minions = cardsJson.getJSONArray("minions");
+            JSONArray spells = cardsJson.getJSONArray("spells");
             loadMinions(minions);
             loadSpells(spells);
+
+            loadSFS();
+
         }  catch (JSONException | IOException e){
             e.printStackTrace();
         }
@@ -102,6 +99,27 @@ public class Content {
         }
     }
 
+    private static void loadSFS(){
+        serializedContent.putInt("initialDraw",initialDraw);
+        serializedContent.putInt("maxCardsHand",maxCardsHand);
+        serializedContent.putInt("maxMana",maxMana);
+
+        ISFSArray heroPowersSfs = new SFSArray();
+        for (Map.Entry<String, HeroPowerAsset> entry : heroPowers.entrySet())
+            heroPowersSfs.addSFSObject(entry.getValue().toISFS());
+        serializedContent.putSFSArray("herosPowers", heroPowersSfs);
+
+        ISFSArray cardsSfs = new SFSArray();
+        for (Map.Entry<String, CardAsset> entry : cards.entrySet())
+            cardsSfs.addSFSObject(entry.getValue().toISFS());
+        serializedContent.putSFSArray("cards", cardsSfs);
+
+        ISFSArray herosSfs = new SFSArray();
+        for (Map.Entry<String, HeroAsset> entry : heros.entrySet())
+            herosSfs.addSFSObject(entry.getValue().toISFS());
+        serializedContent.putSFSArray("heros", herosSfs);
+    }
+
     public static Card getCard(String name) {
         return new Card(Content.cards.get(name));
     }
@@ -120,25 +138,7 @@ public class Content {
     public static int getMaxMana() {
         return maxMana;
     }
-
-    public static String toStringContent(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Game Options : \n");
-        sb.append("- Initial Draw : ").append(getInitialDraw()).append("\n");
-        sb.append("- Max Cards : ").append(getMaxCardsHand()).append("\n");
-        sb.append("- Max Mana : ").append(getMaxMana()).append("\n");
-        sb.append("\n");
-        sb.append("Hero Powers :\n");
-        for (Map.Entry<String, HeroPowerAsset> entry : heroPowers.entrySet())
-            sb.append("- ").append(entry.getValue()).append("\n");
-        sb.append("\n");
-        sb.append("Heros :\n");
-        for (Map.Entry<String, HeroAsset> entry : heros.entrySet())
-            sb.append("- ").append(entry.getValue()).append("\n");
-        sb.append("\n");
-        sb.append("Cards :\n");
-        for (Map.Entry<String, CardAsset> entry : cards.entrySet())
-            sb.append("- ").append(entry.getValue()).append("\n");
-        return sb.toString();
+    public static ISFSObject getSerializedContent() {
+        return serializedContent;
     }
 }

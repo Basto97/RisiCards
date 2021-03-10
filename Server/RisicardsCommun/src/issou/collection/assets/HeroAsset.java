@@ -1,11 +1,14 @@
 package issou.collection.assets;
 
+import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.protocol.serialization.SerializableSFSType;
 import org.json.JSONObject;
 
 public class HeroAsset {
 
     private final String name;
-    private final String heroPowerName;
+    private final String heroPower;
     private final int health;
     private final int startMana;
 
@@ -13,14 +16,14 @@ public class HeroAsset {
         this.name = json.getString("name");
         this.health  = json.getInt("health");
         this.startMana = json.getInt("startMana");
-        this.heroPowerName = json.getString("heroPower");
+        this.heroPower = json.getString("heroPower");
     }
 
     public String getName() {
         return name;
     }
-    public String getHeroPowerName() {
-        return heroPowerName;
+    public String getHeroPower() {
+        return heroPower;
     }
     public int getHealth() {
         return health;
@@ -28,18 +31,18 @@ public class HeroAsset {
     public int getStartMana() {
         return startMana;
     }
+    public ISFSObject toISFS(){
+        ISFSObject ret = new SFSObject();
+        ret.putUtfString("name", name);
+        ret.putUtfString("heroPower", heroPower);
+        ret.putInt("health", health);
+        ret.putInt("startMana", startMana);
+        return ret;
+    }
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HeroAsset heroAsset = (HeroAsset) o;
         return name.equals(heroAsset.name);
-    }
-    public String toString() {
-        return "HeroAsset{" +
-                "name=" + name +
-                ", health=" + health +
-                ", startMana=" + startMana +
-                ", heroPowername=" + heroPowerName +
-                '}';
     }
 }

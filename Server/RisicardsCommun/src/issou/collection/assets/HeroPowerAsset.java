@@ -1,8 +1,11 @@
 package issou.collection.assets;
 
+import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.protocol.serialization.SerializableSFSType;
 import org.json.JSONObject;
 
-public class HeroPowerAsset {
+public class HeroPowerAsset{
 
     private final String name;
     private final int cost;
@@ -18,16 +21,15 @@ public class HeroPowerAsset {
     public String getName() {
         return this.name;
     }
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HeroPowerAsset that = (HeroPowerAsset) o;
-        return name.equals(that.name);
+
+    public ISFSObject toISFS(){
+        ISFSObject ret = new SFSObject();
+        ret.putUtfString("name", name);
+        ret.putInt("cost", cost);
+        return ret;
     }
-    public String toString() {
-        return "HeroPowerAsset{" +
-                "name=" + name +
-                ", cost=" + cost +
-                '}';
+
+    public boolean equals(HeroPowerAsset o) {
+        return name.equals(o.name);
     }
 }
