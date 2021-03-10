@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RisitasZoneExtension">
+    <output-path>$USER_HOME$/SmartFoxServer_2X/SFS2X/extensions/RisicardsZone</output-path>
+    <root id="archive" name="RisitasZoneExtension.jar">
+      <element id="module-output" name="RisitasZone" />
+    </root>
+  </artifact>
+</component>

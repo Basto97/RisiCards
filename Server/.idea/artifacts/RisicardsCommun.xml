@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="RisicardsCommunExtension">
+  <artifact type="jar" name="RisicardsCommun">
     <output-path>$USER_HOME$/SmartFoxServer_2X/SFS2X/extensions/__lib__</output-path>
-    <root id="archive" name="RisicardsCommunExtension.jar">
+    <root id="archive" name="RisicardsCommun.jar">
       <element id="module-output" name="RisicardsCommun" />
     </root>
   </artifact>

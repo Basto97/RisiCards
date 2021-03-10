@@ -43,7 +43,6 @@ public static class ContentLoader {
                 cardAsset = new SpellCardAsset(card);
             _load.data.cards.Add(cardAsset.name, cardAsset);
         }
-        Debug.Log(_load);
     }
 
     public static GameOptions GetGameOptions() => _load.gameOptions;

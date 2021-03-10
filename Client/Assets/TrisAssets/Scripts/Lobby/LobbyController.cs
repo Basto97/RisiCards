@@ -51,12 +51,16 @@ public class LobbyController : MonoBehaviour {
 		private void OnApplicationQuit() => _shuttingDown = true;
 
 		public void OnLogoutButtonClick()  => _sfs.Disconnect();
-		public void OnGameItemClick(int roomId) => _sfs.Send(new JoinRoomRequest(roomId));
-		public void OnStartNewGameButtonClick() {
+
+		public void OnGameItemClick(int roomId) {
 			ISFSObject obj = new SFSObject();
 			obj.PutUtfString("hero",heroText.text);
 			obj.PutUtfStringArray("cards", cardsText.text.Split(','));
-			_sfs.Send(new ExtensionRequest("play", obj));
+			obj.PutInt("room", roomId);
+			_sfs.Send(new ExtensionRequest("join", obj));
+		}
+		public void OnStartNewGameButtonClick() {
+			_sfs.Send(new ExtensionRequest("play", new SFSObject()));
 		}
 		
 		private void OnExtensionResponse(BaseEvent evt) {
