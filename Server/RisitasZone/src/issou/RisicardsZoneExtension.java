@@ -2,8 +2,6 @@ package issou;
 
 import com.smartfoxserver.v2.api.CreateRoomSettings;
 import com.smartfoxserver.v2.entities.Room;
-import com.smartfoxserver.v2.entities.variables.RoomVariable;
-import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
 import com.smartfoxserver.v2.exceptions.SFSCreateRoomException;
 import com.smartfoxserver.v2.exceptions.SFSJoinRoomException;
 import com.smartfoxserver.v2.extensions.SFSExtension;
@@ -15,18 +13,20 @@ import java.util.Collection;
 
 public class RisicardsZoneExtension extends SFSExtension {
 
+    static int i = 0;
     @Override
     public void init() {
 
         addRequestHandler("content", (user, isfsObject) -> send("content", Content.getSerializedContent(), user));
         addRequestHandler("play", (user, isfsObject) -> {
             CreateRoomSettings cfg = new CreateRoomSettings();
-            cfg.setName("Partie de "+user.getName()+".");
+            cfg.setName("Partie de "+user.getName()+i+++".");
             cfg.setGame(true);
             cfg.setMaxUsers(10);
             cfg.setDynamic(true);
+            cfg.setExtension(new CreateRoomSettings.RoomExtensionSettings("RisicardsGame","issou.ext.RisicardsGameExtension"));
             try  {
-               getApi().createRoom(getParentZone(), cfg, null);
+              getApi().createRoom(getParentZone(), cfg, null);
             }
             catch (SFSCreateRoomException e) {
                 e.printStackTrace();

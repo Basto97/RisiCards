@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RisicardsCommun/RisicardsCommun.iml" filepath="$PROJECT_DIR$/RisicardsCommun/RisicardsCommun.iml" />
       <module fileurl="file://$PROJECT_DIR$/RisicardsGame/RisicardsGame.iml" filepath="$PROJECT_DIR$/RisicardsGame/RisicardsGame.iml" />
-      <module fileurl="file://$PROJECT_DIR$/RisitasZone/RisitasZone.iml" filepath="$PROJECT_DIR$/RisitasZone/RisitasZone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RisitasZone/RisicardsZone.iml" filepath="$PROJECT_DIR$/RisitasZone/RisicardsZone.iml" />
     </modules>
   </component>
 </project>

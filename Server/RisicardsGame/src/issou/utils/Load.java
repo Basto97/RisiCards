@@ -1,16 +1,16 @@
-package issou.sfs.utils;
+package issou.utils;
 
 import issou.RisicardsZoneExtension;
 import issou.logic.objects.HeroPower;
 import issou.logic.objects.caracters.Hero;
 import issou.logic.objects.card.Card;
-import issou.sfs.RisicardsExtension;
+import issou.ext.RisicardsGameExtension;
 
 public class Load {
 
     private static RisicardsZoneExtension extension;
 
-    public static void init(RisicardsExtension extension){
+    public static void init(RisicardsGameExtension extension){
         Load.extension = (RisicardsZoneExtension) extension.getParentZone().getExtension();
     }
 

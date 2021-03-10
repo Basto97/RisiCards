@@ -10,6 +10,6 @@
     <orderEntry type="library" name="sfs2x" level="project" />
     <orderEntry type="library" name="org.json:json:20201115" level="project" />
     <orderEntry type="module" module-name="RisicardsCommun" />
-    <orderEntry type="module" module-name="RisitasZone" />
+    <orderEntry type="module" module-name="RisicardsZone" />
   </component>
 </module>
