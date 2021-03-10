@@ -120,6 +120,12 @@ public class Content {
         serializedContent.putSFSArray("heros", herosSfs);
     }
 
+    public static boolean isCard(String name){
+        return cards.containsKey(name);
+    }
+    public static boolean isHero(String name){
+        return heros.containsKey(name);
+    }
     public static Card getCard(String name) {
         return new Card(Content.cards.get(name));
     }

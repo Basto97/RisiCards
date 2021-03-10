@@ -14,8 +14,9 @@ public class LobbyController : MonoBehaviour {
 		public Text loggedInText;
 		public Transform gameListContent;
 		public GameObject gameListItem;
-		public Text deckText;
+		
 		public Text heroText;
+		public Text cardsText;
 
 		private const string ExtensionID = "Risicards";
 		private const string ExtensionClass = "issou.sfs.RisicardsExtension";
@@ -52,14 +53,10 @@ public class LobbyController : MonoBehaviour {
 		public void OnLogoutButtonClick()  => _sfs.Disconnect();
 		public void OnGameItemClick(int roomId) => _sfs.Send(new JoinRoomRequest(roomId));
 		public void OnStartNewGameButtonClick() {
-			RoomSettings settings = new RoomSettings(_sfs.MySelf.Name + "'s game") {
-				GroupId = "games",
-				IsGame = true,
-				MaxUsers = 2,
-				MaxSpectators = 0,
-				Extension = new RoomExtension(ExtensionID, ExtensionClass)
-			};
-			_sfs.Send(new CreateRoomRequest(settings, true, _sfs.LastJoinedRoom));
+			ISFSObject obj = new SFSObject();
+			obj.PutUtfString("hero",heroText.text);
+			obj.PutUtfStringArray("cards", cardsText.text.Split(','));
+			_sfs.Send(new ExtensionRequest("play", obj));
 		}
 		
 		private void OnExtensionResponse(BaseEvent evt) {
