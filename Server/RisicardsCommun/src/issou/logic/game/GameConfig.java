@@ -19,6 +19,8 @@ public class GameConfig {
     public Map<User,ManaPool> manaPools = new HashMap<>();
 
     public void addUserConfig(User user, String heroStr, Collection<String> deckStr) throws SFSException {
+        heroStr = "MageNoir"; // DEBUG
+        deckStr = Arrays.asList("Risitas,Risitas,Risitas,JohnOfTheGuarden".split(","));
         if(users.size()==2)
             throw new SFSException("Trying to join a full room");
         if(!Content.isHero(heroStr))
