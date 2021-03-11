@@ -1,18 +1,16 @@
-﻿namespace TrisAssets.Scripts.Logic {
-    public class Card : Identifiable {
+﻿using System;
+using Sfs2X.Entities.Data;
 
-        private string Name { get;  }
-        private int ManaCost { get; }
-        
-        public Card(int id, string name, int manaCost) : base(id) {
-            Name = name;
-            ManaCost = manaCost;
-        }
-
-        public Card(string name, int manaCost) {
-            Name = name;
-            ManaCost = manaCost;
-        }
-        
+[Serializable]
+public class Card : Identifiable {
+    
+    public string name;
+    public int cost { get; }
+   
+    
+    public Card(ISFSObject obj) : base(obj){
+        name = obj.GetUtfString("name");
+        cost = obj.GetInt("cost");
     }
+        
 }

@@ -17,10 +17,6 @@ public class LobbyController : MonoBehaviour {
 		
 		public Text heroText;
 		public Text cardsText;
-
-		private const string ExtensionID = "Risicards";
-		private const string ExtensionClass = "issou.sfs.RisicardsExtension";
-
 		private SmartFox _sfs;
 		private bool _shuttingDown;
 
@@ -55,7 +51,7 @@ public class LobbyController : MonoBehaviour {
 		public void OnGameItemClick(int roomId) {
 			ISFSObject obj = new SFSObject();
 			obj.PutUtfString("hero",heroText.text);
-			obj.PutUtfStringArray("cards", cardsText.text.Split(','));
+			obj.PutUtfStringArray("deck", cardsText.text.Split(','));
 			obj.PutInt("room", roomId);
 			_sfs.Send(new ExtensionRequest("join", obj));
 		}

@@ -17,4 +17,10 @@ public class MinionCardManager : MonoBehaviour {
             powersText.text += a + ',';
         }
     }
+
+    public void Init(Card c) {
+        nameText.text = c.name;
+        manaCost.text = c.cost;
+        
+    }
 }

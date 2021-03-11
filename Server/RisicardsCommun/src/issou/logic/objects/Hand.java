@@ -1,12 +1,15 @@
 package issou.logic.objects;
 
+import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.protocol.serialization.SerializableSFSType;
 import issou.collection.Content;
 import issou.logic.objects.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand {
+public class Hand implements SerializableSFSType {
 
     public List<Card> cardsInHand = new ArrayList<>();
 
@@ -24,15 +27,17 @@ public class Hand {
     }
 
     public boolean isFull(){
-        return cardsInHand.size() >= 0;//Content.getMaxCardsHand();
+        return cardsInHand.size() >= Content.getMaxCardsHand();
     }
 
-    public String toString() {
-        StringBuilder s = new StringBuilder("Hand{" +
-                "cardsInHand={");
-        for(Card c : cardsInHand)
-            s.append(c).append(", ");
-        s.append("}}");
-        return s.toString();
+    public SFSArray toSFSArray(){
+        SFSArray obj = new SFSArray();
+        for(Card c: cardsInHand)
+            obj.addSFSObject(c.toSFSObject());
+        return obj;
+    }
+
+    public int size() {
+        return cardsInHand.size();
     }
 }

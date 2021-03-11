@@ -1,63 +1,58 @@
 package issou.logic.game;
 
+import com.smartfoxserver.v2.entities.User;
+import com.smartfoxserver.v2.exceptions.SFSException;
 import issou.collection.Content;
-import issou.logic.objects.caracters.Hero;
 import issou.logic.objects.Deck;
 import issou.logic.objects.HeroPower;
+import issou.logic.objects.ManaPool;
+import issou.logic.objects.caracters.Hero;
 
-import java.util.List;
+import java.util.*;
 
 public class GameConfig {
 
-    private final HeroPower[] heroPowers = new HeroPower[2];
-    private final Hero[] heros = new Hero[2];
-    private final Deck[] decks = new Deck[2];
+    public Set<User> users = new HashSet<>();
+    public Map<User,HeroPower> heroPowers = new HashMap<>();
+    public Map<User,Hero> heros =  new HashMap<>();
+    public Map<User,Deck> decks = new HashMap<>();
+    public Map<User,ManaPool> manaPools = new HashMap<>();
 
-    public GameConfig(String[] heros, List<String>[] decks) {
-        assert this.heros.length == heros.length : "Heros size errors in creation of GameConfig";
-        assert this.decks.length == decks.length : "Decks size errors in creation of GameConfig";
+    public void addUserConfig(User user, String heroStr, Collection<String> deckStr) throws SFSException {
+        if(users.size()==2)
+            throw new SFSException("Trying to join a full room");
+        if(!Content.isHero(heroStr))
+            throw new SFSException("Hero "+heroStr+" is not an hero.");
+        if(deckStr.size() > Content.getCardsPerDeck()[1])
+            throw new SFSException("Size of deckstr "+deckStr.size()+" highter then max"+Content.getCardsPerDeck()[1]+".");
+        if(deckStr.size() < Content.getCardsPerDeck()[0])
+            throw new SFSException("Size of deckstr "+deckStr.size()+" smaller then mmin"+Content.getCardsPerDeck()[0]+".");
 
-        // heros & hero powers
-        for(int i = 0 ; i < this.heros.length ; i++){
-            this.heros[i] = Content.getHero(heros[i]);
-            //this.heroPowers[i] = Content.getHeroPower(heroType);
-        }
-
-        // cards
-        for(int i = 0 ; i < this.decks.length ; i++){
-            this.decks[i] = new Deck();
-            for(int j = 0; j < decks[i].size() ; j++)
-                //this.decks[i].addCard(Content.getCard(decks[i].get(j)));
-            this.decks[i].shuffle();
-        }
+        Deck deck = new Deck();
+        for (String cardName : deckStr)
+            if(Content.isCard(cardName))
+                deck.addCard(Content.getCard(cardName));
+        deck.shuffle();
+        decks.put(user,deck);
+        heros.put(user,Content.getHero(heroStr));
+        manaPools.put(user, new ManaPool(Content.getStartMana(heroStr)));
+        heroPowers.put(user, Content.getHeroPowerFromHeroName(heroStr));
+        users.add(user);
     }
 
-    public Deck getDeck(int index){
-        assert index == 0 || index == 1;
-        return decks[index];
+    public void removerUserConfig(User user){
+        heroPowers.remove(user);
+        heros.remove(user);
+        decks.remove(user);
+        manaPools.remove(user);
+        users.remove(user);
     }
 
-    public Hero getHero(int index){
-        assert index == 0 || index == 1;
-        return heros[index];
+    public boolean userIsThere(User user){
+        return users.add(user);
     }
 
-    public HeroPower getHeroPower(int index){
-        assert index == 0 || index == 1;
-        return heroPowers[index];
-    }
-
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("-Heros : \n");
-        for(Hero hero : heros)
-            sb.append(" ").append(hero).append("\n");
-        sb.append("-HeroPowers : \n");
-        for(HeroPower heroPower : heroPowers)
-            sb.append(" ").append(heroPower).append("\n");
-        sb.append("-Decks : \n");
-        for(Deck deck : decks)
-            sb.append(" ").append(deck).append("\n");
-        return sb.toString();
+    public boolean ready(){
+        return users.size() == 2;
     }
 }

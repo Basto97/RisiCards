@@ -1,5 +1,8 @@
 package issou.logic.objects;
 
+import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
+
 public class ManaPool {
 
     private int _totalMana;
@@ -42,10 +45,11 @@ public class ManaPool {
         _currentMana = _totalMana;
     }
 
-    public String toString() {
-        return "ManaPool{" +
-                "_totalMana=" + _totalMana +
-                ", _currentMana=" + _currentMana +
-                '}';
+
+    public ISFSObject toSFSObject() {
+        ISFSObject obj = new SFSObject();
+        obj.putInt("totalMana", _totalMana);
+        obj.putInt("currentMana", _currentMana);
+        return obj;
     }
 }

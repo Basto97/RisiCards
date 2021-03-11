@@ -2,62 +2,47 @@ package issou;
 
 import com.smartfoxserver.v2.api.CreateRoomSettings;
 import com.smartfoxserver.v2.entities.Room;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSCreateRoomException;
+import com.smartfoxserver.v2.exceptions.SFSException;
 import com.smartfoxserver.v2.exceptions.SFSJoinRoomException;
 import com.smartfoxserver.v2.extensions.SFSExtension;
 import issou.collection.Content;
-import issou.logic.objects.Deck;
-import issou.logic.objects.caracters.Hero;
+import issou.sfs.utils.CreateRisitasGameRoomSettings;
 
 import java.util.Collection;
 
 public class RisicardsZoneExtension extends SFSExtension {
 
-    static int i = 0;
     @Override
     public void init() {
-
         addRequestHandler("content", (user, isfsObject) -> send("content", Content.getSerializedContent(), user));
         addRequestHandler("play", (user, isfsObject) -> {
-            CreateRoomSettings cfg = new CreateRoomSettings();
-            cfg.setName("Partie de "+user.getName()+i+++".");
-            cfg.setGame(true);
-            cfg.setMaxUsers(10);
-            cfg.setDynamic(true);
-            cfg.setExtension(new CreateRoomSettings.RoomExtensionSettings("RisicardsGame","issou.ext.RisicardsGameExtension"));
             try  {
-              getApi().createRoom(getParentZone(), cfg, null);
-            }
-            catch (SFSCreateRoomException e) {
+                CreateRoomSettings cfg = CreateRisitasGameRoomSettings.get(user);
+                getApi().createRoom(getParentZone(), cfg, null);
+            } catch (SFSCreateRoomException e) {
                 e.printStackTrace();
             }
         });
         addRequestHandler("join", ((user, isfsObject) -> {
-            String heroStr = isfsObject.getUtfString("hero");
-            Hero hero = null;
-            if(Content.isHero(heroStr))
-                hero = Content.getHero(heroStr);
-
-            Collection<String> cardsStr = isfsObject.getUtfStringArray("cards");
-            Deck deck = new Deck();
-            for (String cardName : cardsStr)
-                if(Content.isCard(cardName))
-                    deck.addCard(Content.getCard(cardName));
-
             Room room = getParentZone().getRoomById(isfsObject.getInt("room"));
-            if(room != null) {
-                // user.setVariable(); (y mettre le deck et le hero) comment lier la variable à la room ?
-                try {
-                    getApi().joinRoom(user,room);
-                } catch (SFSJoinRoomException e) {
-                    e.printStackTrace();
-                }
+            if(room.getUserList().size() == 2){
+                send("full", new SFSObject(), user);
+                return;
+            }
+
+            String heroStr = isfsObject.getUtfString("hero");
+            Collection<String> deckStr = isfsObject.getUtfStringArray("deck");
+
+            try {
+                RisicardsGameExtension ext = (RisicardsGameExtension) room.getExtension();
+                ext.gameConfig.addUserConfig(user, heroStr, deckStr);
+                getApi().joinRoom(user,room);
+            } catch (SFSException e) {
+                e.printStackTrace();
             }
         }));
     }
 
-    private final Content content = new Content(); // to be used in game extensions
-    public Content getContent(){
-        return content;
-    }
 }

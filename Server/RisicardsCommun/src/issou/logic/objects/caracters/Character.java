@@ -1,8 +1,10 @@
 package issou.logic.objects.caracters;
 
-import issou.logic.objects.Identifiable;
+import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.protocol.serialization.SerializableSFSType;
+import issou.logic.objects.utils.Identifiable;
 
-public abstract class Character extends Identifiable {
+public abstract class Character extends Identifiable implements SerializableSFSType {
 
     private final int healthMax;
     private int health;
@@ -56,14 +58,28 @@ public abstract class Character extends Identifiable {
     public int takeDamages(int amount){
         int beforeHealth = this.health;
         this.health-= amount;
-        if(this.health <= 0) die();
+        // if(this.health <= 0) die();
         return beforeHealth - this.health;
-    }
-    public int getHealthBonus(){
-        return this.healthBonus;
     }
     public void changeHealthBonus(int amount) {
         this.healthBonus += amount;
+    }
+
+    public SFSObject toSFSObject(){
+        SFSObject obj = super.toSFSObject();
+        obj.putInt("healthMax", healthMax);
+        obj.putInt("health", health);
+        obj.putInt("healthBonus", healthBonus);
+        obj.putInt("attack", attack);
+        obj.putInt("attackBonus", attackBonus);
+        obj.putInt("attackBonusTurn", attackBonusTurn);
+        obj.putInt("attacksPerTurn", attacksPerTurn);
+        obj.putInt("attacksLeftThisTurn", attacksLeftThisTurn);
+        return obj;
+    }
+
+    public int getHealthBonus(){
+        return this.healthBonus;
     }
     public int getHealthMax(){
         return this.healthMax;
@@ -83,6 +99,4 @@ public abstract class Character extends Identifiable {
     public int getAttacksPerTurn(){
         return attacksPerTurn;
     }
-
-    public abstract void die();
 }

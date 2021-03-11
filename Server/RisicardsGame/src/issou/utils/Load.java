@@ -4,7 +4,7 @@ import issou.RisicardsZoneExtension;
 import issou.logic.objects.HeroPower;
 import issou.logic.objects.caracters.Hero;
 import issou.logic.objects.card.Card;
-import issou.ext.RisicardsGameExtension;
+import issou.RisicardsGameExtension;
 
 public class Load {
 

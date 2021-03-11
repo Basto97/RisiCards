@@ -24,12 +24,4 @@ public class Deck {
     {
         return this.cards.poll();
     }
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(cards.size()).append(" { ");
-        for(Card c : this.cards)
-            sb.append(c.getName()).append(", ");
-        sb.append("}");
-        return sb.toString();
-    }
 }

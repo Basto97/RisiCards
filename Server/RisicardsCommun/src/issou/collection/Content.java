@@ -29,6 +29,8 @@ public class Content {
     private static int initialDraw;
     private static int maxCardsHand;
     private static int maxMana;
+    private static int sameCardsPerDeck;
+    private static int[] cardsPerDeck;
 
     static {
         try {
@@ -69,6 +71,10 @@ public class Content {
         initialDraw = gameOptions.getInt("initialDraw");
         maxCardsHand = gameOptions.getInt("maxCardsHand");
         maxMana = gameOptions.getInt("maxMana");
+        cardsPerDeck = new int[2];
+        cardsPerDeck[0] = gameOptions.getInt("cardsPerDeckMin");
+        cardsPerDeck[1] = gameOptions.getInt("cardsPerDeckMax");
+        sameCardsPerDeck = gameOptions.getInt("sameCardsPerDeck");
     }
     private static void loadHeroPowers(JSONArray heroPowers) {
         for (int i = 0; i < heroPowers.length(); i++) {
@@ -103,6 +109,9 @@ public class Content {
         serializedContent.putInt("initialDraw",initialDraw);
         serializedContent.putInt("maxCardsHand",maxCardsHand);
         serializedContent.putInt("maxMana",maxMana);
+        serializedContent.putInt("cardsPerDeckMin",cardsPerDeck[0]);
+        serializedContent.putInt("cardsPerDeckMax",cardsPerDeck[1]);
+        serializedContent.putInt("sameCardsPerDeck",sameCardsPerDeck);
 
         ISFSArray heroPowersSfs = new SFSArray();
         for (Map.Entry<String, HeroPowerAsset> entry : heroPowers.entrySet())
@@ -126,6 +135,7 @@ public class Content {
     public static boolean isHero(String name){
         return heros.containsKey(name);
     }
+
     public static Card getCard(String name) {
         return new Card(Content.cards.get(name));
     }
@@ -135,6 +145,14 @@ public class Content {
     public static HeroPower getHeroPower(String name) {
         return new HeroPower(heroPowers.get(name));
     }
+    public static HeroPower getHeroPowerFromHeroName(String name) {
+        return new HeroPower(heroPowers.get(heros.get(name).getHeroPower()));
+    }
+
+    public static int getStartMana(String heroName){
+        return heros.get(heroName).getStartMana();
+    }
+
     public static int getInitialDraw() {
         return initialDraw;
     }
@@ -144,7 +162,15 @@ public class Content {
     public static int getMaxMana() {
         return maxMana;
     }
+    public static int getSameCardsPerDeck() {
+        return sameCardsPerDeck;
+    }
+    public static int[] getCardsPerDeck() {
+        return cardsPerDeck;
+    }
     public static ISFSObject getSerializedContent() {
         return serializedContent;
     }
+
+
 }
