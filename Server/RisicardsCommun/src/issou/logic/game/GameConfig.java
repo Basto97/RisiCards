@@ -6,7 +6,7 @@ import issou.collection.Content;
 import issou.logic.objects.Deck;
 import issou.logic.objects.HeroPower;
 import issou.logic.objects.ManaPool;
-import issou.logic.objects.caracters.Hero;
+import issou.logic.objects.Hero;
 
 import java.util.*;
 
@@ -23,10 +23,10 @@ public class GameConfig {
             throw new SFSException("Trying to join a full room");
         if(!Content.isHero(heroStr))
             throw new SFSException("Hero "+heroStr+" is not an hero.");
-        if(deckStr.size() > Content.getCardsPerDeck()[1])
-            throw new SFSException("Size of deckstr "+deckStr.size()+" highter then max"+Content.getCardsPerDeck()[1]+".");
-        if(deckStr.size() < Content.getCardsPerDeck()[0])
-            throw new SFSException("Size of deckstr "+deckStr.size()+" smaller then mmin"+Content.getCardsPerDeck()[0]+".");
+        if(deckStr.size() > Content.cardsPerDeck[1])
+            throw new SFSException("Size of deckstr "+deckStr.size()+" highter then max"+Content.cardsPerDeck[1]+".");
+        if(deckStr.size() < Content.cardsPerDeck[0])
+            throw new SFSException("Size of deckstr "+deckStr.size()+" smaller then mmin"+Content.cardsPerDeck[0]+".");
 
         Deck deck = new Deck();
         for (String cardName : deckStr)
@@ -46,13 +46,5 @@ public class GameConfig {
         decks.remove(user);
         manaPools.remove(user);
         users.remove(user);
-    }
-
-    public boolean userIsThere(User user){
-        return users.add(user);
-    }
-
-    public boolean ready(){
-        return users.size() == 2;
     }
 }

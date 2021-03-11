@@ -8,19 +8,19 @@ public class MinionCardManager : MonoBehaviour {
     public Text attackText;
     public Text powersText;
 
-    public void Init(MinionCardAsset mca) {
-        nameText.text = mca.name;
-        manaCost.text = mca.cost.ToString();
-        healthText.text = mca.health.ToString();
-        attackText.text = mca.attack.ToString();
-        foreach (string a in mca.effects) {
+    public void Init(CardAsset ca) {
+        nameText.text = ca.name;
+        manaCost.text = ca.cost.ToString();
+        healthText.text = ca.health.ToString();
+        attackText.text = ca.attack.ToString();
+        foreach (string a in ca.effects) {
             powersText.text += a + ',';
         }
     }
 
     public void Init(Card c) {
         nameText.text = c.name;
-        manaCost.text = c.cost;
+        manaCost.text = c.cost.ToString();
         
     }
 }

@@ -1,4 +1,4 @@
-package issou.logic.objects.utils;
+package issou.logic.objects;
 
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.protocol.serialization.SerializableSFSType;

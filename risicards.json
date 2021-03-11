@@ -2,18 +2,25 @@
   "gameOptions": {
     "initialDraw": "2",
     "maxCardsHand": "10",
-    "maxMana": "10"
+    "maxMana": "10",
+    "cardsPerDeckMin" : "1",
+    "cardsPerDeckMax" : "50",
+    "sameCardsPerDeck" : "2"
   },
   "data": {
     "heroPowers":
     [
       {
         "name": "BouleDeFeu",
-        "cost": "2"
+        "cost": "2",
+        "special": ["3"],
+        "targetType": "NoTarget"
       },
       {
         "name": "BouleDeGlace",
-        "cost": "1"
+        "cost": "1",
+        "special": [],
+        "targetType": "NoTarget"
       }
     ],
     "heros":
@@ -58,7 +65,7 @@
         {
           "name": "Fireball",
           "cost": "3",
-          "effects": ["Bouclier Divin", "Resistance"],
+          "effects": ["BouleDeFeu"],
           "special": ["4"],
           "targetType": "NoTarget"
         }

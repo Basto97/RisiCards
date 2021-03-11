@@ -6,8 +6,8 @@ import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import issou.collection.assets.*;
 import issou.logic.objects.HeroPower;
-import issou.logic.objects.caracters.Hero;
-import issou.logic.objects.card.Card;
+import issou.logic.objects.Hero;
+import issou.logic.objects.Card;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,16 +21,16 @@ import java.util.Scanner;
 
 public class Content {
 
-    private static final ISFSObject serializedContent = new SFSObject();;
+    public static final ISFSObject serializedContent = new SFSObject();;
 
     private static final Map<String, HeroPowerAsset> heroPowers = new HashMap<>();
     private static final Map<String, HeroAsset> heros = new HashMap<>();
     private static final Map<String, CardAsset> cards = new HashMap<>();
-    private static int initialDraw;
-    private static int maxCardsHand;
-    private static int maxMana;
-    private static int sameCardsPerDeck;
-    private static int[] cardsPerDeck;
+    public static int initialDraw;
+    public static int maxCardsHand;
+    public static int maxMana;
+    public static int sameCardsPerDeck;
+    public static int[] cardsPerDeck;
 
     static {
         try {
@@ -61,7 +61,6 @@ public class Content {
             loadSpells(spells);
 
             loadSFS();
-
         }  catch (JSONException | IOException e){
             e.printStackTrace();
         }
@@ -80,31 +79,30 @@ public class Content {
         for (int i = 0; i < heroPowers.length(); i++) {
             JSONObject json = heroPowers.getJSONObject(i);
             HeroPowerAsset heroPowerAsset =  new HeroPowerAsset(json);
-            Content.heroPowers.put(heroPowerAsset.getName(), heroPowerAsset);
+            Content.heroPowers.put(heroPowerAsset.name, heroPowerAsset);
         }
     }
     private static void loadHeros(JSONArray heros) {
         for (int i = 0; i < heros.length(); i++) {
             JSONObject json = heros.getJSONObject(i) ;
             HeroAsset heroAsset = new HeroAsset(json);
-            Content.heros.put(heroAsset.getName(), heroAsset);
+            Content.heros.put(heroAsset.name, heroAsset);
         }
     }
     private static void loadMinions(JSONArray minions) {
         for (int i = 0; i < minions.length(); i++) {
             JSONObject json = minions.getJSONObject(i);
-            MinionCardAsset minionCardAsset = new MinionCardAsset(json);
-            cards.put(minionCardAsset.getName(), minionCardAsset);
+            CardAsset minionCardAsset = new CardAsset(json, true);
+            cards.put(minionCardAsset.name, minionCardAsset);
         }
     }
     private static void loadSpells(JSONArray spells) {
         for (int i = 0; i < spells.length(); i++) {
             JSONObject json = spells.getJSONObject(i);
-            SpellCardAsset spellCardAsset = new SpellCardAsset(json);
-            cards.put(spellCardAsset.getName(), spellCardAsset);
+            CardAsset spellCardAsset = new CardAsset(json, false);
+            cards.put(spellCardAsset.name, spellCardAsset);
         }
     }
-
     private static void loadSFS(){
         serializedContent.putInt("initialDraw",initialDraw);
         serializedContent.putInt("maxCardsHand",maxCardsHand);
@@ -146,31 +144,10 @@ public class Content {
         return new HeroPower(heroPowers.get(name));
     }
     public static HeroPower getHeroPowerFromHeroName(String name) {
-        return new HeroPower(heroPowers.get(heros.get(name).getHeroPower()));
+        return new HeroPower(heroPowers.get(heros.get(name).heroPower));
     }
 
     public static int getStartMana(String heroName){
-        return heros.get(heroName).getStartMana();
+        return heros.get(heroName).startMana;
     }
-
-    public static int getInitialDraw() {
-        return initialDraw;
-    }
-    public static int getMaxCardsHand() {
-        return maxCardsHand;
-    }
-    public static int getMaxMana() {
-        return maxMana;
-    }
-    public static int getSameCardsPerDeck() {
-        return sameCardsPerDeck;
-    }
-    public static int[] getCardsPerDeck() {
-        return cardsPerDeck;
-    }
-    public static ISFSObject getSerializedContent() {
-        return serializedContent;
-    }
-
-
 }

@@ -7,10 +7,10 @@ import org.json.JSONObject;
 
 public class HeroAsset {
 
-    private final String name;
-    private final String heroPower;
-    private final int health;
-    private final int startMana;
+    public final String name;
+    public final String heroPower;
+    public final int health;
+    public final int startMana;
 
     public HeroAsset(JSONObject json) {
         this.name = json.getString("name");
@@ -19,18 +19,6 @@ public class HeroAsset {
         this.heroPower = json.getString("heroPower");
     }
 
-    public String getName() {
-        return name;
-    }
-    public String getHeroPower() {
-        return heroPower;
-    }
-    public int getHealth() {
-        return health;
-    }
-    public int getStartMana() {
-        return startMana;
-    }
     public ISFSObject toISFS(){
         ISFSObject ret = new SFSObject();
         ret.putUtfString("name", name);
@@ -38,11 +26,5 @@ public class HeroAsset {
         ret.putInt("health", health);
         ret.putInt("startMana", startMana);
         return ret;
-    }
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HeroAsset heroAsset = (HeroAsset) o;
-        return name.equals(heroAsset.name);
     }
 }

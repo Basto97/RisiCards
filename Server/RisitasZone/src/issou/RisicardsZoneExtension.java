@@ -16,7 +16,7 @@ public class RisicardsZoneExtension extends SFSExtension {
 
     @Override
     public void init() {
-        addRequestHandler("content", (user, isfsObject) -> send("content", Content.getSerializedContent(), user));
+        addRequestHandler("content", (user, isfsObject) -> send("content", Content.serializedContent, user));
         addRequestHandler("play", (user, isfsObject) -> {
             try  {
                 CreateRoomSettings cfg = CreateRisitasGameRoomSettings.get(user);

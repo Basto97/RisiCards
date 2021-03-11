@@ -1,7 +1,5 @@
 package issou.logic.objects;
 
-import issou.logic.objects.card.Card;
-
 import java.util.*;
 
 public class Deck {

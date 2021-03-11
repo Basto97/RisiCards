@@ -1,21 +1,19 @@
-package issou.logic.objects.caracters;
+package issou.logic.objects;
 
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.protocol.serialization.SerializableSFSType;
-import issou.logic.objects.utils.Identifiable;
+import issou.logic.objects.Identifiable;
 
 public abstract class Character extends Identifiable implements SerializableSFSType {
 
-    private final int healthMax;
-    private int health;
-    private int healthBonus;
-
-    private final int attack;
-    private int attackBonus;
-    private int attackBonusTurn;
-
-    private int attacksPerTurn;
-    private int attacksLeftThisTurn;
+    public final int healthMax;
+    public int health;
+    public int healthBonus;
+    public final int attack;
+    public int attackBonus;
+    public int attackBonusTurn;
+    public int attacksPerTurn;
+    public int attacksLeftThisTurn;
 
     public Character(int healthMax, int attack, int attacksForOneTurn, boolean charge){
         super();
@@ -76,27 +74,5 @@ public abstract class Character extends Identifiable implements SerializableSFST
         obj.putInt("attacksPerTurn", attacksPerTurn);
         obj.putInt("attacksLeftThisTurn", attacksLeftThisTurn);
         return obj;
-    }
-
-    public int getHealthBonus(){
-        return this.healthBonus;
-    }
-    public int getHealthMax(){
-        return this.healthMax;
-    }
-    public int getHealth(){
-        return this.health;
-    }
-    public int getAttack(){
-        return this.attack;
-    }
-    public int getAttackBonus(){
-        return this.attackBonus;
-    }
-    public int getAttackBonusTurn() {
-        return this.attackBonusTurn;
-    }
-    public int getAttacksPerTurn(){
-        return attacksPerTurn;
     }
 }

@@ -1,10 +1,8 @@
 package issou.logic.objects;
 
 import com.smartfoxserver.v2.entities.data.SFSArray;
-import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.protocol.serialization.SerializableSFSType;
 import issou.collection.Content;
-import issou.logic.objects.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +25,7 @@ public class Hand implements SerializableSFSType {
     }
 
     public boolean isFull(){
-        return cardsInHand.size() >= Content.getMaxCardsHand();
+        return cardsInHand.size() >= Content.maxCardsHand;
     }
 
     public SFSArray toSFSArray(){

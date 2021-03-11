@@ -4,26 +4,24 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import issou.collection.assets.HeroPowerAsset;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class HeroPower {
 
-    private String name;
-    private int cost;
-    private int costModification;
+    public String name;
+    public int cost;
+    public int costModification;
+    public List<Integer> special;
+    public String targetType;
 
     public HeroPower(HeroPowerAsset heroPowerAsset) {
-        this.cost = heroPowerAsset.getCost();
-        this.name = heroPowerAsset.getName();
+        this.cost = heroPowerAsset.cost;
+        this.name = heroPowerAsset.name;
         this.costModification = 0;
-    }
-
-    public int getCostModification(){
-        return this.costModification;
-    }
-    public int getCost() {
-        return this.cost;
-    }
-    public String getName() {
-        return name;
+        this.targetType = heroPowerAsset.targetType;
+        this.special = new ArrayList<>(Arrays.asList(heroPowerAsset.special));
     }
 
     public ISFSObject toSFSObject() {
@@ -31,6 +29,8 @@ public class HeroPower {
         obj.putUtfString("name", name);
         obj.putInt("cost", cost);
         obj.putInt("costModification", costModification);
+        obj.putUtfString("targetType", targetType);
+        obj.putIntArray("special", special);
         return obj;
     }
 }

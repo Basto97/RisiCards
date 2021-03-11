@@ -12,7 +12,7 @@ import com.smartfoxserver.v2.extensions.SFSExtension;
 import issou.logic.objects.Deck;
 import issou.logic.objects.HeroPower;
 import issou.logic.objects.ManaPool;
-import issou.logic.objects.caracters.Hero;
+import issou.logic.objects.Hero;
 
 import java.util.ArrayList;
 import java.util.HashMap;

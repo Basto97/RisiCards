@@ -2,8 +2,8 @@ package issou.logic.game;
 
 import issou.collection.Content;
 import issou.logic.objects.*;
-import issou.logic.objects.caracters.Hero;
-import issou.logic.objects.card.Card;
+import issou.logic.objects.Hero;
+import issou.logic.objects.Card;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class Player {
     }
 
     public void onGameStart(boolean first){
-        int cardsStart = Content.getInitialDraw();
+        int cardsStart = Content.initialDraw;
         if(first)
             cardsStart++;
         for(int i = 0 ; i < cardsStart; i++)
