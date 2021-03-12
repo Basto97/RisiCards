@@ -7,14 +7,7 @@ using Sfs2X.Entities.Data;
 using Sfs2X.Requests;
 
 public class GameController : MonoBehaviour {
-	
-	public Text stateText;
-	public Button restartButton;
 
-	public RectTransform leftT, rightT;
-
-	public State gameState;
-	
 	private SmartFox _sfs;
 	private bool _shuttingDown;
 	
@@ -40,23 +33,9 @@ public class GameController : MonoBehaviour {
 
 	private void OnExtensionResponse(BaseEvent evt) {
 		string cmd = (string)evt.Params["cmd"];
-		if (cmd == "startGame") {
-			SFSObject privateState = (SFSObject)evt.Params["params"];
-			// gameState = new State(privateState);
-			/*
-			float distance = leftT.transform.position.x - rightT.transform.position.x;
-			distance = Mathf.Abs(distance);
-
-			Vector3 offset = new Vector3(distance/(gameState.handPlayer.cards.Count+1), 0, 0);
-			Vector3 actual = leftT.transform.position;
-			foreach(Card card in gameState.handPlayer.cards) {
-				actual += offset;
-				GameObject c = Instantiate(Prefabs.Instance.MinionCard, actual, Quaternion.identity);
-				c.GetComponent<MinionCardManager>().Init(card);
-				c.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, true);
-			
-			}*/
-		}
+		if (cmd == "startGame") 
+			FindObjectOfType<GameAPI>().Init((SFSObject)evt.Params["params"]);
+		
 	}
 
 	public void OnLeaveGameButtonClick() {
@@ -64,7 +43,4 @@ public class GameController : MonoBehaviour {
 		_sfs.Send(new LeaveRoomRequest());
 		SceneManager.LoadScene("Lobby");
 	}
-	
-	public void SetPlayerTurnMessage(string turnMsg) => stateText.text = turnMsg;
-	public void SetStartGame() => restartButton.interactable = false;
 }

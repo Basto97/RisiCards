@@ -18,7 +18,7 @@ public class Command {
         // 2) use coroutines (IEnumerator) and WaitFor... to introduce delays, call CommandExecutionComplete() in the end of coroutine
     }
 
-    protected static void CommandExecutionComplete() {
+    public static void CommandExecutionComplete() {
         if (CommandQueue.Count > 0)
             PlayFirstCommandFromQueue();
         else

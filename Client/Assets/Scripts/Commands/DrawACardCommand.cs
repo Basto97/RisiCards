@@ -7,7 +7,6 @@
     }
 
     protected override void StartCommandExecution() {
-        // _p.PArea.PDeck.CardsInDeck--;
         // _p.PArea.handVisual.GivePlayerACard(_cl.ca, _cl.UniqueCardID, _handPos, _fast, _fromDeck);
     }
 }

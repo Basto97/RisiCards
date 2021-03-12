@@ -1,19 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-using UnityEngine.Serialization;
 
 public class HeroVisual : MonoBehaviour {
-
-    public Hero hero;
+    
     public Text healthText;
     public Image portraitImage;
     public Image portraitBackgroundImage;
 
-    public void ApplyLookFromAsset()
-    {
-        healthText.text = hero.health.ToString();
-        portraitImage.sprite = SpritesLoader.Get(hero.name);
+    public void ApplyLookFromAsset(Hero newHero) {
+        healthText.text = newHero.health.ToString();
+        portraitImage.sprite = SpritesLoader.Get(newHero.name);
         // portraitBackgroundImage.sprite = hero.AvatarBGImage;
         // portraitBackgroundImage.color = hero.AvatarBGTint;
     }

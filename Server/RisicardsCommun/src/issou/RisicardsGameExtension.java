@@ -25,7 +25,7 @@ public class RisicardsGameExtension extends SFSExtension {
         addEventHandler(USER_JOIN_ROOM, new BaseServerEventHandler() {
             @Override
             public void handleServerEvent(ISFSEvent isfsEvent) {
-                if(getParentRoom().getUserList().size() == 2) {
+                if(getParentRoom().getUserList().size() == 1) {
                     try {
                         game = new Game(gameConfig, RisicardsGameExtension.this);
                     } catch (SFSVariableException e) {

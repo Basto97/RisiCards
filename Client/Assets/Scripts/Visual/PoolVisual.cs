@@ -1,12 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteInEditMode]
 public class PoolVisual : MonoBehaviour {
-
-    public int testFullCrystals;
-    public int testTotalCrystalsThisTurn;
-
+    
     private int _totalCrystals;
     public int TotalCrystals {
         get => _totalCrystals;
@@ -43,12 +39,8 @@ public class PoolVisual : MonoBehaviour {
 
         }
     }
+    
     public Image[] crystals;
     public Text progressText;
 
-    private void Update() {
-        if (!Application.isEditor || Application.isPlaying) return;
-        TotalCrystals = testTotalCrystalsThisTurn;
-        AvailableCrystals = testFullCrystals;
-    }
 }
