@@ -16,6 +16,7 @@ public class Card extends Identifiable implements SerializableSFSType {
     public List<Integer> special;
     public int cost;
     public int costModification;
+    public final String hero;
 
     public int attack;
     public int attackModification;
@@ -34,6 +35,7 @@ public class Card extends Identifiable implements SerializableSFSType {
         this.attack = card.attack;
         this.health = card.health;
         this.type = card.type;
+        this.hero = card.hero;
         this.targetType = card.targetType;
         this.special = new ArrayList<>(Arrays.asList(card.special));
         this.effects = new ArrayList<>(Arrays.asList(card.effects));
@@ -47,6 +49,7 @@ public class Card extends Identifiable implements SerializableSFSType {
         obj.putInt("cost", cost);
         obj.putIntArray("special", special);
         obj.putUtfStringArray("effects", effects);
+        obj.putUtfString("hero", hero);
         if(minion){
             obj.putInt("attack", attack);
             obj.putInt("attackModification", attackModification);

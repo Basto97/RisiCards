@@ -4,8 +4,7 @@ using Sfs2X.Entities.Data;
 using UnityEngine;
 
 public static class ContentLoader {
-    
-    public static Load _load;
+    private static Load _load;
     
     public static void Load(ISFSObject ob) {
         _load = new Load {
@@ -62,6 +61,7 @@ public class CardAsset {
     public int[] special;
     public string[] effects;
     public bool minion;
+    public string hero;
     
     public int health;
     public int attack;
@@ -75,6 +75,7 @@ public class CardAsset {
         special = ob.GetIntArray("special");
         effects = ob.GetUtfStringArray("effects");
         minion = ob.GetBool("minion");
+        hero = ob.GetUtfString("hero");
         if (minion) {
             health = ob.GetInt("health");
             attack = ob.GetInt("attack");

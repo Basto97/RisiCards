@@ -2,7 +2,6 @@ package issou.logic.objects;
 
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.protocol.serialization.SerializableSFSType;
-import issou.logic.objects.Identifiable;
 
 public abstract class Character extends Identifiable implements SerializableSFSType {
 
@@ -23,10 +22,8 @@ public abstract class Character extends Identifiable implements SerializableSFST
         this.attack = attack;
         this.attackBonus = 0;
         this.attacksPerTurn = attacksForOneTurn;
-        if(charge)
-            this.attacksLeftThisTurn = this.attacksPerTurn;
-        else
-            this.attacksLeftThisTurn = 0;
+        this.attacksLeftThisTurn = charge ? this.attacksPerTurn : 0;
+
     }
 
     public void setAttacksPerTurn(int attacksPerTurn){

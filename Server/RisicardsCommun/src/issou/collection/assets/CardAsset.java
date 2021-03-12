@@ -14,6 +14,7 @@ public class CardAsset {
     public final String[] effects;
     public final Integer[] special;
     public final boolean minion;
+    public final String hero;
 
     public final int health;
     public final int attack;
@@ -24,6 +25,7 @@ public class CardAsset {
     public CardAsset(JSONObject json, boolean minion) {
         this.cost = json.getInt("cost");
         this.name = json.getString("name");
+        this.hero = json.getString("hero");
         JSONArray temp = json.getJSONArray("effects");
         int length = temp.length();
         effects = new String[length];
@@ -58,6 +60,7 @@ public class CardAsset {
         ret.putBool("minion", minion);
         ret.putInt("health", health);
         ret.putInt("attack", attack);
+        ret.putUtfString("hero", hero);
         ret.putUtfString("type", type);
         ret.putUtfString("targetType", targetType);
         return ret;

@@ -10,6 +10,7 @@ public class Card : Identifiable {
     public string[] effects;
     public int cost;
     public int costModification;
+    public string hero;
 
     public int attack;
     public int attackModification;
@@ -26,7 +27,7 @@ public class Card : Identifiable {
         costModification = obj.GetInt("costModification");
         special = obj.GetIntArray("special");
         effects = obj.GetUtfStringArray("effects");
-
+        hero = obj.GetUtfString("hero");
         attack = obj.GetInt("attack");
         attackModification = obj.GetInt("attackModification");
         health = obj.GetInt("health");
@@ -35,5 +36,4 @@ public class Card : Identifiable {
 
         targetType = obj.GetUtfString("tagetType");
     }
-        
 }
