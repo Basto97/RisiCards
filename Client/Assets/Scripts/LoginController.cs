@@ -18,6 +18,7 @@ public class LoginController : MonoBehaviour {
 	private SmartFox _sfs;
 
 	private void Awake() {
+		SpritesLoader.Get("");
 		Application.runInBackground = true;
 		EnableLoginUI(true);
 	}

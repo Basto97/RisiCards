@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Sfs2X;
@@ -18,9 +17,7 @@ public class GameController : MonoBehaviour {
 	
 	private SmartFox _sfs;
 	private bool _shuttingDown;
-
 	
-
 	private void Awake() {
 		Application.runInBackground = true;
 		
@@ -30,8 +27,6 @@ public class GameController : MonoBehaviour {
 			SceneManager.LoadScene("Login");
 			return;
 		}
-		
-		
 
 		_sfs.AddEventListener(SFSEvent.CONNECTION_LOST, evt => {
 			_sfs.RemoveAllEventListeners();
@@ -47,8 +42,8 @@ public class GameController : MonoBehaviour {
 		string cmd = (string)evt.Params["cmd"];
 		if (cmd == "startGame") {
 			SFSObject privateState = (SFSObject)evt.Params["params"];
-			gameState = new State(privateState);
-
+			// gameState = new State(privateState);
+			/*
 			float distance = leftT.transform.position.x - rightT.transform.position.x;
 			distance = Mathf.Abs(distance);
 
@@ -59,7 +54,8 @@ public class GameController : MonoBehaviour {
 				GameObject c = Instantiate(Prefabs.Instance.MinionCard, actual, Quaternion.identity);
 				c.GetComponent<MinionCardManager>().Init(card);
 				c.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, true);
-			}
+			
+			}*/
 		}
 	}
 

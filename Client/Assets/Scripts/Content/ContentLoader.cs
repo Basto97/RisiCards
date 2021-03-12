@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Sfs2X.Entities.Data;
-using UnityEngine;
 
 public static class ContentLoader {
     private static Load _load;

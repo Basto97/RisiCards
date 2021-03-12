@@ -3,7 +3,7 @@ package issou.sfs.utils;
 import com.smartfoxserver.v2.api.CreateRoomSettings;
 import com.smartfoxserver.v2.entities.User;
 
-public class CreateRisitasGameRoomSettings {
+public class CreateRisicardsGameRoomSettings {
 
     private static int i = 0;
 

@@ -28,12 +28,15 @@ public class Card : Identifiable {
         special = obj.GetIntArray("special");
         effects = obj.GetUtfStringArray("effects");
         hero = obj.GetUtfString("hero");
-        attack = obj.GetInt("attack");
-        attackModification = obj.GetInt("attackModification");
-        health = obj.GetInt("health");
-        healthModification = obj.GetInt("healthModification");
-        type = obj.GetUtfString("type");
-
-        targetType = obj.GetUtfString("tagetType");
+        if (minion) {
+            attack = obj.GetInt("attack");
+            attackModification = obj.GetInt("attackModification");
+            health = obj.GetInt("health");
+            healthModification = obj.GetInt("healthModification");
+            type = obj.GetUtfString("type");
+        }
+        else {
+            targetType = obj.GetUtfString("tagetType");
+        }
     }
 }

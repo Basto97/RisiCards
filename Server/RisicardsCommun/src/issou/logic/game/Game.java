@@ -13,6 +13,7 @@ import issou.logic.objects.Deck;
 import issou.logic.objects.HeroPower;
 import issou.logic.objects.ManaPool;
 import issou.logic.objects.Hero;
+import issou.logic.random.RandomFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,12 +23,12 @@ import java.util.Map;
 public class Game {
 
     public final Map<User, Player> players = new HashMap<>();
-    public final List<User> users = new ArrayList<>();
     private final SFSExtension ext;
 
     public Game(GameConfig config, SFSExtension ext) throws SFSVariableException {
         this.ext = ext;
 
+        boolean first = RandomFactory.aBoolean();
         for(User user : config.users){
             Hero hero = config.heros.get(user);
             HeroPower heroPower = config.heroPowers.get(user);
@@ -35,19 +36,13 @@ public class Game {
             ManaPool manaPool = config.manaPools.get(user);
             Player player = new Player(hero, heroPower, deck, manaPool);
             players.put(user, player);
-            users.add(user);
-            player.onGameStart(user == users.get(0));
+            player.onGameStart(first);
+            first = !first;
         }
 
-        ISFSArray publicState = publicState();
-        for(User user : config.users){
-            ISFSObject privateState = privateState(user, publicState);
-            this.ext.send("startGame", privateState, users);
-        }
-
-        RoomVariable roomVariable = new SFSRoomVariable("publicState", publicState());
-        roomVariable.setPrivate(true);
-        ext.getParentRoom().setVariable(roomVariable);
+        ISFSObject publicState = publicState();
+        for(User user : config.users)
+            this.ext.send("startGame", publicState, user);
     }
 
     public void chooseFirstCards(User user, List<Integer> cardsToChangeIds){
@@ -57,8 +52,8 @@ public class Game {
 
     // getters
 
-    public ISFSArray publicState(){
-        ISFSArray obj = new SFSArray();
+    public ISFSObject publicState(){
+        SFSArray arr = new SFSArray();
         for (Map.Entry<User, Player> entry : players.entrySet()) {
             Player player = entry.getValue();
             User user = entry.getKey();
@@ -69,8 +64,10 @@ public class Game {
             publicState.putInt("deckSize", player.deck.size());
             publicState.putInt("handSize", player.hand.size());
             publicState.putUtfString("player", user.getName());
-            obj.addSFSObject(publicState);
+            arr.addSFSObject(publicState);
         }
+        ISFSObject obj = new SFSObject();
+        obj.putSFSArray("players", arr);
         return obj;
     }
 

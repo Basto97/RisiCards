@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Linq;
 using DG.Tweening;
-using UnityEngine.Serialization;
 
 public class HoverPreview: MonoBehaviour {
     public GameObject turnThisOffWhenPreviewing;

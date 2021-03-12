@@ -64,7 +64,6 @@ public class LobbyController : MonoBehaviour {
 			ISFSObject sfso = (ISFSObject)evt.Params["params"];
 			if (cmd == "content")
 				ContentLoader.Load(sfso);
-			
 		}
 	
 		private void OnConnectionLost(BaseEvent evt) {

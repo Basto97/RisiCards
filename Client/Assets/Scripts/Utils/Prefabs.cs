@@ -4,10 +4,9 @@ public class Prefabs : MonoBehaviour {
     
     public static Prefabs Instance;
     
-    public GameObject MinionCard;
-    public GameObject SpellCard;
+    public GameObject minionCard;
+    public GameObject spellCard;
+    public GameObject damageEffect;
 
-    private void Awake() {
-        Instance = this;
-    }
+    private void Awake() => Instance = this;
 }

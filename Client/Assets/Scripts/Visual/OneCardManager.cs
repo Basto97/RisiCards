@@ -11,6 +11,7 @@ public class OneCardManager : MonoBehaviour {
     public Text healthText;
     public Text attackText;
     public Text typeText;
+    public Image cardGraphicImage;
     public Image cardFaceGlowImage;
 
     private void Awake() {
@@ -31,7 +32,7 @@ public class OneCardManager : MonoBehaviour {
         nameText.text = card.name;
         costText.text = card.cost.ToString();
         descriptionText.text = "Description";
-        // cardGraphicImage.sprite = cardAsset.CardImage;
+        cardGraphicImage.sprite = SpritesLoader.Get(card.name);
 
         if (card.minion) {
             typeText.text = card.type;
