@@ -1,11 +1,11 @@
-﻿using System;
-using Sfs2X.Entities.Data;
-using UnityEngine;
+﻿using Sfs2X.Entities.Data;
 
 public class State {
+    
     public PlayerState opponnant;
     public PlayerState player;
     public Hand handPlayer;
+    public bool myTurn;
 
     public State(ISFSObject publicState) {
         ISFSArray publicStates = publicState.GetSFSArray("players");

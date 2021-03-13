@@ -7,16 +7,13 @@ import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import issou.logic.game.Player;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Users {
 
     private final Map<User, Player> players = new HashMap<>();
     private final Set<UserPlayer> userPlayer = new HashSet<>();
-    private final Set<User> playersReadyToStart = new HashSet<>();
+    private final List<User> playersReadyToStart = new ArrayList<>();
 
     public void add(User user, Player player){
         players.put(user, player);
@@ -46,6 +43,10 @@ public class Users {
 
     public Set<UserPlayer> get(){
         return userPlayer;
+    }
+
+    public List<User> getUsers(){
+        return playersReadyToStart;
     }
 
     public ISFSObject publicState(){

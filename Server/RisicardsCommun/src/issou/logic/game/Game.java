@@ -17,56 +17,66 @@ import java.util.*;
 
 public class Game {
 
-    private Users users = new Users();
     private final SFSExtension ext;
+    private Users users = new Users();
 
-    public Game(GameConfig config, SFSExtension ext) throws SFSVariableException {
+    private User turnOf;
+
+    public Game(SFSExtension ext) {
         this.ext = ext;
-
-        for(User user : config.users){
-            Hero hero = config.heros.get(user);
-            HeroPower heroPower = config.heroPowers.get(user);
-            Deck deck = config.decks.get(user);
-            ManaPool manaPool = config.manaPools.get(user);
-            Player player = new Player(hero, heroPower, deck, manaPool);
-            users.add(user, player);
-        }
-
-        ISFSObject publicState = users.publicState();
-        for(User user : config.users){
-            ext.trace("STRAT GAME : "+user);
-            this.ext.send("startGame", publicState, user);
-        }
-
     }
 
-    public void draw(User user){
-        Card c = users.player(user).drawCard();
+    public void playerReadyToStart(User user, GameConfig config){
+        Hero hero = config.heros.get(user);
+        HeroPower heroPower = config.heroPowers.get(user);
+        Deck deck = config.decks.get(user);
+        ManaPool manaPool = config.manaPools.get(user);
+        Player player = new Player(hero, heroPower, deck, manaPool);
+        users.add(user, player);
+        if(!users.readyToStart(user)) return;
+        this.ext.send("startGame", users.publicState(), users.getUsers());
+        boolean first = RandomFactory.aBoolean();
+        User firstUser = null;
+        for (UserPlayer up : users.get()) {
+            int cardsStart = Content.initialDraw;
+            if(first) {
+                firstUser = up.user;
+                cardsStart++;
+            }
+            for(int i = 0 ; i < cardsStart; i++)
+                draw(up.user);
+            first = !first;
+        }
+        turnOf(firstUser);
+    }
+
+    public void playerEndTurn(User user) {
+        if(!user.equals(turnOf)) return;
+        turnOf(users.other(user));
+        draw(turnOf);
+    }
+
+    // helpers
+
+    private void draw(User user){
         ISFSObject obj = new SFSObject();
-        obj.putUtfString("user", user.getName());
+        if(users.player(user).deck.isEmpty()){
+            // TODO take damages
+            return;
+        }
+        Card c = users.player(user).drawCard();
+        obj.putInt("user", user.getId());
+        obj.putInt("newDeckSize", users.player(user).deck.size());
         ext.send("draw", obj, users.other(user));
         obj.putSFSObject("card", c.toSFSObject());
         ext.send("draw", obj, user);
     }
 
-    public void playerReadyToStart(User user){
-        if(!users.readyToStart(user)) return;
-
-        boolean first = RandomFactory.aBoolean();
-        for (UserPlayer up : users.get()) {
-            int cardsStart = first ? Content.initialDraw +1 : Content.initialDraw;
-            for(int i = 0 ; i < cardsStart; i++)
-                draw(up.user);
-            first = !first;
-        }
-    }
-
-    // getters
-
-    public ISFSObject privateState(User user, ISFSArray publicState){
+    private void turnOf(User user){
+        turnOf = user;
         ISFSObject obj = new SFSObject();
-        obj.putSFSArray("hand", users.player(user).hand.toSFSArray());
-        obj.putSFSArray("publicStates", publicState);
-        return obj;
+        obj.putInt("user", user.getId());
+        obj.putFloat("time",Content.timePerTurn);
+        ext.send("newTurn", obj,users.getUsers());
     }
 }

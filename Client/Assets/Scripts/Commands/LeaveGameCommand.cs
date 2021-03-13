@@ -4,10 +4,10 @@ using UnityEngine.SceneManagement;
 public class LeaveGameCommand : Command {
     
     protected override void StartCommandExecution() {
-        SmartFoxConnection.sfs.RemoveAllEventListeners();;
-        SmartFoxConnection.sfs.Send(new LeaveRoomRequest());
         StopCommands();
         CommandExecutionComplete();
+        SmartFoxConnection.sfs.Send(new LeaveRoomRequest());
+        SmartFoxConnection.sfs.RemoveAllEventListeners();
         SceneManager.LoadScene("Lobby");
     }
 }

@@ -18,19 +18,13 @@ public class RisicardsGameExtension extends SFSExtension {
 
     @Override
     public void init() {
-        addEventHandler(USER_JOIN_ROOM, isfsEvent -> {
-            if(getParentRoom().getUserList().size() == 2) {
-                try {
-                    game = new Game(gameConfig, RisicardsGameExtension.this);
-                } catch (SFSVariableException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        game = new Game(this);
         addEventHandler(USER_LEAVE_ROOM, isfsEvent -> {
             User leaver = (User) isfsEvent.getParameter(SFSEventParam.USER);
             gameConfig.removerUserConfig(leaver);
         });
-        addRequestHandler("readyToStartGame", (user, isfsObject) -> game.playerReadyToStart(user));
+        addRequestHandler("readyToStartGame", (user, isfsObject) -> game.playerReadyToStart(user , gameConfig));
+                            // TODO isfsobject.getsfs('gameconfig') pour avoir le decks et hero choisi
+        addRequestHandler("endTurn", (user, isfsObject) -> game.playerEndTurn(user));
     }
 }

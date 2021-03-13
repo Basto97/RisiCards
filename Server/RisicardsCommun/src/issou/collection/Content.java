@@ -31,6 +31,7 @@ public class Content {
     public static int maxMana;
     public static int sameCardsPerDeck;
     public static int[] cardsPerDeck;
+    public static float timePerTurn;
 
     static {
         try {
@@ -74,6 +75,7 @@ public class Content {
         cardsPerDeck[0] = gameOptions.getInt("cardsPerDeckMin");
         cardsPerDeck[1] = gameOptions.getInt("cardsPerDeckMax");
         sameCardsPerDeck = gameOptions.getInt("sameCardsPerDeck");
+        timePerTurn = gameOptions.getFloat("timePerTurn");
     }
     private static void loadHeroPowers(JSONArray heroPowers) {
         for (int i = 0; i < heroPowers.length(); i++) {

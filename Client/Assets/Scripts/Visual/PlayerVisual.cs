@@ -5,6 +5,7 @@ public class PlayerVisual : MonoBehaviour {
         public HeroVisual heroVisual;
         public PoolVisual poolVisual;
         public HeroPowerVisual heroPowerVisual;
+        public DeckVisual deckVisual;
 
         public void Init(PlayerState playerState) {
                 heroVisual.ApplyLookFromAsset(playerState.hero);

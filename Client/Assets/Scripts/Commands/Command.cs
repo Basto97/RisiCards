@@ -23,9 +23,9 @@ public class Command {
             PlayFirstCommandFromQueue();
         else
             _playingQueue = false;
-        /* TODO
-        if (TurnManager.Instance.whoseTurn != null)
-            TurnManager.Instance.whoseTurn.HighlightPlayableCards();*/
+
+        if (GameAPI.Instance.gameState!= null && GameAPI.Instance.gameState.myTurn)
+            GameAPI.Instance.HighLighPlayable();
     }
 
     protected static void StopCommands() {
@@ -38,6 +38,4 @@ public class Command {
         _playingQueue = true;
         CommandQueue.Dequeue().StartCommandExecution();
     }
-
-   
 }

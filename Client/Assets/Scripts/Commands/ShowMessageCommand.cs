@@ -4,12 +4,11 @@
 
     public ShowMessageCommand(string message, float duration)
     {
-        this._message = message;
-        this._duration = duration;
+        _message = message;
+        _duration = duration;
     }
 
-    protected override void StartCommandExecution()
-    {
-        // MessageManager.Instance.ShowMessage(_message, _duration, this);
+    protected override void StartCommandExecution() {
+        MessageManager.Instance.ShowMessage(_message, _duration);
     }
 }

@@ -23,7 +23,7 @@ public class HandVisual : MonoBehaviour {
             manager.ReadCardFromAsset();
         }
         else {
-            card = Instantiate(Prefabs.Instance.cardBack, deckTransform.position, Quaternion.Euler(new Vector3(0f, -179f, 0f)));
+            card = Instantiate(Prefabs.Instance.cardBack, deckTransform.position, Quaternion.Euler(new Vector3(0f, 0f, 0f)));
         }
         GiveUserACard(card, fast);
     }
@@ -39,7 +39,7 @@ public class HandVisual : MonoBehaviour {
             s.Append(card.transform.DOMove(drawPreviewSpot.position, GlobalSettings.CardTransitionTime));
             s.Insert(0f, playerHand
                 ? card.transform.DORotate(Vector3.zero, GlobalSettings.CardTransitionTime)
-                : card.transform.DORotate(new Vector3(0f, 179f, 0f), GlobalSettings.CardTransitionTime));
+                : card.transform.DORotate(card.transform.eulerAngles, GlobalSettings.CardTransitionTime));
             s.AppendInterval(GlobalSettings.CardPreviewTime);
             s.Append(card.transform.DOLocalMove(slots.Children[0].transform.localPosition, GlobalSettings.CardTransitionTime));
         } else {

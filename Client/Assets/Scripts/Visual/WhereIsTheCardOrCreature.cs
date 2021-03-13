@@ -77,7 +77,7 @@ public class WhereIsTheCardOrCreature : MonoBehaviour {
     
     public void SetHandSortingOrder() {
         if (slot != -1)
-            canvas.sortingOrder = HandSortingOrder(slot);
+            canvas.sortingOrder = 100-slot;
         canvas.sortingLayerName = "Cards";
     }
 
@@ -85,6 +85,4 @@ public class WhereIsTheCardOrCreature : MonoBehaviour {
         canvas.sortingOrder = 0;
         canvas.sortingLayerName = "Creatures";
     }
-
-    private int HandSortingOrder(int placeInHand) => (placeInHand + 1) * 10;
 }
