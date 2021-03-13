@@ -3,9 +3,9 @@ using System.Linq;
 
 public class Command {
     private static readonly Queue<Command> CommandQueue = new Queue<Command>();
-    private static bool _playingQueue = false;
+    private static bool _playingQueue;
 
-    public virtual void AddToQueue() {
+    public void AddToQueue() {
         CommandQueue.Enqueue(this);
         if (!_playingQueue)
             PlayFirstCommandFromQueue();
@@ -23,15 +23,21 @@ public class Command {
             PlayFirstCommandFromQueue();
         else
             _playingQueue = false;
-        /*
+        /* TODO
         if (TurnManager.Instance.whoseTurn != null)
             TurnManager.Instance.whoseTurn.HighlightPlayableCards();*/
     }
+
+    protected static void StopCommands() {
+        CommandQueue.Clear();
+    }
+    
+    public static bool CardDrawPending() => CommandQueue.OfType<DrawACardCommand>().Any();
 
     private static void PlayFirstCommandFromQueue() {
         _playingQueue = true;
         CommandQueue.Dequeue().StartCommandExecution();
     }
 
-    public static bool CardDrawPending() => CommandQueue.OfType<DrawACardCommand>().Any();
+   
 }

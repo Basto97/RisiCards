@@ -7,7 +7,7 @@ public class SameDistanceChildren : MonoBehaviour {
     public Transform[] Children;
 
 	// Use this for initialization
-	void Awake () 
+	private void Awake () 
     {
         Vector3 firstElementPos = Children[0].transform.position;
         Vector3 lastElementPos = Children[Children.Length - 1].transform.position;

@@ -1,11 +1,6 @@
 package issou.logic.game;
 
-import issou.collection.Content;
 import issou.logic.objects.*;
-import issou.logic.objects.Hero;
-import issou.logic.objects.Card;
-
-import java.util.List;
 
 public class Player {
 
@@ -25,20 +20,9 @@ public class Player {
         this.table = new Table();
     }
 
-    public void onGameStart(boolean first){
-        int cardsStart = Content.initialDraw;
-        if(first)
-            cardsStart++;
-        for(int i = 0 ; i < cardsStart; i++)
-            hand.addCard(deck.draw());
-    }
-
-    public void onGameStartCardsChanged(List<Integer> cardsToChangeIds){
-        List<Card> cardsDropped = hand.dropTheseCards(cardsToChangeIds);
-        for(int i = 0 ; i < cardsDropped.size() ; i++)
-            hand.addCard(deck.draw());
-        for(Card card : cardsDropped)
-            deck.addCard(card);
-        deck.shuffle();
+    public Card drawCard(){
+        Card drawed = deck.draw();
+        hand.addCard(drawed);
+        return drawed;
     }
 }

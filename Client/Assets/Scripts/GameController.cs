@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Sfs2X;
 using Sfs2X.Core;
 using Sfs2X.Entities.Data;
-using Sfs2X.Requests;
 
 public class GameController : MonoBehaviour {
 
 	private SmartFox _sfs;
 	private bool _shuttingDown;
+	private GameAPI _gameAPI;
 	
 	private void Awake() {
 		Application.runInBackground = true;
@@ -21,6 +20,7 @@ public class GameController : MonoBehaviour {
 			return;
 		}
 
+		_gameAPI = FindObjectOfType<GameAPI>();
 		_sfs.AddEventListener(SFSEvent.CONNECTION_LOST, evt => {
 			_sfs.RemoveAllEventListeners();
 			if (_shuttingDown) return;
@@ -33,14 +33,16 @@ public class GameController : MonoBehaviour {
 
 	private void OnExtensionResponse(BaseEvent evt) {
 		string cmd = (string)evt.Params["cmd"];
-		if (cmd == "startGame") 
-			FindObjectOfType<GameAPI>().Init((SFSObject)evt.Params["params"]);
-		
+
+		switch (cmd) {
+			case "startGame":
+				_gameAPI.Init((SFSObject)evt.Params["params"]);
+				break;
+			case "draw":
+				_gameAPI.Draw((SFSObject)evt.Params["params"]);
+				break;
+		}
 	}
 
-	public void OnLeaveGameButtonClick() {
-		_sfs.RemoveAllEventListeners();;
-		_sfs.Send(new LeaveRoomRequest());
-		SceneManager.LoadScene("Lobby");
-	}
+	public void OnLeaveGameButtonClick() => new LeaveGameCommand().AddToQueue();
 }

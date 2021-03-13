@@ -7,6 +7,7 @@ public class Prefabs : MonoBehaviour {
     public GameObject minionCard;
     public GameObject spellCard;
     public GameObject damageEffect;
+    public GameObject cardBack;
 
     private void Awake() => Instance = this;
 }

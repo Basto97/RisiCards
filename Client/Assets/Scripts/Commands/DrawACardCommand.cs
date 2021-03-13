@@ -1,12 +1,14 @@
-﻿public abstract class DrawACardCommand : Command {
+﻿public class DrawACardCommand : Command {
     
-    private Card _cl;
+    private readonly Card _cl;
+    private readonly HandVisual _handVisual;
 
-    public DrawACardCommand(Card card) {        
+    public DrawACardCommand(Card card, HandVisual handVisual) {
         _cl = card;
+        _handVisual = handVisual;
     }
-
+    
     protected override void StartCommandExecution() {
-        // _p.PArea.handVisual.GivePlayerACard(_cl.ca, _cl.UniqueCardID, _handPos, _fast, _fromDeck);
+        _handVisual.GivePlayerACard(_cl);
     }
 }

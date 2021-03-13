@@ -1,4 +1,4 @@
-package issou.logic.random;
+package issou.logic.utils;
 
 import java.util.Random;
 

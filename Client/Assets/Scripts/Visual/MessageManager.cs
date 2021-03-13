@@ -19,7 +19,7 @@ public class MessageManager : MonoBehaviour
 
     public void ShowMessage(string message, float duration, Command com) => StartCoroutine(ShowMessageCoroutine(message, duration, com));
 
-    IEnumerator ShowMessageCoroutine(string message, float duration, Command com)
+    private IEnumerator ShowMessageCoroutine(string message, float duration, Command com)
     {
         messageText.text = message;
         messagePanel.SetActive(true);
