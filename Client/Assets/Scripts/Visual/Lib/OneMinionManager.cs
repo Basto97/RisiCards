@@ -24,7 +24,7 @@ public class OneMinionManager : MonoBehaviour
 
     public void ReadMinionFromAsset(Card card) {
         this.card = card;
-        creatureGraphicImage.sprite = SpritesLoader.Get(card.name);
+        creatureGraphicImage.sprite = SpritesLoader.Get(card.Name);
         attackText.text = card.attack.ToString();
         healthText.text = card.health.ToString();
         if (previewManager == null) return;

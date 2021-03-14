@@ -23,16 +23,15 @@ public class Command {
             PlayFirstCommandFromQueue();
         else
             _playingQueue = false;
-
-        if (GameAPI.instance.gameState!= null && GameAPI.instance.gameState.myTurn)
-            GameAPI.instance.HighLighPlayable();
-    }
-
-    protected static void StopCommands() {
-        CommandQueue.Clear();
+        
+        GameAPI instance = GameAPI.Instance;
+        if (instance == null) return;
+        if (instance.gameState.MyTurn && instance.gameState.State == State.Playing)
+            instance.va.HighlightPlayableCards();
     }
     
-    public static bool CardDrawPending() => CommandQueue.OfType<DrawACardCommand>().Any();
+
+    protected static void StopCommands() =>   CommandQueue.Clear();
 
     private static void PlayFirstCommandFromQueue() {
         _playingQueue = true;

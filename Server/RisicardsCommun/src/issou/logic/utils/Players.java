@@ -11,10 +11,8 @@ public class Players {
     private final List<User> usersReady = new ArrayList<>();
     private Player userPlaying;
 
-
-
-    public void changePlayerPlaying(){
-
+    public void changeUserPlaying(){
+        userPlaying = userPlaying.getOtherPlayer();
     }
 
     // to start the game
@@ -29,7 +27,6 @@ public class Players {
     }
 
     public void randomlyChooseFirstPlayer(){
-        // choose
         boolean first = RandomFactory.aBoolean();
         for(Player player : players.values()){
             if(!first) userPlaying = player; // pour que au début du prochaine tour ce soir l'autre qui joue

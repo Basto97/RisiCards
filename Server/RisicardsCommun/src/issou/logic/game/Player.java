@@ -20,12 +20,12 @@ public class Player implements SerializableSFSType {
     private final Players players;
     private Player otherPlayer;
 
-    public Player(Players players, User user, Hero hero, HeroPower heroPower, Deck deck) {
+    public Player(Players players, User user, GameConfig config) {
         this.players = players;
         this.user = user;
-        this.hero = hero;
-        this.deck = deck;
-        this.heroPower = heroPower;
+        this.hero = config.hero;
+        this.deck = config.deck;
+        this.heroPower = config.heroPower;
         this.manaPool = new ManaPool();
         this.hand = new Hand();
         this.table = new Table();
@@ -72,6 +72,14 @@ public class Player implements SerializableSFSType {
         obj.putSFSObject("heroPower", heroPower.toSFSObject());
         obj.putInt("deckSize", deck.size());
         return obj;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "user=" + user +
+                ", hand=" + hand +
+                '}';
     }
 
     @Override

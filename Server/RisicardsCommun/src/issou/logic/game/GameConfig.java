@@ -16,9 +16,10 @@ public class GameConfig {
     public Deck deck;
 
     public GameConfig(String heroStr, Collection<String> deckStr) {
-        /*
+
         heroStr = "MageNoir"; // DEBUG
         deckStr = Arrays.asList("Risitas,Risitas,Risitas,JohnOfTheGuarden".split(","));
+        /*
         if(!Content.isHero(heroStr))
             throw new SFSException("Hero "+heroStr+" is not an hero.");
         if(deckStr.size() > Content.cardsPerDeck[1])

@@ -23,8 +23,8 @@ public class SpellCardManager : MonoBehaviour {
     }
 
     public void Init(Card c) {
-        nameText.text = c.name;
-        cost.text = c.cost.ToString();
+        nameText.text = c.Name;
+        cost.text = c.baseCost.ToString();
         costModification.text = ('(' + c.costModification + ')').ToString();
         targetType.text = c.targetType;
         foreach (string a in c.effects) 

@@ -14,11 +14,9 @@ public class RisicardsGameExtension extends SFSExtension {
     private final Players players = new Players();
     private final CommunicationManager cm = new CommunicationManager(this, players);
 
-    private GameConfig config = new GameConfig("", new ArrayList<>()); // DEBUG ONLY
-
     @Override
     public void init() {
-        addRequestHandler("readyToStartGame", (user, isfsObject) -> playerReadyToStart(new Player(players, user, config.hero, config.heroPower, config.deck)));
+        addRequestHandler("readyToStartGame", (user, isfsObject) -> playerReadyToStart(new Player(players, user, new GameConfig("", new ArrayList<>()))));
         addRequestHandler("endTurn", (user, isfsObject) -> playerEndTurn(players.get(user)));
     }
 
@@ -35,38 +33,28 @@ public class RisicardsGameExtension extends SFSExtension {
         newTurn();
     }
 
+    //
 
     private void startGame(){
         players.randomlyChooseFirstPlayer();
         cm.sendStartGame();
-
         for (Player player : players.get())
-            for(int i = 0 ; i < Content.initialDraw; i++)
+            for(int i = 0 ; i < Content.initialDraw ; i++)
                 draw(player);
-
         draw(players.getUserPlaying());
         newTurn();
     }
 
-    // helpers
-
     private void draw(Player player){
-        if(!player.canDraw()){
-            // TODO take damages
-            return;
-        }
+        if(!player.canDraw()) return;
         Card c = player.drawCard();
         cm.sendDraw(player, c);
     }
 
     public void newTurn(){
-        players.changePlayerPlaying();
-        Player playerPlaying = players.getUserPlaying();
-
-        playerPlaying.getManaPool().newTurn();
-
-        cm.sendNewTurn(playerPlaying);
-
-        draw(playerPlaying);
+        players.changeUserPlaying();
+        players.getUserPlaying().getManaPool().newTurn();
+        cm.sendNewTurn(players.getUserPlaying());
+        draw(players.getUserPlaying());
     }
 }

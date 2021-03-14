@@ -7,6 +7,7 @@ import issou.collection.assets.CardAsset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Card extends Identifiable implements SerializableSFSType {
 
@@ -40,7 +41,6 @@ public class Card extends Identifiable implements SerializableSFSType {
         this.special = new ArrayList<>(Arrays.asList(card.special));
         this.effects = new ArrayList<>(Arrays.asList(card.effects));
     }
-
     public SFSObject toSFSObject(){
         SFSObject obj = new SFSObject();
         obj.putUtfString("name", name);
@@ -62,7 +62,23 @@ public class Card extends Identifiable implements SerializableSFSType {
         return obj;
     }
 
-    public boolean equals(Card card){
-        return card.name.equals(name);
+    @Override
+    public String toString() {
+        return "Card{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return Objects.equals(name, card.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

@@ -28,10 +28,10 @@ public class OneCardManager : MonoBehaviour {
 
     public void ReadCardFromAsset(Card newCard) {
         this.card = newCard;
-        nameText.text = newCard.name;
-        costText.text = newCard.cost.ToString();
+        nameText.text = newCard.Name;
+        costText.text = newCard.baseCost.ToString();
         descriptionText.text = "Description";
-        cardGraphicImage.sprite = SpritesLoader.Get(newCard.name);
+        cardGraphicImage.sprite = SpritesLoader.Get(newCard.Name);
 
         if (newCard.minion) {
             typeText.text = newCard.type;

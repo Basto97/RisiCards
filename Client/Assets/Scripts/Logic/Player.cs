@@ -1,0 +1,14 @@
+﻿using Sfs2X.Entities.Data;
+
+public class Player : UserState {
+    public Hand Hand { get; }
+
+    public Player(ISFSObject obj) : base(obj) {
+        Hand = new Hand(obj.GetSFSArray("hand"));
+    }
+
+    public bool CanPlayThisCard(Card c) {
+        if (!Hand.Contains(c)) return false;
+        return Pool.currentMana > c.Cost;
+    }
+}

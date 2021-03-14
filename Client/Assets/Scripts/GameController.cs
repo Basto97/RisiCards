@@ -12,21 +12,19 @@ public class GameController : MonoBehaviour {
 	
 	private void Awake() {
 		Application.runInBackground = true;
-		
 		if (SmartFoxConnection.IsInitialized) {
 			_sfs = SmartFoxConnection.Connection;
 		} else {
 			SceneManager.LoadScene("Login");
 			return;
 		}
-		
-		_gameAPI = FindObjectOfType<GameAPI>();
 		_sfs.AddEventListener(SFSEvent.CONNECTION_LOST, evt => {
 			_sfs.RemoveAllEventListeners();
 			if (_shuttingDown) return;
 			SceneManager.LoadScene("Login");
 		});
 		_sfs.AddEventListener(SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
+		_gameAPI = GetComponent<GameAPI>();
 		SmartFoxConnection.Send("readyToStartGame");
 	}
 	private void Update() => _sfs?.ProcessEvents();
@@ -40,6 +38,9 @@ public class GameController : MonoBehaviour {
 				break;
 			case "draw":
 				_gameAPI.Draw((SFSObject)evt.Params["params"]);
+				break;
+			case "opponantDraw":
+				_gameAPI.OpponantDraw((SFSObject)evt.Params["params"]);
 				break;
 			case "newTurn":
 				_gameAPI.NewTurn((SFSObject)evt.Params["params"]);

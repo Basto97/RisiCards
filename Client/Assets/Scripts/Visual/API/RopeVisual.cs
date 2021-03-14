@@ -2,13 +2,16 @@
 using UnityEngine.UI;
 
 public class RopeVisual : MonoBehaviour {
-        public Slider slider;
-        public Text timeText;
-        public Text endTurnText;
+        
+        [SerializeField] private Slider slider;
+        [SerializeField] private Text timeText;
+        [SerializeField] private Text endTurnText;
 
         private float _timeRemaining;
         private float _timeMax;
 
+        public bool Counting { get; set; }
+        
         public void OnNewTurn(bool myTurn, float timeRemaining) {
                 _timeMax = timeRemaining;
                 _timeRemaining = timeRemaining;
@@ -16,6 +19,7 @@ public class RopeVisual : MonoBehaviour {
         }
 
         private void Update() {
+                if (!Counting) return;
                 _timeRemaining -= Time.deltaTime;
                 timeText.text = ((int) _timeRemaining).ToString();
                 slider.value = _timeRemaining / _timeMax;

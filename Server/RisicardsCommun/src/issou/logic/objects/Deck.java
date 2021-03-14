@@ -22,4 +22,18 @@ public class Deck {
     {
         return this.cards.poll();
     }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Deck{");
+        Iterator<Card> it = cards.iterator();
+        while(it.hasNext()){
+            sb.append(it.next());
+            if(it.hasNext())
+                sb.append('i');
+        }
+        sb.append('}');
+        return sb.toString();
+    }
 }

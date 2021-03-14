@@ -4,11 +4,11 @@ using Sfs2X.Entities.Data;
 [Serializable]
 public class Card : Identifiable {
     
-    public string name;
+    public string Name { get; }
     public bool minion;
     public int[] special;
     public string[] effects;
-    public int cost;
+    public int baseCost;
     public int costModification;
     public string hero;
 
@@ -19,14 +19,13 @@ public class Card : Identifiable {
     public string type;
    
     public string targetType;
-    
-    // client variables
-    public bool canBePlayed;
+
+    public int Cost => baseCost + costModification;
 
     public Card(ISFSObject obj) : base(obj){
-        name = obj.GetUtfString("name");
+        Name = obj.GetUtfString("name");
         minion = obj.GetBool("minion");
-        cost = obj.GetInt("cost");
+        baseCost = obj.GetInt("cost");
         costModification = obj.GetInt("costModification");
         special = obj.GetIntArray("special");
         effects = obj.GetUtfStringArray("effects");
