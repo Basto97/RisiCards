@@ -13,11 +13,7 @@ public class OneCardManager : MonoBehaviour {
     public Text typeText;
     public Image cardGraphicImage;
     public Image cardFaceGlowImage;
-
-    private void Awake() {
-        if (card != null)
-            ReadCardFromAsset();
-    }
+    
 
     private bool _canBePlayedNow;
     public bool CanBePlayedNow {
@@ -25,24 +21,26 @@ public class OneCardManager : MonoBehaviour {
         set {
             _canBePlayedNow = value;
             cardFaceGlowImage.enabled = value;
+            if (previewManager != null)
+                previewManager.CanBePlayedNow = value;
         }
     }
 
-    public void ReadCardFromAsset() {
-        nameText.text = card.name;
-        costText.text = card.cost.ToString();
+    public void ReadCardFromAsset(Card newCard) {
+        this.card = newCard;
+        nameText.text = newCard.name;
+        costText.text = newCard.cost.ToString();
         descriptionText.text = "Description";
-        cardGraphicImage.sprite = SpritesLoader.Get(card.name);
+        cardGraphicImage.sprite = SpritesLoader.Get(newCard.name);
 
-        if (card.minion) {
-            typeText.text = card.type;
-            attackText.text = card.attack.ToString();
-            healthText.text = card.health.ToString();
+        if (newCard.minion) {
+            typeText.text = newCard.type;
+            attackText.text = newCard.attack.ToString();
+            healthText.text = newCard.health.ToString();
         }
         else
             typeText.text = "Sort";
         if (previewManager == null) return;
-        previewManager.card = card;
-        previewManager.ReadCardFromAsset();
+        previewManager.ReadCardFromAsset(newCard);
     }
 }

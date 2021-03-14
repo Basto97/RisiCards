@@ -43,4 +43,9 @@ public class PoolVisual : MonoBehaviour {
     public Image[] crystals;
     public Text progressText;
 
+    public void UpdatePoolVisual(ManaPool pool) {
+        TotalCrystals = pool.totalMana;
+        AvailableCrystals = pool.currentMana;
+    }
+
 }

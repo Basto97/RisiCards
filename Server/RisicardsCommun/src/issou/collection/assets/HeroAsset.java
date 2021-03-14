@@ -10,12 +10,10 @@ public class HeroAsset {
     public final String name;
     public final String heroPower;
     public final int health;
-    public final int startMana;
 
     public HeroAsset(JSONObject json) {
         this.name = json.getString("name");
         this.health  = json.getInt("health");
-        this.startMana = json.getInt("startMana");
         this.heroPower = json.getString("heroPower");
     }
 
@@ -24,7 +22,6 @@ public class HeroAsset {
         ret.putUtfString("name", name);
         ret.putUtfString("heroPower", heroPower);
         ret.putInt("health", health);
-        ret.putInt("startMana", startMana);
         return ret;
     }
 }

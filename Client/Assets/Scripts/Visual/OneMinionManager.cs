@@ -10,11 +10,7 @@ public class OneMinionManager : MonoBehaviour
     public Text attackText;
     public Image creatureGraphicImage;
     public Image creatureGlowImage;
-
-    private void Awake() {
-        if (card != null)
-            ReadMinionFromAsset();
-    }
+    
 
     private bool _canAttackNow = false;
     public bool CanAttackNow
@@ -26,13 +22,13 @@ public class OneMinionManager : MonoBehaviour
         }
     }
 
-    public void ReadMinionFromAsset() {
+    public void ReadMinionFromAsset(Card card) {
+        this.card = card;
         creatureGraphicImage.sprite = SpritesLoader.Get(card.name);
         attackText.text = card.attack.ToString();
         healthText.text = card.health.ToString();
         if (previewManager == null) return;
-        previewManager.card = card;
-        previewManager.ReadCardFromAsset();
+        previewManager.ReadCardFromAsset(card);
     }	
 
     public void TakeDamage(int amount, int healthAfter) {

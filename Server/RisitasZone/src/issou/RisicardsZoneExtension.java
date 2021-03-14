@@ -7,18 +7,23 @@ import com.smartfoxserver.v2.exceptions.SFSCreateRoomException;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.smartfoxserver.v2.extensions.SFSExtension;
 import issou.collection.Content;
-import issou.sfs.utils.CreateRisicardsGameRoomSettings;
 
 import java.util.Collection;
 
 public class RisicardsZoneExtension extends SFSExtension {
 
+    private static int i = 0;
     @Override
     public void init() {
         addRequestHandler("content", (user, isfsObject) -> send("content", Content.serializedContent, user));
         addRequestHandler("play", (user, isfsObject) -> {
             try  {
-                CreateRoomSettings cfg = CreateRisicardsGameRoomSettings.get(user);
+                CreateRoomSettings cfg = new CreateRoomSettings();
+                cfg.setName("Partie de "+user.getName()+i+++".");
+                cfg.setGame(true);
+                cfg.setMaxUsers(2);
+                cfg.setDynamic(true);
+                cfg.setExtension(new CreateRoomSettings.RoomExtensionSettings("__lib__","issou.RisicardsGameExtension"));
                 getApi().createRoom(getParentZone(), cfg, null);
             } catch (SFSCreateRoomException e) {
                 e.printStackTrace();
@@ -26,17 +31,7 @@ public class RisicardsZoneExtension extends SFSExtension {
         });
         addRequestHandler("join", ((user, isfsObject) -> {
             Room room = getParentZone().getRoomById(isfsObject.getInt("room"));
-            if(room.getUserList().size() == 2){
-                send("full", new SFSObject(), user);
-                return;
-            }
-
-            String heroStr = isfsObject.getUtfString("hero");
-            Collection<String> deckStr = isfsObject.getUtfStringArray("deck");
-
             try {
-                RisicardsGameExtension ext = (RisicardsGameExtension) room.getExtension();
-                ext.gameConfig.addUserConfig(user, heroStr, deckStr);
                 getApi().joinRoom(user,room);
             } catch (SFSException e) {
                 e.printStackTrace();

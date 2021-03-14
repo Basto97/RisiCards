@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 
 public class HandVisual : MonoBehaviour {
@@ -12,15 +13,16 @@ public class HandVisual : MonoBehaviour {
     public Transform drawPreviewSpot;
     public Transform deckTransform;
 
-    private readonly List<GameObject> _cardsInHand = new List<GameObject>();
-    
+    private readonly List<GameObject> cardsInHand = new List<GameObject>();
+
+    public OneCardManager GetCardWithID(int id) => cardsInHand.Select(card => card.GetComponent<OneCardManager>()).FirstOrDefault(ocm => ocm.card.ID == id);
+
     public void GivePlayerACard(Card c , bool fast = false) {
         GameObject card;
         if (playerHand) {
             card = Instantiate(c.minion ? Prefabs.Instance.minionCard : Prefabs.Instance.spellCard, deckTransform.position, Quaternion.Euler(new Vector3(0f, -179f, 0f)));
             OneCardManager manager = card.GetComponent<OneCardManager>();
-            manager.card = c;
-            manager.ReadCardFromAsset();
+            manager.ReadCardFromAsset(c);
         }
         else {
             card = Instantiate(Prefabs.Instance.cardBack, deckTransform.position, Quaternion.Euler(new Vector3(0f, 0f, 0f)));
@@ -53,36 +55,36 @@ public class HandVisual : MonoBehaviour {
     // UTILS
     
     public void AddCard(GameObject card) {
-        _cardsInHand.Insert(0, card);
+        cardsInHand.Insert(0, card);
         card.transform.SetParent(slots.transform);
         PlaceCardsOnNewSlots();
         UpdatePlacementOfSlots();
     }
     
     public void RemoveCard(GameObject card) {
-        _cardsInHand.Remove(card);
+        cardsInHand.Remove(card);
         PlaceCardsOnNewSlots();
         UpdatePlacementOfSlots();
     }
     
     public void RemoveCardAtIndex(int index) {
-        _cardsInHand.RemoveAt(index);
+        cardsInHand.RemoveAt(index);
         PlaceCardsOnNewSlots();
         UpdatePlacementOfSlots();
     }
 
     private void UpdatePlacementOfSlots() {
-        float posX = _cardsInHand.Count > 0
-            ? (slots.Children[0].transform.localPosition.x - slots.Children[_cardsInHand.Count - 1].transform.localPosition.x) / 2f
+        float posX = cardsInHand.Count > 0
+            ? (slots.Children[0].transform.localPosition.x - slots.Children[cardsInHand.Count - 1].transform.localPosition.x) / 2f
             : 0f;
         slots.gameObject.transform.DOLocalMoveX(posX, 0.3f);
     }
     
     private void PlaceCardsOnNewSlots() {
-        foreach (GameObject g in _cardsInHand) {
-            g.transform.DOLocalMoveX(slots.Children[_cardsInHand.IndexOf(g)].transform.localPosition.x, 0.3f);
+        foreach (GameObject g in cardsInHand) {
+            g.transform.DOLocalMoveX(slots.Children[cardsInHand.IndexOf(g)].transform.localPosition.x, 0.3f);
             WhereIsTheCardOrCreature w = g.GetComponent<WhereIsTheCardOrCreature>();
-            w.Slot = _cardsInHand.IndexOf(g);
+            w.Slot = cardsInHand.IndexOf(g);
             w.SetHandSortingOrder();
         }
     }

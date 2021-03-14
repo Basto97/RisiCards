@@ -2,36 +2,45 @@
 
 public class State {
     
-    public PlayerState opponnant;
+    public OpponantState opponnant;
     public PlayerState player;
-    public Hand handPlayer;
     public bool myTurn;
 
-    public State(ISFSObject publicState) {
-        ISFSArray publicStates = publicState.GetSFSArray("players");
-        for (int i = 0; i < publicStates.Size(); i++) {
-            ISFSObject playerState = publicStates.GetSFSObject(i);
-            if (playerState.GetUtfString("player") == SmartFoxConnection.sfs.MySelf.Name)
-                player = new PlayerState(playerState);
-            else 
-                opponnant = new PlayerState(playerState);
-        }
+    public State(ISFSObject state) {
+        
     }
+
+    public PlayerState userPlaying => myTurn ? player : opponnant;
 }
 
 public class PlayerState {
     public Hero hero;
     public HeroPower heroPower;
     public ManaPool manaPool;
+    public Hand handPlayer; 
     public int deckSize;
-    public int handSize;
 
     public PlayerState(ISFSObject obj) {
         hero = new Hero(obj.GetSFSObject("hero"));
-        
         heroPower = new HeroPower(obj.GetSFSObject("heroPower"));
         manaPool = new ManaPool(obj.GetSFSObject("manaPool"));
         deckSize = obj.GetInt("deckSize");
+        handPlayer = new Hand(obj.GetSFSObject("hand"));
+    }
+}
+
+public class OpponantState {
+    public Hero hero;
+    public HeroPower heroPower;
+    public ManaPool manaPool;
+    public int handSize;
+    public int deckSize;
+
+    public OpponantState(ISFSObject obj) {
+        hero = new Hero(obj.GetSFSObject("hero"));
+        heroPower = new HeroPower(obj.GetSFSObject("heroPower"));
+        manaPool = new ManaPool(obj.GetSFSObject("manaPool"));
         handSize = obj.GetInt("handSize");
+        deckSize = obj.GetInt("deckSize");
     }
 }

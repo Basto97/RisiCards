@@ -5,35 +5,37 @@ import com.smartfoxserver.v2.entities.data.SFSObject;
 
 public class ManaPool {
 
-    public int totalMana;
-    public int currentMana;
+    private int totalMana;
+    private int currentMana;
 
-    public ManaPool(int startMana) {
-        totalMana = startMana;
-        currentMana = startMana;
+    public ManaPool() {
+        totalMana = 0;
+        currentMana = 0;
     }
 
-    public void increaseMana(int amount)
-    {
+    private void increaseMana(int amount) {
         currentMana = Math.min(currentMana +amount, 10);
     }
-    public void increaseManaMax(int amount)
-    {
-        totalMana = Math.min(totalMana +amount, 10 /*Constantes.MANA_MAX*/);
+    private void increaseManaMax(int amount) {
+        totalMana = Math.min(totalMana +amount, 10);
     }
-    public void decreaseMana(int amount)
+    private void decreaseMana(int amount)
     {
         currentMana = Math.max(currentMana +amount, 0);
     }
-    public void decreaseManaMax(int amount)
+    private void decreaseManaMax(int amount)
     {
         totalMana = Math.max(totalMana +amount, 0);
     }
-    public void resetCurrentMana()
+    private void resetCurrentMana()
     {
         currentMana = totalMana;
     }
 
+    public void newTurn(){
+        increaseManaMax(1);
+        resetCurrentMana();
+    }
 
     public ISFSObject toSFSObject() {
         ISFSObject obj = new SFSObject();

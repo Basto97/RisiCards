@@ -148,8 +148,4 @@ public class Content {
     public static HeroPower getHeroPowerFromHeroName(String name) {
         return new HeroPower(heroPowers.get(heros.get(name).heroPower));
     }
-
-    public static int getStartMana(String heroName){
-        return heros.get(heroName).startMana;
-    }
 }

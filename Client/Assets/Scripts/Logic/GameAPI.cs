@@ -1,19 +1,21 @@
 ﻿using Sfs2X.Entities.Data;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameAPI : MonoBehaviour {
-    public static GameAPI Instance;
-    
-    public PlayerVisual player;
-    public PlayerVisual opponant;
-    public RopeVisual rope;
-
+    public static GameAPI instance;
     public State gameState;
 
-    private void Awake() => Instance = this;
+    public PlayersVisual playersVisual;
+    public RopeVisual ropeVisual;
+
+    private void Awake() => instance = this;
     
     public void HighLighPlayable() {
-        
+        foreach (var c in gameState.handPlayer.cards) {
+            c.canBePlayed =  c.cost + c.costModification <= gameState.player.manaPool.currentMana
+            playersVisual.Player.handVisual.GetCardWithID(c.ID).CanBePlayedNow =;
+        }
     }
     
     // CLIENT CALLS
@@ -26,23 +28,36 @@ public class GameAPI : MonoBehaviour {
     
     public void NewGame(SFSObject publicState) {
         gameState = new State(publicState);
-        player.Init(gameState.player);
-        opponant.Init(gameState.opponnant);
+        playersVisual.Player.Init(gameState.player);
+        playersVisual.Opponant.Init(gameState.opponnant);
     }
 
     public void Draw(SFSObject obj) {
         int newDeckSize = obj.GetInt("newDeckSize");
-        if (obj.GetInt("user").Equals(SmartFoxConnection.sfs.MySelf.Id)) 
-            new DrawACardCommand(new Card(obj.GetSFSObject("card")), newDeckSize, player.handVisual, player.deckVisual).AddToQueue();
-        else 
-            new DrawACardCommand(null,newDeckSize, opponant.handVisual,opponant.deckVisual).AddToQueue();
+        if (obj.GetInt("user").Equals(SmartFoxConnection.sfs.MySelf.Id)) {
+            gameState.player.deckSize--;
+            gameState.player.handSize++;
+            Card drawed = new Card(obj.GetSFSObject("card"));
+            gameState.handPlayer.AddCard(drawed);
+            new DrawACardCommand(drawed, newDeckSize,  playersVisual.Player.handVisual,  playersVisual.Player.deckVisual).AddToQueue();
+        } else {
+            gameState.opponnant.deckSize--;
+            gameState.opponnant.handSize++;
+            new DrawACardCommand(null,newDeckSize, playersVisual.Opponant.handVisual, playersVisual.Opponant.deckVisual).AddToQueue();
+        }
+            
     }
 
     public void NewTurn(SFSObject obj) {
         gameState.myTurn = obj.GetInt("user").Equals(SmartFoxConnection.sfs.MySelf.Id);
-        float time = obj.GetFloat("time");
+        
+        ropeVisual.OnNewTurn(gameState.myTurn, obj.GetFloat("time"));
+
+        ManaPool pool = new ManaPool(obj.GetSFSObject("pool"));
+        gameState.userPlaying.manaPool = pool;
+        playersVisual.UserPlaying.poolVisual.UpdatePoolVisual(pool);
+        
         new ShowMessageCommand(gameState.myTurn ? "Votre tour." : "Tour de l'adversaire", 1.5f).AddToQueue();
-        rope.OnNewTurn(gameState.myTurn, time);
-    } 
-    
+    }
+
 }

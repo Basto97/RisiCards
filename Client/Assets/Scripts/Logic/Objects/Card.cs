@@ -19,6 +19,9 @@ public class Card : Identifiable {
     public string type;
    
     public string targetType;
+    
+    // client variables
+    public bool canBePlayed;
 
     public Card(ISFSObject obj) : base(obj){
         name = obj.GetUtfString("name");

@@ -10,4 +10,8 @@ public class Hand {
         for(int i = 0 ; i <arr.Count; i++)
             cards.Add(new Card(arr.GetSFSObject(i)));
     }
+
+    public void AddCard(Card c) {
+        cards.Add(c);
+    }
 }

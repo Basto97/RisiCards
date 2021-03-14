@@ -24,8 +24,8 @@ public class Command {
         else
             _playingQueue = false;
 
-        if (GameAPI.Instance.gameState!= null && GameAPI.Instance.gameState.myTurn)
-            GameAPI.Instance.HighLighPlayable();
+        if (GameAPI.instance.gameState!= null && GameAPI.instance.gameState.myTurn)
+            GameAPI.instance.HighLighPlayable();
     }
 
     protected static void StopCommands() {

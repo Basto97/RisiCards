@@ -2,7 +2,6 @@
 using UnityEngine.SceneManagement;
 using Sfs2X;
 using Sfs2X.Core;
-using Sfs2X.Entities;
 using Sfs2X.Entities.Data;
 
 public class GameController : MonoBehaviour {
