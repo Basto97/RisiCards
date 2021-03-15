@@ -1,40 +1,42 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using Sfs2X;
-using Sfs2X.Core;
-using Sfs2X.Entities.Data;
+﻿using Sfs2X.Entities.Data;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameController : MonoBehaviour {
-	
-	private GameAPI _gameAPI;
+    
+    [SerializeField] private VisualAPI va;
+    private GameState _gs;
 
-	private void Awake() {
-		_gameAPI = GetComponent<GameAPI>();
-		/*
-		_sfs.AddEventListener(SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
-	
-		SmartFoxConnection.Send("readyToStartGame");
-		*/
-	}
-
-
-	private void OnExtensionResponse(BaseEvent evt) {
-		string cmd = (string)evt.Params["cmd"];
-		switch (cmd) {
-			case "startGame":
-				_gameAPI.NewGame((SFSObject)evt.Params["params"]);
-				break;
-			case "draw":
-				_gameAPI.Draw((SFSObject)evt.Params["params"]);
-				break;
-			case "opponantDraw":
-				_gameAPI.OpponantDraw((SFSObject)evt.Params["params"]);
-				break;
-			case "newTurn":
-				_gameAPI.NewTurn((SFSObject)evt.Params["params"]);
-				break;
-		}
-	}
-
-	public void OnLeaveGameButtonClick() => new LeaveGameCommand().AddToQueue();
+    private void Awake() {
+        Command.executionQueueComplete += () => {
+            if (_gs != null && _gs.MyTurn && _gs.State == State.Playing)
+                va.HighlightPlayableCards();
+        };
+        SFS.OnExtension("startGame", o => {
+            _gs = new GameState(o);
+            va.Init(_gs);
+        });
+        SFS.OnExtension("draw", o => {
+            Card drawed = new Card(o.GetSFSObject("card"));
+            _gs.Player.DeckSize--;
+            _gs.Player.Hand.AddCard(drawed);
+            va.Draw();
+        });
+        SFS.OnExtension("opponantDraw", o => {
+            _gs.Opponant.DeckSize--;
+            _gs.Opponant.HandSize++;
+            va.OpponantDraw();
+        });
+        SFS.OnExtension("newTurn", o => {
+            // gs.MyTurn = obj.GetInt("user").Equals(SmartFoxConnection.sfs.MySelf.Id);
+            _gs.TimeToPlay = o.GetFloat("time");
+            _gs.UserPlaying.Pool = new Pool(o.GetSFSObject("pool"));
+            va.NewTurn();
+        });
+        
+        SFS.Req("readyToStartGame").Send();
+    }
+    
+    public void OnLeaveGameButtonClick() => new LeaveGameCommand().AddToQueue();
+    public void OnEndTurnButtonClick() => SFS.Req("endTurn").Send();
 }

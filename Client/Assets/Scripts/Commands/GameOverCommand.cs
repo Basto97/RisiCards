@@ -1,5 +1,5 @@
 ﻿public class GameOverCommand : Command{
-/*
+
     private Player _looser;
 
     public GameOverCommand(Player looser)
@@ -9,6 +9,6 @@
 
     protected override void StartCommandExecution()
     {
-        _looser.PArea.Portrait.Explode();
-    }*/
+        // _looser.PArea.Portrait.Explode();
+    }
 }

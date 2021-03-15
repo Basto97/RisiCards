@@ -43,9 +43,9 @@ public class HandVisual : MonoBehaviour {
                 ? card.transform.DORotate(Vector3.zero, GlobalSettings.CardTransitionTime)
                 : card.transform.DORotate(card.transform.eulerAngles, GlobalSettings.CardTransitionTime));
             s.AppendInterval(GlobalSettings.CardPreviewTime);
-            s.Append(card.transform.DOLocalMove(slots.Children[0].transform.localPosition, GlobalSettings.CardTransitionTime));
+            s.Append(card.transform.DOLocalMove(slots.children[0].transform.localPosition, GlobalSettings.CardTransitionTime));
         } else {
-            s.Append(card.transform.DOLocalMove(slots.Children[0].transform.localPosition, GlobalSettings.CardTransitionTimeFast));
+            s.Append(card.transform.DOLocalMove(slots.children[0].transform.localPosition, GlobalSettings.CardTransitionTimeFast));
             if (playerHand)    
                 s.Insert(0f,card.transform.DORotate(Vector3.zero, GlobalSettings.CardTransitionTimeFast)); 
         }
@@ -75,14 +75,14 @@ public class HandVisual : MonoBehaviour {
 
     private void UpdatePlacementOfSlots() {
         float posX = cardsInHand.Count > 0
-            ? (slots.Children[0].transform.localPosition.x - slots.Children[cardsInHand.Count - 1].transform.localPosition.x) / 2f
+            ? (slots.children[0].transform.localPosition.x - slots.children[cardsInHand.Count - 1].transform.localPosition.x) / 2f
             : 0f;
         slots.gameObject.transform.DOLocalMoveX(posX, 0.3f);
     }
     
     private void PlaceCardsOnNewSlots() {
         foreach (GameObject g in cardsInHand) {
-            g.transform.DOLocalMoveX(slots.Children[cardsInHand.IndexOf(g)].transform.localPosition.x, 0.3f);
+            g.transform.DOLocalMoveX(slots.children[cardsInHand.IndexOf(g)].transform.localPosition.x, 0.3f);
             WhereIsTheCardOrCreature w = g.GetComponent<WhereIsTheCardOrCreature>();
             w.Slot = cardsInHand.IndexOf(g);
             w.SetHandSortingOrder();

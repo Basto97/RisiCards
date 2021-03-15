@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Sfs2X;
-using Sfs2X.Core;
 using Sfs2X.Entities;
 using Sfs2X.Entities.Data;
 using Sfs2X.Entities.Managers;
@@ -17,8 +16,8 @@ public class SFS : MonoBehaviour {
     public int port = 9933;
     public string zone = "Risicards";
     
-    private static SFS _instance; 
-    public static SmartFox _sfs;
+    private static SFS _instance;
+    private static SmartFox _sfs;
     
     private static bool _shuttingDown;
     private static bool _firstAwake = true;
@@ -45,6 +44,7 @@ public class SFS : MonoBehaviour {
             _sfs.RemoveAllEventListeners();
             if(!_shuttingDown) SceneManager.LoadScene(_sceneToLoadWhenLooseConnection);
         });
+        actions.Clear();
         _sfs.AddEventListener(EXTENSION_RESPONSE, evt =>  actions[(string)evt.Params["cmd"]]?.Invoke((SFSObject)evt.Params["params"]));
     }
     
@@ -73,12 +73,11 @@ public class SFS : MonoBehaviour {
     public static User MySelf => _sfs.MySelf;
     public static IRoomManager RoomManager => _sfs.RoomManager;
 
-
     // SEND
 
-    public static void SendJoinRoom(string roomName) => _sfs.Send(new JoinRoomRequest(roomName));
+    public static void SendJoinRoom(string roomNameOrId) => _sfs.Send(new JoinRoomRequest(roomNameOrId));
+    public static void SendLeaveRoom() => _sfs.Send(new LeaveRoomRequest());
     public static ISFSend Req(string cmd) => new SFSend(cmd);
-    // public static void Send(IRequest request) => _sfs.Send(request, new SFSObject(), _sfs.LastJoinedRoom);
 
 
     // EVENTS
@@ -93,19 +92,8 @@ public class SFS : MonoBehaviour {
         _sfs.AddEventListener(ROOM_REMOVE, evt => roomRemoved.Invoke((Room)evt.Params["room"]));
     
     private static Dictionary<string, Action<ISFSObject>> actions = new Dictionary<string, Action<ISFSObject>>();
-    public static void OnExtensionCmd(string cmd, Action<ISFSObject> response) => actions.Add(cmd, response);
-    
-    
+    public static void OnExtension(string cmd, Action<ISFSObject> response) => actions.Add(cmd, response);
 
-    public static void DebugEvent(BaseEvent evt) {
-        Debug.Log("Target : "+evt.Target);
-        Debug.Log("Type : "+evt.Type);
-        foreach(KeyValuePair<string, object> entry in evt.Params)
-        {
-            Debug.Log(entry.Key+" "+entry.Value);
-        }
-    }
-    
     // Stuff
     
     private class SFSend : ISFSend {
@@ -140,5 +128,4 @@ public class SFS : MonoBehaviour {
         ISFSend Str(string key, string value);
         ISFSend StrA(string key, string[] value);
     }
-    
 }
