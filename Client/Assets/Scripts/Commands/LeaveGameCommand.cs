@@ -6,8 +6,8 @@ public class LeaveGameCommand : Command {
     protected override void StartCommandExecution() {
         StopCommands();
         CommandExecutionComplete();
-        SmartFoxConnection.sfs.Send(new LeaveRoomRequest());
-        SmartFoxConnection.sfs.RemoveAllEventListeners();
+        // SmartFoxConnection.Send(new LeaveRoomRequest());
+        // SmartFoxConnection.RemoveAllEventListeners();
         SceneManager.LoadScene("Lobby");
     }
 }

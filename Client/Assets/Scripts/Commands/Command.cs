@@ -26,7 +26,7 @@ public class Command {
         
         GameAPI instance = GameAPI.Instance;
         if (instance == null) return;
-        if (instance.gameState.MyTurn && instance.gameState.State == State.Playing)
+        if (instance.gs.MyTurn && instance.gs.State == State.Playing)
             instance.va.HighlightPlayableCards();
     }
     

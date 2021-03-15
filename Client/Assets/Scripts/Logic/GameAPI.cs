@@ -5,7 +5,7 @@ public class GameAPI : MonoBehaviour {
 
     public static GameAPI Instance;
     
-    public GameState gameState;
+    public GameState gs;
     public VisualAPI va;
 
     private void Awake() => Instance = this;
@@ -13,34 +13,34 @@ public class GameAPI : MonoBehaviour {
     // CLIENT CALLS
 
     public void EndTurn() {
-        SmartFoxConnection.Send("endTurn");
+        // SmartFoxConnection.Send("endTurn");
     }
 
     // SERVER CALLS
     
     public void NewGame(SFSObject publicState) {
-        gameState = new GameState(publicState);
-        va.Init(gameState);
+        gs = new GameState(publicState);
+        va.Init(gs);
     }
 
     public void Draw(SFSObject obj) {
         Card drawed = new Card(obj.GetSFSObject("card"));
-        gameState.Player.DeckSize--;
-        gameState.Player.Hand.AddCard(drawed);
+        gs.Player.DeckSize--;
+        gs.Player.Hand.AddCard(drawed);
         va.Draw();
     }
 
     public void OpponantDraw(SFSObject obj) {
-        gameState.Opponant.DeckSize--;
-        gameState.Opponant.HandSize++;
+        gs.Opponant.DeckSize--;
+        gs.Opponant.HandSize++;
         va.OpponantDraw();
     }
 
     public void NewTurn(SFSObject obj) {
-        gameState.MyTurn = obj.GetInt("user").Equals(SmartFoxConnection.sfs.MySelf.Id);
-        gameState.TimeToPlay = obj.GetFloat("time");
+        // gs.MyTurn = obj.GetInt("user").Equals(SmartFoxConnection.sfs.MySelf.Id);
+        gs.TimeToPlay = obj.GetFloat("time");
         
-        gameState.UserPlaying.Pool = new Pool(obj.GetSFSObject("pool"));
+        gs.UserPlaying.Pool = new Pool(obj.GetSFSObject("pool"));
 
         va.NewTurn();
     }
