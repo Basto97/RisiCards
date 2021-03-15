@@ -14,13 +14,6 @@ public abstract class Command {
             PlayFirstCommandFromQueue();
     }
     
-    private static void PlayFirstCommandFromQueue() {
-        _playingQueue = true;
-        CommandQueue.Dequeue().StartCommandExecution();
-    }
-    
-    protected abstract void StartCommandExecution();
-
     public static void CommandExecutionComplete() {
         if (CommandQueue.Count > 0) {
             PlayFirstCommandFromQueue();
@@ -29,8 +22,15 @@ public abstract class Command {
         _playingQueue = false;
         executionQueueComplete?.Invoke();
     }
-
-    public static void CancelCommands() {
+    
+    private static void PlayFirstCommandFromQueue() {
+        _playingQueue = true;
+        CommandQueue.Dequeue().StartCommandExecution();
+    }
+    
+    protected abstract void StartCommandExecution();
+    
+    protected static void CancelCommands() {
         CommandQueue.Clear();
         CommandExecutionComplete();
     }

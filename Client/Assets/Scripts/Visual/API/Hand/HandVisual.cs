@@ -5,23 +5,24 @@ using DG.Tweening;
 
 public class HandVisual : MonoBehaviour {
 
-    public string owner = "Player";
     
-    public bool playerHand = true;
     public SameDistanceChildren slots;
     
     public Transform drawPreviewSpot;
     public Transform deckTransform;
 
-    private readonly List<GameObject> cardsInHand = new List<GameObject>();
+    private readonly List<GameObject> _cardsInHand = new List<GameObject>();
 
-    public OneCardManager GetCardWithID(int id) => cardsInHand.Select(card => card.GetComponent<OneCardManager>()).FirstOrDefault(ocm => ocm.card.ID == id);
+    private bool _playerHand;
+
+    public void Init(bool playerHand) =>  _playerHand = playerHand;
+    public CardManager GetCardWithID(int id) => _cardsInHand.Select(card => card.GetComponent<CardManager>()).FirstOrDefault(ocm => ocm.card.ID == id);
 
     public void GivePlayerACard(Card c , bool fast = false) {
         GameObject card;
-        if (playerHand) {
+        if (_playerHand) {
             card = Instantiate(c.minion ? Prefabs.Instance.minionCard : Prefabs.Instance.spellCard, deckTransform.position, Quaternion.Euler(new Vector3(0f, -179f, 0f)));
-            OneCardManager manager = card.GetComponent<OneCardManager>();
+            CardManager manager = card.GetComponent<CardManager>();
             manager.ReadCardFromAsset(c);
         }
         else {
@@ -33,68 +34,66 @@ public class HandVisual : MonoBehaviour {
     private void GiveUserACard(GameObject card, bool fast) {
         AddCard(card);
         
-        WhereIsTheCardOrCreature w = card.GetComponent<WhereIsTheCardOrCreature>();
+        VisualStateManager w = card.GetComponent<VisualStateManager>();
         w.BringToFront();
         w.Slot = 0;
         Sequence s = DOTween.Sequence();
         if (!fast) {
             s.Append(card.transform.DOMove(drawPreviewSpot.position, GlobalSettings.CardTransitionTime));
-            s.Insert(0f, playerHand
+            s.Insert(0f, _playerHand
                 ? card.transform.DORotate(Vector3.zero, GlobalSettings.CardTransitionTime)
                 : card.transform.DORotate(card.transform.eulerAngles, GlobalSettings.CardTransitionTime));
             s.AppendInterval(GlobalSettings.CardPreviewTime);
             s.Append(card.transform.DOLocalMove(slots.children[0].transform.localPosition, GlobalSettings.CardTransitionTime));
         } else {
             s.Append(card.transform.DOLocalMove(slots.children[0].transform.localPosition, GlobalSettings.CardTransitionTimeFast));
-            if (playerHand)    
+            if (_playerHand)    
                 s.Insert(0f,card.transform.DORotate(Vector3.zero, GlobalSettings.CardTransitionTimeFast)); 
         }
-        s.OnComplete(()=>ChangeLastCardStatusToInHand( w));
+        s.OnComplete(() => {
+            w.VisualState = _playerHand ? VisualStates.LowHand : VisualStates.TopHand;
+            w.SetHandSortingOrder();
+            Command.CommandExecutionComplete();
+        });
     }
 
     // UTILS
     
     public void AddCard(GameObject card) {
-        cardsInHand.Insert(0, card);
+        _cardsInHand.Insert(0, card);
         card.transform.SetParent(slots.transform);
         PlaceCardsOnNewSlots();
         UpdatePlacementOfSlots();
     }
     
     public void RemoveCard(GameObject card) {
-        cardsInHand.Remove(card);
+        _cardsInHand.Remove(card);
         PlaceCardsOnNewSlots();
         UpdatePlacementOfSlots();
     }
     
     public void RemoveCardAtIndex(int index) {
-        cardsInHand.RemoveAt(index);
+        _cardsInHand.RemoveAt(index);
         PlaceCardsOnNewSlots();
         UpdatePlacementOfSlots();
     }
 
     private void UpdatePlacementOfSlots() {
-        float posX = cardsInHand.Count > 0
-            ? (slots.children[0].transform.localPosition.x - slots.children[cardsInHand.Count - 1].transform.localPosition.x) / 2f
+        float posX = _cardsInHand.Count > 0
+            ? (slots.children[0].transform.localPosition.x - slots.children[_cardsInHand.Count - 1].transform.localPosition.x) / 2f
             : 0f;
         slots.gameObject.transform.DOLocalMoveX(posX, 0.3f);
     }
     
     private void PlaceCardsOnNewSlots() {
-        foreach (GameObject g in cardsInHand) {
-            g.transform.DOLocalMoveX(slots.children[cardsInHand.IndexOf(g)].transform.localPosition.x, 0.3f);
-            WhereIsTheCardOrCreature w = g.GetComponent<WhereIsTheCardOrCreature>();
-            w.Slot = cardsInHand.IndexOf(g);
+        foreach (GameObject g in _cardsInHand) {
+            g.transform.DOLocalMoveX(slots.children[_cardsInHand.IndexOf(g)].transform.localPosition.x, 0.3f);
+            VisualStateManager w = g.GetComponent<VisualStateManager>();
+            w.Slot = _cardsInHand.IndexOf(g);
             w.SetHandSortingOrder();
         }
     }
-    
-    private void ChangeLastCardStatusToInHand(WhereIsTheCardOrCreature w) {
-        w.VisualState = owner == "Player" ? VisualStates.LowHand : VisualStates.TopHand;
-        w.SetHandSortingOrder();
-        Command.CommandExecutionComplete();
-    }
-    
+
     /*
     public void PlayASpellFromHand(GameObject cardVisual) {
         Command.CommandExecutionComplete();

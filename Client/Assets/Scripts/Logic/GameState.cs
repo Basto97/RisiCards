@@ -1,25 +1,20 @@
 ﻿using Sfs2X.Entities.Data;
 
-public enum State {
-    Playing,
-    Finished
-}
+
 
 public class GameState {
     public Player Player { get; }
     public Opponant Opponant { get; }
-    public bool MyTurn { get; set; }
+    public bool PlayerTurn { get; set; }
     public float TimeToPlay { get; set; }
-    public State State { get; }
 
     public GameState(ISFSObject state) {
         Player = new Player(state.GetSFSObject("player"));
         Opponant = new Opponant(state.GetSFSObject("opponant"));
-        MyTurn = state.GetBool("first");
-        State = State.Playing;
+        PlayerTurn = state.GetBool("first");
     }
 
-    public UserState UserPlaying => MyTurn ? (UserState) Player : Opponant;
+    public UserState UserPlaying => PlayerTurn ? (UserState) Player : Opponant;
 }
 
 public abstract class UserState {
@@ -37,7 +32,7 @@ public abstract class UserState {
 }
 
 public class Opponant : UserState {
-    public int HandSize { get; set; }
+    public int HandSize;
 
     public Opponant(ISFSObject obj) : base(obj) {
         HandSize = obj.GetInt("handSize");

@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class OneCardManager : MonoBehaviour {
+public class CardManager : MonoBehaviour {
 
     public Card card;
-    public OneCardManager previewManager;
+    public CardManager previewManager;
     public Text nameText;
     public Text costText;
     public Text descriptionText;
@@ -14,12 +14,8 @@ public class OneCardManager : MonoBehaviour {
     public Image cardGraphicImage;
     public Image cardFaceGlowImage;
     
-
-    private bool _canBePlayedNow;
     public bool CanBePlayedNow {
-        get => _canBePlayedNow;
         set {
-            _canBePlayedNow = value;
             cardFaceGlowImage.enabled = value;
             if (previewManager != null)
                 previewManager.CanBePlayedNow = value;
@@ -27,7 +23,7 @@ public class OneCardManager : MonoBehaviour {
     }
 
     public void ReadCardFromAsset(Card newCard) {
-        this.card = newCard;
+        card = newCard;
         nameText.text = newCard.Name;
         costText.text = newCard.baseCost.ToString();
         descriptionText.text = "Description";

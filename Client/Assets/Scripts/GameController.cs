@@ -1,37 +1,37 @@
-﻿using Sfs2X.Entities.Data;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
 public class GameController : MonoBehaviour {
     
-    [SerializeField] private VisualAPI va;
-    private GameState _gs;
+    private VisualAPI _va;
+    private GameAPI _ga;
 
     private void Awake() {
+        _va = FindObjectOfType<VisualAPI>();
+        _ga = new GameAPI();
+        
         Command.executionQueueComplete += () => {
-            if (_gs != null && _gs.MyTurn && _gs.State == State.Playing)
-                va.HighlightPlayableCards();
+            if (_ga.WaitingUserPlay)
+                _va.HighlightPlayableCards(_ga.State.Player);
         };
         SFS.OnExtension("startGame", o => {
-            _gs = new GameState(o);
-            va.Init(_gs);
+            _ga.StartGame(new GameState(o));
+            _va.StartGame(_ga.State);
         });
         SFS.OnExtension("draw", o => {
             Card drawed = new Card(o.GetSFSObject("card"));
-            _gs.Player.DeckSize--;
-            _gs.Player.Hand.AddCard(drawed);
-            va.Draw();
+            _ga.draw(drawed);
+            _va.Draw(drawed, _ga.State.Player.DeckSize);
         });
         SFS.OnExtension("opponantDraw", o => {
-            _gs.Opponant.DeckSize--;
-            _gs.Opponant.HandSize++;
-            va.OpponantDraw();
+            _ga.opponantDraw();
+            _va.OpponantDraw(_ga.State.Opponant.DeckSize);
         });
         SFS.OnExtension("newTurn", o => {
-            // gs.MyTurn = obj.GetInt("user").Equals(SmartFoxConnection.sfs.MySelf.Id);
-            _gs.TimeToPlay = o.GetFloat("time");
-            _gs.UserPlaying.Pool = new Pool(o.GetSFSObject("pool"));
-            va.NewTurn();
+            bool playerTurn = o.GetInt("user").Equals(SFS.MySelf.Id);
+            float timeToPlay = o.GetFloat("time");
+            Pool newPool = new Pool(o.GetSFSObject("pool"));
+            _va.NewTurn(playerTurn, timeToPlay, newPool);
+            _ga.NewTurn(playerTurn, timeToPlay, newPool);
         });
         
         SFS.Req("readyToStartGame").Send();

@@ -8,8 +8,7 @@ public class DelayCommand : Command
         _delay = timeToWait;    
     }
 
-    protected override void StartCommandExecution()
-    {
+    protected override void StartCommandExecution() {
         Sequence s = DOTween.Sequence();
         s.PrependInterval(_delay);
         s.OnComplete(CommandExecutionComplete);

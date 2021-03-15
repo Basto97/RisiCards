@@ -4,8 +4,9 @@ using UnityEngine.UI;
 public class PoolVisual : MonoBehaviour {
     
     private int _totalCrystals;
+    private int _availableCrystals;
+    
     public int TotalCrystals {
-        get => _totalCrystals;
         set {
             if (value > crystals.Length)
                 _totalCrystals = crystals.Length;
@@ -22,10 +23,8 @@ public class PoolVisual : MonoBehaviour {
             progressText.text = $"{_availableCrystals.ToString()}/{_totalCrystals.ToString()}";
         }
     }
-
-    private int _availableCrystals;
+    
     public int AvailableCrystals {
-        get => _availableCrystals;
         set {
             if (value > _totalCrystals)
                 _availableCrystals = _totalCrystals;
@@ -36,16 +35,14 @@ public class PoolVisual : MonoBehaviour {
             for (int i = 0; i < _totalCrystals; i++) 
                 crystals[i].color = i < _availableCrystals ? Color.white : Color.gray;
             progressText.text = $"{_availableCrystals.ToString()}/{_totalCrystals.ToString()}";
-
         }
     }
     
-    public Image[] crystals;
-    public Text progressText;
+    [SerializeField] private Image[] crystals;
+    [SerializeField] private Text progressText;
 
     public void UpdatePoolVisual(Pool pool) {
         TotalCrystals = pool.totalMana;
         AvailableCrystals = pool.currentMana;
     }
-
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class OneMinionManager : MonoBehaviour 
 {
     public Card card;
-    public OneCardManager previewManager;
+    public CardManager previewManager;
     public Text healthText;
     public Text attackText;
     public Image creatureGraphicImage;
