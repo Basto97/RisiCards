@@ -3,8 +3,8 @@
 public class Player : UserState {
     public Hand Hand { get; }
 
-    public Player(ISFSObject obj) : base(obj) {
-        Hand = new Hand(obj.GetSFSObject("hand"));
+    public Player(ISFSObject player, ISFSObject hand) : base(player) {
+        Hand = new Hand(hand);
     }
 
     public bool CanPlayThisCard(Card c) {

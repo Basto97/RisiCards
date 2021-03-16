@@ -13,6 +13,7 @@ public class RopeVisual : MonoBehaviour {
         public bool Counting { get; set; }
         
         public void OnNewTurn(bool myTurn, float timeRemaining) {
+                Counting = true;
                 _timeMax = timeRemaining;
                 _timeRemaining = timeRemaining;
                 endTurnText.text = myTurn ? "Fin de tour" : "Tour de l'adversaire";

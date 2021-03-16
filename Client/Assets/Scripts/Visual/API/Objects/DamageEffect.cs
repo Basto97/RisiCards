@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
-using UnityEngine.Serialization;
 
 public class DamageEffect : MonoBehaviour {
     

@@ -7,7 +7,7 @@ public class GameState {
     public float TimeToPlay { get; set; }
 
     public GameState(ISFSObject state) {
-        Player = new Player(state.GetSFSObject("player"));
+        Player = new Player(state.GetSFSObject("player"), state.GetSFSObject("hand"));
         Opponant = new Opponant(state.GetSFSObject("opponant"));
         PlayerTurn = state.GetBool("playerTurn");
     }

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class PlayACreatureCommand : Command
+﻿public class PlayACreatureCommand : Command
 {
     
     private Card c;

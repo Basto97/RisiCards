@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [ExecuteInEditMode]
-public class BetterCardRotation : MonoBehaviour {
+public class CardRotation : MonoBehaviour {
     
     public RectTransform cardFront;
     public RectTransform cardBack;
@@ -10,11 +10,17 @@ public class BetterCardRotation : MonoBehaviour {
     
     private bool _showingBack;
 
+    private Camera _cam;
+
+    private void Awake() {
+        _cam = Camera.main;
+        Update();
+    }
+
     private void Update () {
-        var position = Camera.main.transform.position;
+        var position = _cam.transform.position;
         var position1 = targetFacePoint.position;
-        RaycastHit[] hits = 
-            Physics.RaycastAll(origin: position, direction: (-position + position1).normalized, maxDistance: (-position + position1).magnitude);
+        RaycastHit[] hits = Physics.RaycastAll(origin: position, direction: (-position + position1).normalized, maxDistance: (-position + position1).magnitude);
         bool passedThroughColliderOnCard = false;
         foreach (RaycastHit h in hits)
             if (h.collider == col)
@@ -24,8 +30,7 @@ public class BetterCardRotation : MonoBehaviour {
         if (_showingBack) {
             cardFront.gameObject.SetActive(false);
             cardBack.gameObject.SetActive(true);
-        }
-        else {
+        } else {
             cardFront.gameObject.SetActive(true);
             cardBack.gameObject.SetActive(false);
         }

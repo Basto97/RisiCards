@@ -15,7 +15,7 @@ public class PlayerHandVisual : HandVisual {
         Sequence s = DOTween.Sequence();
         if (!fast) {
             s.Append(card.transform.DOMove(drawPreviewSpot.position, CardTransitionTime));
-            s.Insert(0f, card.transform.DORotate(card.transform.eulerAngles, CardTransitionTime));
+            s.Insert(0f, card.transform.DORotate(Vector3.zero, CardTransitionTime));
             s.AppendInterval(CardPreviewTime);
             s.Append(card.transform.DOLocalMove(slots.transforms[0].transform.localPosition, CardTransitionTime));
         } else {
