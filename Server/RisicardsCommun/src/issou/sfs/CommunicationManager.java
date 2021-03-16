@@ -26,4 +26,6 @@ public class CommunicationManager extends SendManager {
     public void sendNewTurn(Player playerPlaying){
         req("newTurn").i("user",  playerPlaying.getUser().getId()).f("time", Content.timePerTurn).sfs("pool", playerPlaying.getPool()).sendAll();
     }
+
+
 }
