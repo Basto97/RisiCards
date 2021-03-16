@@ -36,9 +36,27 @@ public class Card : Identifiable {
             health = obj.GetInt("health");
             healthModification = obj.GetInt("healthModification");
             type = obj.GetUtfString("type");
-        }
-        else {
+        } else {
             targetType = obj.GetUtfString("tagetType");
+        }
+    }
+
+    public Card(CardAsset c) {
+        Name = c.name;
+        minion = c.IsMinion;
+        baseCost = c.cost;
+        costModification = 0;
+        special = new int[0];
+        effects = new string[0];
+        hero = c.hero;
+        if (minion) {
+            attack = c.attack;
+            attackModification = 0;
+            health = c.health;
+            healthModification = 0;
+            type = c.type;
+        } else {
+            targetType = c.targetType;
         }
     }
 }

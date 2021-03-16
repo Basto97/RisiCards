@@ -1,7 +1,6 @@
 ﻿using DG.Tweening;
 
-public class DelayCommand : Command 
-{
+public class DelayCommand : Command {
     private readonly float _delay;
 
     public DelayCommand(float timeToWait) {

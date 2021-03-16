@@ -21,11 +21,9 @@ public class Players {
         players.put(user, player);
         usersReady.add(user);
     }
-
     public boolean readyToStart(){
         return usersReady.size() == 2;
     }
-
     public void randomlyChooseFirstPlayer(){
         boolean first = RandomFactory.aBoolean();
         for(Player player : players.values()){
@@ -33,7 +31,6 @@ public class Players {
             first = !first;
         }
     }
-
 
     // GETTERS
 

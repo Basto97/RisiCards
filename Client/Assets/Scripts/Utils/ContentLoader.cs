@@ -59,7 +59,7 @@ public class CardAsset {
     public int cost;
     public int[] special;
     public string[] effects;
-    public bool minion;
+    public bool IsMinion { get; }
     public string hero;
     
     public int health;
@@ -73,9 +73,9 @@ public class CardAsset {
         cost = ob.GetInt("cost");
         special = ob.GetIntArray("special");
         effects = ob.GetUtfStringArray("effects");
-        minion = ob.GetBool("minion");
+        IsMinion = ob.GetBool("minion");
         hero = ob.GetUtfString("hero");
-        if (minion) {
+        if (IsMinion) {
             health = ob.GetInt("health");
             attack = ob.GetInt("attack");
             type = ob.GetUtfString("type");

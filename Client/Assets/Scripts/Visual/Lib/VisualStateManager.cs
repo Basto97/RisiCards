@@ -22,11 +22,11 @@ public class VisualStateManager : MonoBehaviour {
         _canvas = GetComponentInChildren<Canvas>();
     }
 
-    public int Slot { get; set; } = -1;
+    public int ID { get; set; }
+    public int Slot { get; set; }
 
     private VisualStates _state;
     public VisualStates VisualState {
-        get => _state;
         set {
             _state = value;
             if (_hover == null)

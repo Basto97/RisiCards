@@ -9,16 +9,14 @@ public class MessageManager : MonoBehaviour
 
     public static MessageManager Instance;
 
-    private void Awake()
-    {
+    private void Awake() {
         Instance = this;
         messagePanel.SetActive(false);
     }
 
     public void ShowMessage(string message, float duration) => StartCoroutine(ShowMessageCoroutine(message, duration));
 
-    private IEnumerator ShowMessageCoroutine(string message, float duration)
-    {
+    private IEnumerator ShowMessageCoroutine(string message, float duration) {
         messageText.text = message;
         messagePanel.SetActive(true);
         yield return new WaitForSeconds(duration);

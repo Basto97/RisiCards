@@ -73,12 +73,6 @@ public class SFS : MonoBehaviour {
     public static User MySelf => _sfs.MySelf;
     public static IRoomManager RoomManager => _sfs.RoomManager;
 
-    // SEND
-
-    public static void SendJoinRoom(string roomNameOrId) => _sfs.Send(new JoinRoomRequest(roomNameOrId));
-    public static void SendLeaveRoom() => _sfs.Send(new LeaveRoomRequest());
-    public static ISFSend Req(string cmd) => new SFSend(cmd);
-
 
     // EVENTS
     
@@ -94,6 +88,13 @@ public class SFS : MonoBehaviour {
     private static Dictionary<string, Action<ISFSObject>> actions = new Dictionary<string, Action<ISFSObject>>();
     public static void OnExtension(string cmd, Action<ISFSObject> response) => actions.Add(cmd, response);
 
+    
+    // SEND
+
+    public static void SendJoinRoom(string roomNameOrId) => _sfs.Send(new JoinRoomRequest(roomNameOrId));
+    public static void SendLeaveRoom() => _sfs.Send(new LeaveRoomRequest());
+    public static ISFSend Req(string cmd) => new SFSend(cmd);
+    
     // Stuff
     
     private class SFSend : ISFSend {

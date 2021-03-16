@@ -26,7 +26,6 @@ public class GameConfig {
             throw new SFSException("Size of deckstr "+deckStr.size()+" highter then max"+Content.cardsPerDeck[1]+".");
         if(deckStr.size() < Content.cardsPerDeck[0])
             throw new SFSException("Size of deckstr "+deckStr.size()+" smaller then mmin"+Content.cardsPerDeck[0]+".");
-
          */
 
         Deck deck = new Deck();

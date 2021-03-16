@@ -1,29 +1,27 @@
 ﻿public class GameAPI {
 
-        public GameState State;
+        public GameState state;
 
         public void StartGame(GameState ga) {
-                State = ga;
+                state = ga;
         }
         
-        public void draw(Card drawed) {
-                State.Player.DeckSize--;
-                State.Player.Hand.AddCard(drawed);
+        public void OnDraw(Card drawed) {
+                state.Player.DeckSize--;
+                state.Player.Hand.AddCard(drawed);
         }
 
-        public void opponantDraw() {
-                State.Opponant.DeckSize--;
-                State.Opponant.HandSize++;
+        public void OnOpponantDraw() {
+                state.Opponant.DeckSize--;
+                state.Opponant.HandSize++;
         }
 
         public void NewTurn(bool playerTurn, float timeToplay, Pool newPool) {
-                State.TimeToPlay = timeToplay;
+                state.TimeToPlay = timeToplay;
                 if (playerTurn)
-                        State.Player.Pool = newPool;
+                        state.Player.Pool = newPool;
                 else 
-                        State.Opponant.Pool = newPool;
-                new StartATurnCommand(State, playerTurn).AddToQueue();
+                        state.Opponant.Pool = newPool;
+                new StartATurnCommand(state, playerTurn).AddToQueue();
         }
-
-        public bool WaitingUserPlay => true;
 }

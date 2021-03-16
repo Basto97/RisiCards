@@ -6,6 +6,7 @@ import issou.logic.game.GameConfig;
 import issou.logic.game.Player;
 import issou.logic.objects.Card;
 import issou.logic.utils.Players;
+import issou.sfs.CommunicationManager;
 
 import java.util.ArrayList;
 
@@ -29,8 +30,8 @@ public class RisicardsGameExtension extends SFSExtension {
     }
 
     public void playerEndTurn(Player player) {
-        if(!player.itsHisTurn()) return;
-        newTurn();
+        if(player.itsHisTurn())
+            newTurn();
     }
 
     //
@@ -53,7 +54,7 @@ public class RisicardsGameExtension extends SFSExtension {
 
     public void newTurn(){
         players.changeUserPlaying();
-        players.getUserPlaying().getManaPool().newTurn();
+        players.getUserPlaying().getPool().newTurn();
         cm.sendNewTurn(players.getUserPlaying());
         draw(players.getUserPlaying());
     }

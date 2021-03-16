@@ -10,7 +10,8 @@ public class Hand {
 
     public Card LastDrawedCard => _cards[_cards.Count - 1];
 
-    public Hand(ISFSArray arr) {
+    public Hand(ISFSObject obj) {
+        ISFSArray arr = obj.GetSFSArray("cards");
         _cards = new List<Card>();
         for(int i = 0 ; i <arr.Count; i++)
             _cards.Add(new Card(arr.GetSFSObject(i)));

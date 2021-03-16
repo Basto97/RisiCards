@@ -1,15 +1,16 @@
 package issou.logic.objects;
 
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
-import com.smartfoxserver.v2.protocol.serialization.SerializableSFSType;
 import issou.collection.assets.CardAsset;
+import issou.sfs.api.SFSerializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Card extends Identifiable implements SerializableSFSType {
+public class Card extends Identifiable implements SFSerializable {
 
     public final String name;
     public final boolean minion;
@@ -41,7 +42,9 @@ public class Card extends Identifiable implements SerializableSFSType {
         this.special = new ArrayList<>(Arrays.asList(card.special));
         this.effects = new ArrayList<>(Arrays.asList(card.effects));
     }
-    public SFSObject toSFSObject(){
+
+    @Override
+    public ISFSObject toSFS() {
         SFSObject obj = new SFSObject();
         obj.putUtfString("name", name);
         obj.putBool("minion", minion);
@@ -61,14 +64,12 @@ public class Card extends Identifiable implements SerializableSFSType {
         }
         return obj;
     }
-
     @Override
     public String toString() {
         return "Card{" +
                 "name='" + name + '\'' +
                 '}';
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,7 +77,6 @@ public class Card extends Identifiable implements SerializableSFSType {
         Card card = (Card) o;
         return Objects.equals(name, card.name);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(name);
